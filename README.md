@@ -14,9 +14,9 @@ Mobile-first Hawaii family trip app for GitHub Pages.
 
 ## Data Storage
 
-- Bulletin board and chat currently use browser `localStorage`.
-- This means posts/messages are saved only on the same device/browser.
-- For family-wide sync and realtime chat, connect Supabase or another backend later.
+- Bulletin board and chat use Supabase `posts` and `messages` tables.
+- Realtime updates are subscribed through Supabase Realtime.
+- The frontend uses only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`-style public config.
 
 ## Files
 
