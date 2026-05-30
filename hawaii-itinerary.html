@@ -553,7 +553,7 @@
       return {
         id: row.id,
         author: row.author || "가족",
-        content: row.content || "",
+        content: row.message || row.content || "",
         createdAt: row.created_at || row.createdAt || new Date().toISOString()
       };
     }
@@ -715,7 +715,6 @@
         const ok = await insertRow({
           id: crypto.randomUUID(),
           author: form.author.trim() || "가족",
-          category: form.category,
           title: form.title.trim(),
           content: form.content.trim(),
           created_at: new Date().toISOString()
@@ -760,7 +759,7 @@
         const ok = await insertRow({
           id: crypto.randomUUID(),
           author: form.author.trim() || "가족",
-          content: form.content.trim(),
+          message: form.content.trim(),
           created_at: new Date().toISOString()
         });
         if (ok) setForm({ author: form.author, content: "" });
