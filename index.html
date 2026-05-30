@@ -189,7 +189,7 @@
       border-color: var(--aqua-dark);
     }
 
-    .card, .day-card, .panel, .post, .chat-message {
+    .card, .day-card, .panel, .post {
       border-radius: 8px;
       background: rgba(255, 253, 248, 0.96);
       border: 1px solid var(--line);
@@ -410,6 +410,116 @@
       margin: 0 0 5px;
       font-size: 1rem;
     }
+    .chat-phone {
+      overflow: hidden;
+      border: 1px solid rgba(27, 138, 148, 0.18);
+      border-radius: 8px;
+      background: #b9d8df;
+      box-shadow: 0 14px 30px rgba(23, 49, 59, 0.1);
+    }
+    .chat-room-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 13px;
+      background: #f7f4ee;
+      border-bottom: 1px solid rgba(23, 49, 59, 0.09);
+    }
+    .chat-room-title {
+      min-width: 0;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+    .chat-count {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .chat-list {
+      display: grid;
+      align-content: end;
+      gap: 10px;
+      min-height: 420px;
+      max-height: 62svh;
+      overflow-y: auto;
+      padding: 14px 12px 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)),
+        #b9d8df;
+      scroll-behavior: smooth;
+    }
+    .message-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: start;
+    }
+    .message-row.mine { justify-items: end; }
+    .message-author {
+      margin: 0 0 3px 4px;
+      color: rgba(23, 49, 59, 0.72);
+      font-size: 0.75rem;
+      font-weight: 850;
+    }
+    .message-row.mine .message-author { display: none; }
+    .bubble-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      max-width: min(76%, 520px);
+    }
+    .message-row.mine .bubble-wrap { flex-direction: row-reverse; }
+    .bubble {
+      min-width: 0;
+      padding: 9px 11px;
+      border-radius: 6px 16px 16px 16px;
+      background: #fffdf8;
+      color: #223c45;
+      box-shadow: 0 3px 9px rgba(23, 49, 59, 0.08);
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+    .message-row.mine .bubble {
+      border-radius: 16px 6px 16px 16px;
+      background: #fee500;
+      color: #261d00;
+    }
+    .message-time {
+      flex: 0 0 auto;
+      color: rgba(23, 49, 59, 0.58);
+      font-size: 0.68rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .chat-compose {
+      display: grid;
+      grid-template-columns: minmax(86px, 0.3fr) minmax(0, 1fr) auto;
+      gap: 8px;
+      margin: 0;
+      padding: 10px;
+      border: 0;
+      border-top: 1px solid rgba(23, 49, 59, 0.09);
+      border-radius: 0;
+      background: #f7f4ee;
+    }
+    .chat-compose input,
+    .chat-compose textarea {
+      border-color: rgba(23, 49, 59, 0.12);
+      background: #fff;
+    }
+    .chat-compose textarea {
+      min-height: 42px;
+      max-height: 120px;
+      resize: vertical;
+    }
+    .chat-send {
+      min-width: 58px;
+      align-self: stretch;
+      background: #fee500;
+      color: #261d00;
+    }
     .empty {
       margin: 10px 0;
       padding: 14px;
@@ -445,6 +555,16 @@
       .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chat-list { min-height: 500px; }
+    }
+    @media (max-width: 520px) {
+      .chat-compose {
+        grid-template-columns: 1fr auto;
+      }
+      .chat-compose input {
+        grid-column: 1 / -1;
+      }
+      .bubble-wrap { max-width: 86%; }
     }
   </style>
 </head>
@@ -767,6 +887,7 @@
     function Chat() {
       const { items: messages, status, error, insertRow } = useSupabaseRows("messages", normalizeMessage, byOldest);
       const [form, setForm] = useState({ author: "", content: "" });
+      const activeAuthor = form.author.trim() || "가족";
       const submit = async (event) => {
         event.preventDefault();
         if (!form.content.trim()) return;
@@ -782,21 +903,30 @@
         React.createElement("h2", { className: "section-title" }, "가족 채팅"),
         React.createElement("p", { className: "section-kicker" }, "여행 중 빠른 공유용입니다. 새 메시지는 Supabase Realtime으로 바로 동기화됩니다."),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
-        React.createElement("div", null,
-          status === "loading" ? React.createElement("div", { className: "empty" }, "메시지를 불러오는 중입니다.") :
-          messages.length === 0 ? React.createElement("div", { className: "empty" }, "아직 메시지가 없습니다.") :
-          messages.map((message) => React.createElement("div", { className: "chat-message", key: message.id },
-            React.createElement("div", { className: "chat-meta" },
-              React.createElement("span", null, message.author),
-              React.createElement("span", null, new Date(message.createdAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }))
-            ),
-            React.createElement("div", null, message.content)
-          ))
-        ),
-        React.createElement("form", { className: "form", onSubmit: submit },
-          React.createElement("input", { placeholder: "이름", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
-          React.createElement("textarea", { placeholder: "메시지", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
-          React.createElement("button", { className: "primary-action", type: "submit" }, "보내기")
+        React.createElement("div", { className: "chat-phone" },
+          React.createElement("div", { className: "chat-room-head" },
+            React.createElement("div", { className: "chat-room-title" }, "하와이 가족방"),
+            React.createElement("div", { className: "chat-count" }, `${messages.length} messages`)
+          ),
+          React.createElement("div", { className: "chat-list" },
+            status === "loading" ? React.createElement("div", { className: "empty" }, "메시지를 불러오는 중입니다.") :
+            messages.length === 0 ? React.createElement("div", { className: "empty" }, "아직 메시지가 없습니다.") :
+            messages.map((message) => {
+              const mine = message.author === activeAuthor;
+              return React.createElement("div", { className: `message-row ${mine ? "mine" : ""}`, key: message.id },
+                React.createElement("div", { className: "message-author" }, message.author),
+                React.createElement("div", { className: "bubble-wrap" },
+                  React.createElement("div", { className: "bubble" }, message.content),
+                  React.createElement("div", { className: "message-time" }, new Date(message.createdAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }))
+                )
+              );
+            })
+          ),
+          React.createElement("form", { className: "chat-compose", onSubmit: submit },
+            React.createElement("input", { placeholder: "이름", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
+            React.createElement("textarea", { placeholder: "메시지", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
+            React.createElement("button", { className: "primary-action chat-send", type: "submit" }, "전송")
+          )
         )
       );
     }
