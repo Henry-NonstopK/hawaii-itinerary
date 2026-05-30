@@ -451,7 +451,7 @@
 <body>
   <div id="root"></div>
   <script type="module">
-    import React, { useEffect, useMemo, useState } from "https://esm.sh/react@18.3.1";
+    import React, { useEffect, useMemo, useRef, useState } from "https://esm.sh/react@18.3.1";
     import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
@@ -569,6 +569,7 @@
       const [items, setItems] = useState([]);
       const [status, setStatus] = useState("loading");
       const [error, setError] = useState("");
+      const channelRef = useRef(null);
 
       useEffect(() => {
         let cancelled = false;
@@ -593,7 +594,11 @@
 
         loadRows();
         const channel = supabase
-          .channel(`${table}-realtime`)
+          .channel(`${table}-realtime`, { config: { broadcast: { self: false } } })
+          .on("broadcast", { event: "row-change" }, ({ payload }) => {
+            if (!payload || payload.table !== table || !payload.row) return;
+            setItems((current) => upsertRealtimeRow(current, normalizeRow(payload.row), sortRows));
+          })
           .on("postgres_changes", { event: "*", schema: "public", table }, (payload) => {
             setItems((current) => {
               if (payload.eventType === "DELETE") {
@@ -607,20 +612,29 @@
               setError("실시간 연결을 확인해주세요.");
             }
           });
+        channelRef.current = channel;
 
         return () => {
           cancelled = true;
+          channelRef.current = null;
           supabase.removeChannel(channel);
         };
       }, [table, normalizeRow, sortRows]);
 
       async function insertRow(row) {
         setError("");
-        const { error } = await supabase.from(table).insert(row);
+        const { data, error } = await supabase.from(table).insert(row).select("*").single();
         if (error) {
           setError(error.message);
           return false;
         }
+        const savedRow = data || row;
+        setItems((current) => upsertRealtimeRow(current, normalizeRow(savedRow), sortRows));
+        channelRef.current?.send({
+          type: "broadcast",
+          event: "row-change",
+          payload: { table, row: savedRow }
+        });
         return true;
       }
 
