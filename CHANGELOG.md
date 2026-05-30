@@ -2,6 +2,7 @@
 
 ## 2026-05-31
 
+- 전체 UI를 하와이 여행 톤의 모던한 색감, 히어로 비주얼, 글래스 탭, 카드 스타일로 개선
 - 게시판/채팅 저장소를 브라우저 `localStorage`에서 Supabase `posts`/`messages` 테이블로 전환
 - Supabase Realtime 구독 추가로 다른 기기에서 작성된 글/메시지가 자동 반영되도록 변경
 - Supabase insert 성공 시 작성자 화면에 즉시 반영하고 Broadcast로 열린 탭/기기에 전파되도록 보강
