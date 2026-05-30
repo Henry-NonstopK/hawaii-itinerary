@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hawaii Family Trip Itinerary</title>
+  <title>Hawaii Family Trip App</title>
   <style>
     :root {
       color-scheme: light;
@@ -16,167 +16,147 @@
       --aqua-dark: #116570;
       --coral: #e86f51;
       --sun: #f5b64b;
-      --leaf: #5c8f5e;
       --sand: #fff5df;
-      --shadow: 0 18px 38px rgba(23, 49, 59, 0.13);
+      --shadow: 0 16px 34px rgba(23, 49, 59, 0.12);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 12% 0%, rgba(245, 182, 75, 0.22), transparent 30rem),
+        radial-gradient(circle at 10% 0%, rgba(245, 182, 75, 0.22), transparent 27rem),
         linear-gradient(180deg, #e9f7f5 0%, #fffaf0 42%, #f7fbf8 100%);
       color: var(--ink);
       line-height: 1.5;
     }
-
-    a {
-      color: inherit;
-    }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
 
     .shell {
       width: min(100%, 920px);
       margin: 0 auto;
-      padding: 16px 14px 42px;
+      padding: 16px 14px 44px;
     }
-
     .hero {
-      min-height: 86svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 18px 4px 20px;
+      min-height: 58svh;
+      display: grid;
+      align-content: end;
+      padding: 18px 2px 18px;
     }
-
     .hero-visual {
-      position: relative;
-      overflow: hidden;
       min-height: 24svh;
+      overflow: hidden;
       border-radius: 8px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(23, 49, 59, 0.2)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(23, 49, 59, 0.2)),
         linear-gradient(135deg, #8ed8d4 0%, #f7d18b 45%, #ef876e 100%);
       box-shadow: var(--shadow);
+      position: relative;
     }
-
     .hero-visual::before,
     .hero-visual::after {
       content: "";
       position: absolute;
       inset: auto auto 0 0;
       width: 120%;
-      height: 34%;
+      height: 35%;
       background: rgba(255, 253, 248, 0.82);
       clip-path: polygon(0 54%, 10% 45%, 22% 62%, 36% 49%, 50% 67%, 65% 47%, 82% 61%, 100% 42%, 100% 100%, 0 100%);
     }
-
     .hero-visual::after {
       height: 24%;
       background: rgba(27, 138, 148, 0.34);
       clip-path: polygon(0 42%, 13% 50%, 28% 36%, 43% 52%, 58% 39%, 76% 55%, 100% 38%, 100% 100%, 0 100%);
     }
-
-    .hero-copy {
-      margin-top: 18px;
-    }
-
     .eyebrow {
-      margin: 0 0 8px;
+      margin: 18px 0 8px;
       color: var(--aqua-dark);
       font-size: 0.78rem;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0;
       text-transform: uppercase;
     }
-
     h1 {
       margin: 0;
-      max-width: 9.5ch;
-      font-size: clamp(2.25rem, 10.5vw, 5.8rem);
+      max-width: 12ch;
+      font-size: clamp(2.45rem, 12vw, 5.8rem);
       line-height: 0.96;
       letter-spacing: 0;
     }
-
     .subtitle {
       margin: 12px 0 0;
-      max-width: 38rem;
       color: var(--muted);
       font-size: 0.98rem;
-    }
-
-    .hero-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      margin-top: 15px;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: var(--aqua);
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-weight: 900;
-      line-height: 1.15;
-      text-align: center;
-      text-decoration: none;
       overflow-wrap: anywhere;
     }
-
-    .hero-cta.secondary {
-      border: 1px solid rgba(17, 101, 112, 0.24);
-      background: rgba(255, 253, 248, 0.86);
-      color: var(--aqua-dark);
-    }
-
     .quick-facts {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 9px;
       margin-top: 14px;
     }
-
     .fact {
-      min-height: 66px;
+      min-height: 64px;
       padding: 10px;
       border: 1px solid rgba(27, 138, 148, 0.18);
       border-radius: 8px;
-      background: rgba(255, 253, 248, 0.82);
+      background: rgba(255, 253, 248, 0.84);
       overflow-wrap: anywhere;
     }
-
-    .fact b,
-    .label {
+    .fact b {
       display: block;
       margin-bottom: 3px;
-      font-size: 0.74rem;
       color: var(--aqua-dark);
-      font-weight: 800;
+      font-size: 0.74rem;
+      font-weight: 900;
     }
+    .fact span { font-size: 0.9rem; font-weight: 800; }
 
-    .fact span {
-      font-size: 0.9rem;
-      font-weight: 700;
+    .tabbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+      margin: 0 -14px 14px;
+      padding: 10px 14px 11px;
+      background: rgba(246, 251, 248, 0.96);
+      border-block: 1px solid rgba(27, 138, 148, 0.14);
+      backdrop-filter: blur(12px);
     }
-
+    .tab {
+      min-height: 42px;
+      padding: 8px 7px;
+      border: 1px solid rgba(17, 101, 112, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.96);
+      color: var(--aqua-dark);
+      font-size: 0.8rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    .tab.active {
+      border-color: var(--aqua);
+      background: var(--aqua);
+      color: #fff;
+      box-shadow: 0 7px 16px rgba(27, 138, 148, 0.2);
+    }
     .section-title {
       margin: 10px 2px 12px;
       font-size: 1.28rem;
       letter-spacing: 0;
+    }
+    .section-kicker {
+      margin: -5px 2px 14px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      overflow-wrap: anywhere;
     }
 
     .toolbar {
@@ -187,90 +167,35 @@
       margin: 0 -14px 18px;
       padding: 9px 14px 11px;
       background: rgba(246, 251, 248, 0.94);
-      backdrop-filter: blur(12px);
       border-block: 1px solid rgba(27, 138, 148, 0.12);
       scrollbar-width: none;
     }
-
-    .toolbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .tabbar {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 7px;
-      margin: 0 -14px 12px;
-      padding: 10px 14px 11px;
-      background: rgba(246, 251, 248, 0.96);
-      border-block: 1px solid rgba(27, 138, 148, 0.14);
-      backdrop-filter: blur(12px);
-    }
-
-    .tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 8px 7px;
-      border: 1px solid rgba(17, 101, 112, 0.22);
-      border-radius: 8px;
-      background: rgba(255, 253, 248, 0.96);
-      color: var(--aqua-dark);
-      font-size: 0.82rem;
-      font-weight: 900;
-      line-height: 1.1;
-      text-align: center;
-      text-decoration: none;
-      overflow-wrap: anywhere;
-      box-shadow: 0 5px 14px rgba(23, 49, 59, 0.05);
-    }
-
-    .tab.primary {
-      background: var(--aqua);
-      color: #fff;
-      border-color: var(--aqua);
-    }
-
+    .toolbar::-webkit-scrollbar { display: none; }
     .chip {
       flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       min-height: 38px;
-      scroll-snap-align: start;
+      padding: 8px 13px;
       border: 1px solid rgba(17, 101, 112, 0.2);
       border-radius: 999px;
-      padding: 8px 13px;
-      background: #ffffff;
+      background: #fff;
       color: var(--aqua-dark);
       font-size: 0.86rem;
-      font-weight: 800;
-      text-decoration: none;
+      font-weight: 850;
       white-space: nowrap;
-      box-shadow: 0 5px 14px rgba(23, 49, 59, 0.05);
     }
-
-    .chip.primary {
+    .chip.active {
       background: var(--aqua-dark);
+      color: #fff;
       border-color: var(--aqua-dark);
-      color: #ffffff;
     }
 
-    .day-card {
-      position: relative;
-      margin-bottom: 16px;
-      padding: 15px;
-      border: 1px solid var(--line);
+    .card, .day-card, .panel, .post, .chat-message {
       border-radius: 8px;
-      background: rgba(255, 253, 248, 0.94);
-      box-shadow: 0 12px 28px rgba(23, 49, 59, 0.08);
-      scroll-margin-top: 80px;
+      background: rgba(255, 253, 248, 0.96);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
     }
-
+    .day-card { margin-bottom: 16px; padding: 15px; }
     .day-head {
       display: flex;
       align-items: flex-start;
@@ -278,21 +203,17 @@
       gap: 12px;
       margin-bottom: 13px;
     }
-
     .date {
       margin: 0 0 2px;
       color: var(--coral);
       font-size: 0.82rem;
       font-weight: 900;
     }
-
     .day-card h3 {
       margin: 0;
       font-size: 1.18rem;
       line-height: 1.2;
-      letter-spacing: 0;
     }
-
     .badge {
       flex: 0 0 auto;
       padding: 6px 9px;
@@ -303,7 +224,6 @@
       font-weight: 900;
       white-space: nowrap;
     }
-
     .timeline {
       display: grid;
       gap: 0;
@@ -311,7 +231,6 @@
       padding: 0;
       list-style: none;
     }
-
     .stop {
       display: grid;
       grid-template-columns: 62px 1fr;
@@ -319,7 +238,6 @@
       position: relative;
       padding: 0 0 14px;
     }
-
     .stop::before {
       content: "";
       position: absolute;
@@ -329,26 +247,17 @@
       width: 2px;
       background: var(--line);
     }
-
-    .stop:last-child {
-      padding-bottom: 0;
-    }
-
-    .stop:last-child::before {
-      display: none;
-    }
-
+    .stop:last-child { padding-bottom: 0; }
+    .stop:last-child::before { display: none; }
     .time {
       color: var(--aqua-dark);
       font-size: 0.76rem;
       font-weight: 900;
     }
-
     .stop-body {
       min-width: 0;
       overflow-wrap: anywhere;
     }
-
     .stop-body::before {
       content: "";
       display: inline-block;
@@ -357,29 +266,22 @@
       margin: 0 8px 1px -15px;
       border: 3px solid var(--aqua);
       border-radius: 50%;
-      background: #ffffff;
+      background: #fff;
       vertical-align: middle;
     }
-
-    .stop-title {
-      display: inline;
-      font-weight: 850;
-    }
-
+    .stop-title { display: inline; font-weight: 850; }
     .stop-note {
       margin: 3px 0 0;
       color: var(--muted);
       font-size: 0.9rem;
     }
-
-    .actions {
+    .actions, .map-hub {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 13px;
     }
-
-    .map-btn {
+    .map-btn, .primary-action, .ghost-action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -387,13 +289,18 @@
       padding: 9px 12px;
       border-radius: 8px;
       background: var(--aqua);
-      color: white;
+      color: #fff;
+      border: 0;
       font-size: 0.86rem;
       font-weight: 850;
       text-decoration: none;
       overflow-wrap: anywhere;
     }
-
+    .ghost-action {
+      background: #fff;
+      color: var(--aqua-dark);
+      border: 1px solid rgba(17, 101, 112, 0.22);
+    }
     .note {
       margin-top: 13px;
       padding: 11px 12px;
@@ -403,63 +310,33 @@
       color: #5f4b22;
       font-size: 0.91rem;
     }
-
     .note b {
       display: block;
       margin-bottom: 3px;
       color: #8a6418;
       font-size: 0.76rem;
-      letter-spacing: 0;
     }
 
-    .section-kicker {
-      margin: -5px 2px 14px;
-      color: var(--muted);
-      font-size: 0.94rem;
-      overflow-wrap: anywhere;
-    }
-
-    .content-section {
-      scroll-margin-top: 76px;
-      margin-top: 24px;
-    }
-
-    .supplies-grid {
+    .grid {
       display: grid;
       gap: 12px;
-      margin-top: 12px;
     }
-
-    .supply-card {
-      min-width: 0;
-      padding: 14px;
-      border: 1px solid rgba(27, 138, 148, 0.16);
-      border-radius: 8px;
-      background: rgba(255, 253, 248, 0.96);
-      box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
-    }
-
-    .supply-card h3 {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .card { padding: 14px; }
+    .card h3 {
       margin: 0 0 9px;
       color: var(--aqua-dark);
       font-size: 1rem;
       line-height: 1.25;
-      letter-spacing: 0;
       overflow-wrap: anywhere;
     }
-
-    .supply-card ul {
+    .card ul {
       display: grid;
       gap: 7px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
-
-    .supply-card li {
+    .card li {
       display: grid;
       grid-template-columns: 18px 1fr;
       gap: 7px;
@@ -467,8 +344,7 @@
       font-size: 0.92rem;
       overflow-wrap: anywhere;
     }
-
-    .supply-card li::before {
+    .card li::before {
       content: "";
       width: 10px;
       height: 10px;
@@ -476,401 +352,391 @@
       border-radius: 50%;
       background: var(--sun);
     }
-
-    .supply-card.featured {
+    .featured {
       border-color: rgba(245, 182, 75, 0.5);
       background: var(--sand);
     }
 
-    .supply-card.featured h3 {
-      color: #8a6418;
-    }
-
-    .map-hub {
+    .form {
       display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .map-hub .map-btn {
-      min-height: 44px;
-    }
-
-    .memo-card {
-      margin-top: 12px;
+      gap: 9px;
+      margin-bottom: 14px;
       padding: 14px;
-      border: 1px solid rgba(27, 138, 148, 0.16);
       border-radius: 8px;
       background: rgba(255, 253, 248, 0.96);
-      color: var(--muted);
-      font-size: 0.92rem;
+      border: 1px solid rgba(27, 138, 148, 0.18);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    input, textarea, select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid rgba(17, 101, 112, 0.22);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 9px 10px;
+      outline-color: var(--aqua);
+    }
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+    .post, .chat-message {
+      padding: 13px;
+      margin-bottom: 10px;
       overflow-wrap: anywhere;
     }
-
-    .panel {
-      margin: 22px 0 0;
-      padding: 16px;
-      border-radius: 8px;
-      background: #17313b;
-      color: #f8fbfa;
-      box-shadow: var(--shadow);
-      scroll-margin-top: 76px;
+    .post-meta, .chat-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
     }
-
-    .panel h2 {
-      margin: 0 0 10px;
-      font-size: 1.14rem;
-      letter-spacing: 0;
-    }
-
-    .panel ul {
-      margin: 0;
-      padding-left: 19px;
-    }
-
-    .panel li + li {
-      margin-top: 7px;
-    }
-
-    .food-caution {
-      background: rgba(255, 253, 248, 0.96);
-      color: var(--ink);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-
-    .food-caution h2 {
+    .category {
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: #e7f4f3;
       color: var(--aqua-dark);
     }
-
+    .post h3 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+    }
+    .empty {
+      margin: 10px 0;
+      padding: 14px;
+      border: 1px dashed rgba(17, 101, 112, 0.3);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 253, 248, 0.72);
+    }
+    .panel {
+      margin-top: 16px;
+      padding: 16px;
+      background: #17313b;
+      color: #f8fbfa;
+    }
+    .panel h2 { margin: 0 0 10px; font-size: 1.12rem; }
+    .panel ul { margin: 0; padding-left: 19px; }
+    .panel li + li { margin-top: 7px; }
     footer {
       padding: 24px 4px 6px;
       color: var(--muted);
       font-size: 0.84rem;
       text-align: center;
     }
-
     @media (min-width: 720px) {
-      .shell {
-        padding-inline: 24px;
-      }
-
+      .shell { padding-inline: 24px; }
       .hero {
-        min-height: 78vh;
-        display: grid;
+        min-height: 72vh;
         grid-template-columns: 0.9fr 1.1fr;
         align-items: end;
-        justify-content: initial;
         gap: 34px;
       }
-
-      .hero-visual {
-        min-height: 520px;
-      }
-
-      .hero-copy {
-        margin-top: 0;
-        padding-bottom: 20px;
-      }
-
-      .quick-facts {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .hero-actions {
-        display: flex;
-        max-width: 420px;
-      }
-
-      .hero-cta {
-        min-width: 180px;
-      }
-
-      .toolbar {
-        margin-inline: -24px;
-        padding-inline: 24px;
-      }
-
-      .tabbar {
-        margin-inline: -24px;
-        padding-inline: 24px;
-      }
-
-      .day-card {
-        padding: 22px;
-      }
-
-      .supplies-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .hero-visual { min-height: 500px; }
+      .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <section class="hero" aria-labelledby="title">
-      <div class="hero-visual" aria-hidden="true"></div>
-      <div class="hero-copy">
-        <p class="eyebrow">Honolulu / Oahu only</p>
-        <h1 id="title">Hawaii Family Trip</h1>
-        <p class="subtitle">2026년 6월 24일부터 29일까지, 와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 모바일 일정표입니다.</p>
-        <div class="hero-actions" aria-label="핵심 이동">
-          <a class="hero-cta" href="#schedule">일정 바로 보기</a>
-          <a class="hero-cta secondary" href="#supplies">준비물 보기</a>
-        </div>
-        <div class="quick-facts" aria-label="여행 핵심 정보">
-          <div class="fact"><b>기간</b><span>6/24 Wed - 6/29 Mon</span></div>
-          <div class="fact"><b>그룹</b><span>6명, 임산부 동행</span></div>
-          <div class="fact"><b>베이스</b><span>Waikiki / Honolulu</span></div>
-          <div class="fact"><b>우선순위</b><span>휴식, 그늘, 짧은 동선</span></div>
-        </div>
-      </div>
-    </section>
+  <div id="root"></div>
+  <script type="module">
+    import React, { useMemo, useState } from "https://esm.sh/react@18.3.1";
+    import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
 
-    <nav class="tabbar" aria-label="주요 탭">
-      <a class="tab primary" href="#schedule">일정</a>
-      <a class="tab" href="#supplies">준비물</a>
-      <a class="tab" href="#maps">지도</a>
-      <a class="tab" href="#notes">메모</a>
-    </nav>
+    const tabs = [
+      ["schedule", "일정"],
+      ["supplies", "준비물"],
+      ["board", "게시판"],
+      ["chat", "채팅"],
+      ["maps", "지도"],
+      ["notes", "메모"],
+    ];
 
-    <section class="content-section" id="schedule" aria-labelledby="schedule-title">
-    <h2 class="section-title" id="schedule-title">여행 일정</h2>
-    <nav class="toolbar" aria-label="날짜 바로가기">
-      <a class="chip primary" href="#day-0624">6/24 도착</a>
-      <a class="chip" href="#day-0625">6/25 와이키키</a>
-      <a class="chip" href="#day-0626">6/26 동부</a>
-      <a class="chip" href="#day-0627">6/27 진주만</a>
-      <a class="chip" href="#day-0628">6/28 노스쇼어</a>
-      <a class="chip" href="#day-0629">6/29 출발</a>
-    </nav>
+    const days = [
+      {
+        id: "0624", date: "6/24 Wed", title: "Arrival / Adjust", badge: "낮은 강도",
+        stops: [["10:30", "HNL 도착, 입국, 호텔 이동", "수하물 드롭 또는 체크인 후 바로 쉬는 흐름."], ["점심", "가벼운 식사", "도착일은 양과 이동을 줄이는 쪽으로."], ["오후", "체크인, 낮잠, 와이키키 짧은 산책", "첫날 쇼핑은 길게 잡지 않기."], ["저녁", "Duke's Waikiki 또는 Marugame Udon", "대기 시간이 길면 바로 대체 가능한 곳으로 이동."]],
+        maps: [["공항 지도", "Daniel K. Inouye International Airport"], ["와이키키 지도", "Waikiki Beach"]],
+        memoTitle: "임산부 메모", memo: "비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 회복을 우선합니다."
+      },
+      {
+        id: "0625", date: "6/25 Thu", title: "Waikiki + Shopping", badge: "실내 휴식",
+        stops: [["아침", "Kapiolani Park, Waikiki Beach 산책", "예쁜 근처 장소 중심으로 천천히."], ["점심", "Pioneer Saloon", "포장 후 그늘이나 호텔에서 먹는 옵션도 좋음."], ["오후", "Ala Moana Center, 호텔 휴식", "가장 더운 시간은 실내와 호텔로 배치."], ["저녁", "Monkeypod Kitchen", "예약 가능하면 저녁 피로도를 줄일 수 있음."]],
+        maps: [["공원 지도", "Kapiolani Park Honolulu"], ["알라모아나 지도", "Ala Moana Center"]],
+        memoTitle: "가족 메모", memo: "쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다."
+      },
+      {
+        id: "0626", date: "6/26 Fri", title: "East Coast Drive", badge: "풍경 드라이브",
+        stops: [["오전", "Halona Blowhole, Makapuu Lookout", "사진과 전망 위주, 긴 하이킹은 생략."], ["점심", "Kailua lunch", "화장실과 주차가 쉬운 곳 우선."], ["오후", "Lanikai / Kailua 짧은 방문", "물놀이는 짧고 가볍게, 대부분은 사진과 휴식."], ["저녁", "ZIGU 또는 Hula Grill Waikiki", "와이키키 복귀 후 이동 적은 저녁."]],
+        maps: [["Halona 지도", "Halona Blowhole Lookout"], ["Makapuu 지도", "Makapuu Lookout"], ["Lanikai 지도", "Lanikai Beach"]],
+        memoTitle: "임산부 메모", memo: "거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다."
+      },
+      {
+        id: "0627", date: "6/27 Sat", title: "Pearl Harbor + Rest", badge: "예약 권장",
+        stops: [["오전", "USS Arizona Memorial", "사전 예약 필수에 가깝게 보고 준비."], ["점심", "Nico's Pier 38", "해산물은 익힌 메뉴 중심으로 선택."], ["오후", "호텔 휴식, 와이키키 비치", "의미 있는 오전 뒤에는 회복 시간 확보."], ["저녁", "Gyu-Kaku", "고기는 충분히 익혀 먹기."]],
+        maps: [["진주만 지도", "Pearl Harbor National Memorial"], ["Nico's 지도", "Nico's Pier 38"]],
+        memoTitle: "체크포인트", memo: "오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다."
+      },
+      {
+        id: "0628", date: "6/28 Sun", title: "North Shore", badge: "메인 드라이브",
+        stops: [["아침", "Dole Plantation", "일찍 출발해 더위와 주말 교통을 피하기."], ["점심", "Haleiwa, Shrimp truck 또는 로컬 식당", "줄이 길면 앉아서 먹는 대안으로 변경."], ["오후", "Turtle beach viewing, 와이키키 복귀", "야생동물은 거리 유지, 해변 체류는 짧게."], ["저녁", "와이키키 가벼운 저녁", "긴 드라이브 뒤에는 가까운 곳으로."]],
+        maps: [["Dole 지도", "Dole Plantation"], ["Haleiwa 지도", "Haleiwa Hawaii"], ["거북이 비치 지도", "Laniakea Beach"]],
+        memoTitle: "가족 메모", memo: "일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다."
+      },
+      {
+        id: "0629", date: "6/29 Mon", title: "Departure", badge: "공항 우선",
+        stops: [["아침", "조식, 짐 정리, 짧은 산책", "실제 관광 일정은 추가하지 않기."], ["10:30", "공항 도착 목표", "렌터카 반납이 있으면 더 일찍 출발."], ["13:00", "Hawaii 출발", "6/30 17:00 KST 한국 도착 예정."]],
+        maps: [["공항 지도", "Daniel K. Inouye International Airport"]],
+        memoTitle: "체크포인트", memo: "마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다."
+      },
+    ];
 
-    <article class="day-card" id="day-0624">
-      <div class="day-head">
-        <div>
-          <p class="date">6/24 Wed</p>
-          <h3>Arrival / Adjust</h3>
-        </div>
-        <span class="badge">낮은 강도</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">10:30</span><div class="stop-body"><span class="stop-title">HNL 도착, 입국, 호텔 이동</span><p class="stop-note">수하물 드롭 또는 체크인 후 바로 쉬는 흐름.</p></div></li>
-        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">가벼운 식사</span><p class="stop-note">도착일은 양과 이동을 줄이는 쪽으로.</p></div></li>
-        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">체크인, 낮잠, 와이키키 짧은 산책</span><p class="stop-note">첫날 쇼핑은 길게 잡지 않기.</p></div></li>
-        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Duke's Waikiki 또는 Marugame Udon</span><p class="stop-note">대기 시간이 길면 바로 대체 가능한 곳으로 이동.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Waikiki+Beach" target="_blank" rel="noopener">와이키키 지도</a>
-      </div>
-      <div class="note"><b>임산부 메모</b>비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 회복을 우선합니다.</div>
-    </article>
+    const supplies = [
+      ["서류 / 결제", ["여권, ESTA, 항공권, 숙소/렌터카 바우처", "여행자보험, 운전자는 한국면허증 + 국제운전면허증", "해외결제 카드 2장 이상, 팁용 1달러 지폐"]],
+      ["전자기기", ["충전기, 보조배터리, 멀티탭", "eSIM/유심, 차량용 휴대폰 거치대", "방수팩, 카메라, 여분 케이블"]],
+      ["남자 3명", ["반팔 5~6벌, 반바지 3~4벌, 얇은 바람막이", "수영복 2벌, 슬리퍼, 오래 걸을 운동화", "면도기, 선글라스, 모자"]],
+      ["여자 3명", ["원피스/가벼운 옷 4~6벌, 얇은 가디건", "수영복/래시가드, 샌들, 쿠션 좋은 운동화", "선케어, 진정팩, 개인 화장품"]],
+      ["임산부 메모", ["압박스타킹, 개인 복용약/영양제, 물병", "견과류/크래커/에너지바 같은 간식", "산모수첩 또는 영문 진료 요약, 담당의 비행 확인"], true],
+      ["공용", ["가족 상비약, 밴드, 체온계, 소독티슈", "보냉백, 텀블러, 지퍼백, 접이식 장바구니", "세탁망, 작은 세제, 휴대용 티슈, 물티슈"]],
+      ["해변용품", ["수영복, 래시가드, 아쿠아슈즈, 큰 타월", "SPF 선크림, 모자, 선글라스, 휴대용 티슈", "방수팩, 젖은 옷용 비닐백, 여벌 옷"]],
+    ];
 
-    <article class="day-card" id="day-0625">
-      <div class="day-head">
-        <div>
-          <p class="date">6/25 Thu</p>
-          <h3>Waikiki + Shopping</h3>
-        </div>
-        <span class="badge">실내 휴식</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">Kapiolani Park, Waikiki Beach 산책</span><p class="stop-note">예쁜 근처 장소 중심으로 천천히.</p></div></li>
-        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Pioneer Saloon</span><p class="stop-note">포장 후 그늘이나 호텔에서 먹는 옵션도 좋음.</p></div></li>
-        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Ala Moana Center, 호텔 휴식</span><p class="stop-note">가장 더운 시간은 실내와 호텔로 배치.</p></div></li>
-        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Monkeypod Kitchen</span><p class="stop-note">예약 가능하면 저녁 피로도를 줄일 수 있음.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kapiolani+Park+Honolulu" target="_blank" rel="noopener">공원 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ala+Moana+Center" target="_blank" rel="noopener">알라모아나 지도</a>
-      </div>
-      <div class="note"><b>가족 메모</b>쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다.</div>
-    </article>
+    const mapLinks = [
+      ["Waikiki Beach", "Waikiki Beach"],
+      ["Ala Moana Center", "Ala Moana Center"],
+      ["Pearl Harbor", "Pearl Harbor National Memorial"],
+      ["Dole Plantation", "Dole Plantation"],
+      ["HNL Airport", "Daniel K. Inouye International Airport"],
+    ];
 
-    <article class="day-card" id="day-0626">
-      <div class="day-head">
-        <div>
-          <p class="date">6/26 Fri</p>
-          <h3>East Coast Drive</h3>
-        </div>
-        <span class="badge">풍경 드라이브</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">오전</span><div class="stop-body"><span class="stop-title">Halona Blowhole, Makapuu Lookout</span><p class="stop-note">사진과 전망 위주, 긴 하이킹은 생략.</p></div></li>
-        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Kailua lunch</span><p class="stop-note">화장실과 주차가 쉬운 곳 우선.</p></div></li>
-        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Lanikai / Kailua 짧은 방문</span><p class="stop-note">물놀이는 짧고 가볍게, 대부분은 사진과 휴식.</p></div></li>
-        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">ZIGU 또는 Hula Grill Waikiki</span><p class="stop-note">와이키키 복귀 후 이동 적은 저녁.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Halona+Blowhole+Lookout" target="_blank" rel="noopener">Halona 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Makapuu+Lookout" target="_blank" rel="noopener">Makapuu 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Lanikai+Beach" target="_blank" rel="noopener">Lanikai 지도</a>
-      </div>
-      <div class="note"><b>임산부 메모</b>거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다.</div>
-    </article>
+    const boardSeed = [
+      { id: "seed-board-1", author: "PM", category: "공지", title: "게시판 사용 시작", content: "여행 준비 질문, 맛집 의견, 일정 변경 요청을 여기에 남기면 됩니다.", createdAt: new Date().toISOString() }
+    ];
+    const chatSeed = [
+      { id: "seed-chat-1", author: "PM", content: "여행 중 빠른 공유용 채팅 탭입니다. 지금은 이 브라우저에 저장됩니다.", createdAt: new Date().toISOString() }
+    ];
 
-    <article class="day-card" id="day-0627">
-      <div class="day-head">
-        <div>
-          <p class="date">6/27 Sat</p>
-          <h3>Pearl Harbor + Rest</h3>
-        </div>
-        <span class="badge">예약 권장</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">오전</span><div class="stop-body"><span class="stop-title">USS Arizona Memorial</span><p class="stop-note">사전 예약 필수에 가깝게 보고 준비.</p></div></li>
-        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Nico's Pier 38</span><p class="stop-note">해산물은 익힌 메뉴 중심으로 선택.</p></div></li>
-        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">호텔 휴식, 와이키키 비치</span><p class="stop-note">의미 있는 오전 뒤에는 회복 시간 확보.</p></div></li>
-        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Gyu-Kaku</span><p class="stop-note">고기는 충분히 익혀 먹기.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Pearl+Harbor+National+Memorial" target="_blank" rel="noopener">진주만 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nico%27s+Pier+38" target="_blank" rel="noopener">Nico's 지도</a>
-      </div>
-      <div class="note"><b>체크포인트</b>오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다.</div>
-    </article>
+    function mapUrl(query) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    }
 
-    <article class="day-card" id="day-0628">
-      <div class="day-head">
-        <div>
-          <p class="date">6/28 Sun</p>
-          <h3>North Shore</h3>
-        </div>
-        <span class="badge">메인 드라이브</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">Dole Plantation</span><p class="stop-note">일찍 출발해 더위와 주말 교통을 피하기.</p></div></li>
-        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Haleiwa, Shrimp truck 또는 로컬 식당</span><p class="stop-note">줄이 길면 앉아서 먹는 대안으로 변경.</p></div></li>
-        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Turtle beach viewing, 와이키키 복귀</span><p class="stop-note">야생동물은 거리 유지, 해변 체류는 짧게.</p></div></li>
-        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">와이키키 가벼운 저녁</span><p class="stop-note">긴 드라이브 뒤에는 가까운 곳으로.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Dole+Plantation" target="_blank" rel="noopener">Dole 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Haleiwa+Hawaii" target="_blank" rel="noopener">Haleiwa 지도</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Laniakea+Beach" target="_blank" rel="noopener">거북이 비치 지도</a>
-      </div>
-      <div class="note"><b>가족 메모</b>일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다.</div>
-    </article>
+    function useStoredList(key, seed) {
+      const [items, setItems] = useState(() => {
+        try {
+          const stored = localStorage.getItem(key);
+          return stored ? JSON.parse(stored) : seed;
+        } catch {
+          return seed;
+        }
+      });
+      const save = (next) => {
+        setItems(next);
+        localStorage.setItem(key, JSON.stringify(next));
+      };
+      return [items, save];
+    }
 
-    <article class="day-card" id="day-0629">
-      <div class="day-head">
-        <div>
-          <p class="date">6/29 Mon</p>
-          <h3>Departure</h3>
-        </div>
-        <span class="badge">공항 우선</span>
-      </div>
-      <ol class="timeline">
-        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">조식, 짐 정리, 짧은 산책</span><p class="stop-note">실제 관광 일정은 추가하지 않기.</p></div></li>
-        <li class="stop"><span class="time">10:30</span><div class="stop-body"><span class="stop-title">공항 도착 목표</span><p class="stop-note">렌터카 반납이 있으면 더 일찍 출발.</p></div></li>
-        <li class="stop"><span class="time">13:00</span><div class="stop-body"><span class="stop-title">Hawaii 출발</span><p class="stop-note">6/30 17:00 KST 한국 도착 예정.</p></div></li>
-      </ol>
-      <div class="actions">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
-      </div>
-      <div class="note"><b>체크포인트</b>마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다.</div>
-    </article>
-    </section>
+    function Header() {
+      return (
+        React.createElement("section", { className: "hero" },
+          React.createElement("div", { className: "hero-visual", "aria-hidden": "true" }),
+          React.createElement("div", null,
+            React.createElement("p", { className: "eyebrow" }, "Honolulu / Oahu only"),
+            React.createElement("h1", null, "Hawaii Family Trip"),
+            React.createElement("p", { className: "subtitle" }, "2026년 6월 24일부터 29일까지, 와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 React 여행 앱입니다."),
+            React.createElement("div", { className: "quick-facts" },
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기간"), React.createElement("span", null, "6/24 Wed - 6/29 Mon")),
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 준비물, 게시판, 채팅")),
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "저장"), React.createElement("span", null, "브라우저 localStorage"))
+            )
+          )
+        )
+      );
+    }
 
-    <section class="content-section" id="supplies" aria-labelledby="supplies-title">
-      <h2 class="section-title" id="supplies-title">준비물 체크리스트</h2>
-      <p class="section-kicker">6명 가족여행 기준. 현지에서 사기 쉬운 물건보다 임산부 메모, 개인 상비약, 서류를 먼저 챙깁니다.</p>
-      <div class="supplies-grid">
-        <article class="supply-card">
-          <h3>서류 / 결제</h3>
-          <ul>
-            <li>여권, ESTA, 항공권, 숙소/렌터카 바우처</li>
-            <li>여행자보험, 운전자는 한국면허증 + 국제운전면허증</li>
-            <li>해외결제 카드 2장 이상, 팁용 1달러 지폐</li>
-          </ul>
-        </article>
-        <article class="supply-card">
-          <h3>전자기기</h3>
-          <ul>
-            <li>충전기, 보조배터리, 멀티탭</li>
-            <li>eSIM/유심, 차량용 휴대폰 거치대</li>
-            <li>방수팩, 카메라, 여분 케이블</li>
-          </ul>
-        </article>
-        <article class="supply-card">
-          <h3>남자 3명</h3>
-          <ul>
-            <li>반팔 5~6벌, 반바지 3~4벌, 얇은 바람막이</li>
-            <li>수영복 2벌, 슬리퍼, 오래 걸을 운동화</li>
-            <li>면도기, 선글라스, 모자</li>
-          </ul>
-        </article>
-        <article class="supply-card">
-          <h3>여자 3명</h3>
-          <ul>
-            <li>원피스/가벼운 옷 4~6벌, 얇은 가디건</li>
-            <li>수영복/래시가드, 샌들, 쿠션 좋은 운동화</li>
-            <li>선케어, 진정팩, 개인 화장품</li>
-          </ul>
-        </article>
-        <article class="supply-card featured">
-          <h3>임산부 메모</h3>
-          <ul>
-            <li>압박스타킹, 개인 복용약/영양제, 물병</li>
-            <li>견과류/크래커/에너지바 같은 간식</li>
-            <li>산모수첩 또는 영문 진료 요약, 담당의 비행 확인</li>
-          </ul>
-        </article>
-        <article class="supply-card">
-          <h3>공용</h3>
-          <ul>
-            <li>가족 상비약, 밴드, 체온계, 소독티슈</li>
-            <li>보냉백, 텀블러, 지퍼백, 접이식 장바구니</li>
-            <li>세탁망, 작은 세제, 휴대용 티슈, 물티슈</li>
-          </ul>
-        </article>
-        <article class="supply-card">
-          <h3>해변용품</h3>
-          <ul>
-            <li>수영복, 래시가드, 아쿠아슈즈, 큰 타월</li>
-            <li>SPF 선크림, 모자, 선글라스, 휴대용 티슈</li>
-            <li>방수팩, 젖은 옷용 비닐백, 여벌 옷</li>
-          </ul>
-        </article>
-      </div>
-    </section>
+    function Tabbar({ active, setActive }) {
+      return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
+        tabs.map(([id, label]) => React.createElement("button", {
+          key: id,
+          className: `tab ${active === id ? "active" : ""}`,
+          onClick: () => setActive(id)
+        }, label))
+      );
+    }
 
-    <section class="content-section" id="maps" aria-labelledby="maps-title">
-      <h2 class="section-title" id="maps-title">지도 바로가기</h2>
-      <p class="section-kicker">현장에서 많이 열 곳만 모았습니다. 버튼을 누르면 Google Maps 검색으로 연결됩니다.</p>
-      <div class="map-hub">
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Waikiki+Beach" target="_blank" rel="noopener">Waikiki Beach</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ala+Moana+Center" target="_blank" rel="noopener">Ala Moana Center</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Pearl+Harbor+National+Memorial" target="_blank" rel="noopener">Pearl Harbor</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Dole+Plantation" target="_blank" rel="noopener">Dole Plantation</a>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">HNL Airport</a>
-      </div>
-    </section>
+    function Schedule() {
+      const [activeDay, setActiveDay] = useState(days[0].id);
+      const shownDays = useMemo(() => days.filter((day) => day.id === activeDay), [activeDay]);
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "여행 일정"),
+        React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
+          days.map((day) => React.createElement("button", {
+            key: day.id,
+            className: `chip ${activeDay === day.id ? "active" : ""}`,
+            onClick: () => setActiveDay(day.id)
+          }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
+        ),
+        shownDays.map((day) => React.createElement("article", { className: "day-card", key: day.id },
+          React.createElement("div", { className: "day-head" },
+            React.createElement("div", null,
+              React.createElement("p", { className: "date" }, day.date),
+              React.createElement("h3", null, day.title)
+            ),
+            React.createElement("span", { className: "badge" }, day.badge)
+          ),
+          React.createElement("ol", { className: "timeline" },
+            day.stops.map(([time, title, note]) => React.createElement("li", { className: "stop", key: `${day.id}-${time}-${title}` },
+              React.createElement("span", { className: "time" }, time),
+              React.createElement("div", { className: "stop-body" },
+                React.createElement("span", { className: "stop-title" }, title),
+                React.createElement("p", { className: "stop-note" }, note)
+              )
+            ))
+          ),
+          React.createElement("div", { className: "actions" },
+            day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
+          ),
+          React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
+        ))
+      );
+    }
 
-    <section class="content-section" id="notes" aria-labelledby="notes-title">
-      <h2 class="section-title" id="notes-title">메모</h2>
-      <div class="memo-card">일정은 컨디션에 따라 줄이는 방향을 기본으로 합니다. 긴 이동일에는 아침 출발 전 물, 간식, 화장실 위치, 대체 식당을 먼저 확인합니다.</div>
-    </section>
+    function Supplies() {
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "준비물 체크리스트"),
+        React.createElement("p", { className: "section-kicker" }, "6명 가족여행 기준. 현지에서 사기 쉬운 물건보다 임산부 메모, 개인 상비약, 서류를 먼저 챙깁니다."),
+        React.createElement("div", { className: "grid" },
+          supplies.map(([title, items, featured]) => React.createElement("article", { className: `card ${featured ? "featured" : ""}`, key: title },
+            React.createElement("h3", null, title),
+            React.createElement("ul", null, items.map((item) => React.createElement("li", { key: item }, item)))
+          ))
+        )
+      );
+    }
 
-    <section class="panel" id="planning-rules">
-      <h2>체크포인트</h2>
-      <ul>
-        <li>야외 활동은 오전 중심, 한낮에는 실내나 호텔 휴식으로 둡니다.</li>
-        <li>긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 일정에서 빼고 여유 시간을 둡니다.</li>
-        <li>그늘, 화장실, 물, 주차가 쉬운 장소를 우선하고 일정 변경 여지를 남깁니다.</li>
-      </ul>
-    </section>
+    function Board() {
+      const [posts, setPosts] = useStoredList("hawaii-board-posts", boardSeed);
+      const [form, setForm] = useState({ author: "", category: "일정문의", title: "", content: "" });
+      const submit = (event) => {
+        event.preventDefault();
+        if (!form.title.trim() || !form.content.trim()) return;
+        const post = { id: crypto.randomUUID(), ...form, author: form.author.trim() || "가족", createdAt: new Date().toISOString() };
+        setPosts([post, ...posts]);
+        setForm({ author: form.author, category: form.category, title: "", content: "" });
+      };
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "가족 게시판"),
+        React.createElement("p", { className: "section-kicker" }, "현재 버전은 이 브라우저에 저장됩니다. 가족 전체 공유는 Supabase 연결 후 활성화할 수 있습니다."),
+        React.createElement("form", { className: "form", onSubmit: submit },
+          React.createElement("div", { className: "form-row" },
+            React.createElement("input", { placeholder: "작성자", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
+            React.createElement("select", { value: form.category, onChange: (e) => setForm({ ...form, category: e.target.value }) },
+              ["일정문의", "맛집", "준비물", "공지"].map((value) => React.createElement("option", { key: value, value }, value))
+            )
+          ),
+          React.createElement("input", { placeholder: "제목", value: form.title, onChange: (e) => setForm({ ...form, title: e.target.value }) }),
+          React.createElement("textarea", { placeholder: "내용을 적어주세요", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
+          React.createElement("button", { className: "primary-action", type: "submit" }, "글쓰기")
+        ),
+        posts.length === 0 ? React.createElement("div", { className: "empty" }, "아직 글이 없습니다.") :
+          posts.map((post) => React.createElement("article", { className: "post", key: post.id },
+            React.createElement("div", { className: "post-meta" },
+              React.createElement("span", { className: "category" }, post.category),
+              React.createElement("span", null, post.author),
+              React.createElement("span", null, new Date(post.createdAt).toLocaleString("ko-KR"))
+            ),
+            React.createElement("h3", null, post.title),
+            React.createElement("p", null, post.content)
+          ))
+      );
+    }
 
-    <section class="panel food-caution">
-      <h2>임산부 식사 체크포인트</h2>
-      <ul>
-        <li>raw fish, sushi, poke, undercooked seafood/meat, alcohol은 미리 피할 항목으로 공유합니다.</li>
-        <li>해산물은 익힌 메뉴 위주로 고르고, 고기류는 충분히 익혀 먹습니다.</li>
-        <li>더운 날에는 대기 시간이 긴 식당보다 예약 가능하거나 포장 가능한 곳을 우선합니다.</li>
-      </ul>
-    </section>
+    function Chat() {
+      const [messages, setMessages] = useStoredList("hawaii-chat-messages", chatSeed);
+      const [form, setForm] = useState({ author: "", content: "" });
+      const submit = (event) => {
+        event.preventDefault();
+        if (!form.content.trim()) return;
+        const message = { id: crypto.randomUUID(), author: form.author.trim() || "가족", content: form.content, createdAt: new Date().toISOString() };
+        setMessages([...messages, message]);
+        setForm({ author: form.author, content: "" });
+      };
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "가족 채팅"),
+        React.createElement("p", { className: "section-kicker" }, "여행 중 빠른 공유용입니다. 지금은 같은 기기/브라우저에서만 보이고, 실시간 가족 공유는 Supabase 연결이 필요합니다."),
+        React.createElement("div", null,
+          messages.map((message) => React.createElement("div", { className: "chat-message", key: message.id },
+            React.createElement("div", { className: "chat-meta" },
+              React.createElement("span", null, message.author),
+              React.createElement("span", null, new Date(message.createdAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }))
+            ),
+            React.createElement("div", null, message.content)
+          ))
+        ),
+        React.createElement("form", { className: "form", onSubmit: submit },
+          React.createElement("input", { placeholder: "이름", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
+          React.createElement("textarea", { placeholder: "메시지", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
+          React.createElement("button", { className: "primary-action", type: "submit" }, "보내기")
+        )
+      );
+    }
 
-    <footer>Source: hawaii-trip.md latest saved itinerary · Single-file mobile HTML</footer>
-  </main>
+    function Maps() {
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "지도 바로가기"),
+        React.createElement("p", { className: "section-kicker" }, "현장에서 많이 열 곳만 모았습니다. 버튼을 누르면 Google Maps 검색으로 연결됩니다."),
+        React.createElement("div", { className: "map-hub" },
+          mapLinks.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
+        )
+      );
+    }
+
+    function Notes() {
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "메모"),
+        React.createElement("div", { className: "card" }, "일정은 컨디션에 따라 줄이는 방향을 기본으로 합니다. 긴 이동일에는 아침 출발 전 물, 간식, 화장실 위치, 대체 식당을 먼저 확인합니다."),
+        React.createElement("section", { className: "panel" },
+          React.createElement("h2", null, "체크포인트"),
+          React.createElement("ul", null,
+            React.createElement("li", null, "야외 활동은 오전 중심, 한낮에는 실내나 호텔 휴식으로 둡니다."),
+            React.createElement("li", null, "긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 일정에서 빼고 여유 시간을 둡니다."),
+            React.createElement("li", null, "그늘, 화장실, 물, 주차가 쉬운 장소를 우선하고 일정 변경 여지를 남깁니다.")
+          )
+        )
+      );
+    }
+
+    function App() {
+      const [active, setActive] = useState("schedule");
+      const view = {
+        schedule: React.createElement(Schedule),
+        supplies: React.createElement(Supplies),
+        board: React.createElement(Board),
+        chat: React.createElement(Chat),
+        maps: React.createElement(Maps),
+        notes: React.createElement(Notes),
+      }[active];
+      return React.createElement("main", { className: "shell" },
+        React.createElement(Header),
+        React.createElement(Tabbar, { active, setActive }),
+        view,
+        React.createElement("footer", null, "React static app · board/chat store in this browser · Supabase-ready next step")
+      );
+    }
+
+    createRoot(document.getElementById("root")).render(React.createElement(App));
+  </script>
 </body>
 </html>
