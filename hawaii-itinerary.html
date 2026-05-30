@@ -461,9 +461,6 @@
       display: grid;
       gap: 8px;
     }
-    .login-grid input[type="password"] {
-      letter-spacing: 0;
-    }
     .chat-user {
       min-width: 0;
       color: var(--muted);
@@ -977,7 +974,7 @@
           return null;
         }
       });
-      const [login, setLogin] = useState({ userId: "", password: "", displayName: "" });
+      const [displayName, setDisplayName] = useState("");
       const [content, setContent] = useState("");
       const chatListRef = useRef(null);
       const activeAuthor = session?.displayName || "";
@@ -990,13 +987,12 @@
       const enterChat = (event) => {
         event.preventDefault();
         const nextSession = {
-          userId: login.userId.trim(),
-          displayName: login.displayName.trim() || login.userId.trim()
+          displayName: displayName.trim()
         };
-        if (!nextSession.userId || !login.password.trim() || !nextSession.displayName) return;
+        if (!nextSession.displayName) return;
         sessionStorage.setItem(CHAT_SESSION_KEY, JSON.stringify(nextSession));
         setSession(nextSession);
-        setLogin({ userId: "", password: "", displayName: "" });
+        setDisplayName("");
       };
 
       const leaveChat = () => {
@@ -1020,12 +1016,10 @@
       if (!session) {
         return React.createElement("section", null,
           React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-          React.createElement("p", { className: "section-kicker" }, "아이디와 비밀번호를 입력해 채팅방에 들어갑니다. 입장 후 이름은 채팅방을 나갈 때까지 유지됩니다."),
+          React.createElement("p", { className: "section-kicker" }, "이름만 입력해 채팅방에 들어갑니다. 입장 후 이름은 채팅방을 나갈 때까지 유지됩니다."),
           React.createElement("form", { className: "chat-login", onSubmit: enterChat },
             React.createElement("div", { className: "login-grid" },
-              React.createElement("input", { placeholder: "아이디", value: login.userId, onChange: (e) => setLogin({ ...login, userId: e.target.value }) }),
-              React.createElement("input", { type: "password", placeholder: "비밀번호", value: login.password, onChange: (e) => setLogin({ ...login, password: e.target.value }) }),
-              React.createElement("input", { placeholder: "채팅 이름", value: login.displayName, onChange: (e) => setLogin({ ...login, displayName: e.target.value }) })
+              React.createElement("input", { placeholder: "채팅 이름", value: displayName, onChange: (e) => setDisplayName(e.target.value) })
             ),
             React.createElement("button", { className: "primary-action", type: "submit" }, "채팅방 입장")
           )
@@ -1040,7 +1034,7 @@
           React.createElement("div", { className: "chat-room-head" },
             React.createElement("div", { className: "chat-room-title" }, "하와이 가족방"),
             React.createElement("div", { className: "chat-room-actions" },
-              React.createElement("div", { className: "chat-user" }, `${session.displayName} · ${session.userId}`),
+              React.createElement("div", { className: "chat-user" }, session.displayName),
               React.createElement("div", { className: "chat-count" }, `${messages.length} messages`),
               React.createElement("button", { className: "leave-chat", type: "button", onClick: leaveChat }, "나가기")
             )
