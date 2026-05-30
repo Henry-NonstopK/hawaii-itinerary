@@ -7,6 +7,12 @@ Mobile-first Hawaii family trip itinerary page for GitHub Pages.
 - `index.html` - GitHub Pages entry point.
 - `hawaii-itinerary.html` - Same itinerary page kept under the original working name.
 - `hawaii-trip.md` - Current saved itinerary source.
+- `CHANGELOG.md` - Project change history.
+- `AGENT_ROLES.md` - Agent role names and reporting rules.
+
+## Live Page
+
+https://henry-nonstopk.github.io/hawaii-itinerary/
 
 ## Publish With GitHub Pages
 
@@ -23,4 +29,3 @@ Then enable GitHub Pages for the repository:
 - Source: deploy from branch
 - Branch: `main`
 - Folder: `/`
-
