@@ -17,6 +17,7 @@
       --coral: #e86f51;
       --sun: #f5b64b;
       --leaf: #5c8f5e;
+      --sand: #fff5df;
       --shadow: 0 18px 38px rgba(23, 49, 59, 0.13);
     }
 
@@ -45,11 +46,11 @@
     .shell {
       width: min(100%, 920px);
       margin: 0 auto;
-      padding: 18px 14px 42px;
+      padding: 16px 14px 42px;
     }
 
     .hero {
-      min-height: 92svh;
+      min-height: 86svh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -99,8 +100,8 @@
 
     h1 {
       margin: 0;
-      max-width: 12ch;
-      font-size: clamp(2.35rem, 12vw, 5.8rem);
+      max-width: 9.5ch;
+      font-size: clamp(2.25rem, 10.5vw, 5.8rem);
       line-height: 0.96;
       letter-spacing: 0;
     }
@@ -109,7 +110,7 @@
       margin: 12px 0 0;
       max-width: 38rem;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
     .hero-actions {
@@ -173,46 +174,101 @@
     }
 
     .section-title {
-      margin: 8px 2px 14px;
+      margin: 10px 2px 12px;
       font-size: 1.28rem;
       letter-spacing: 0;
     }
 
     .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 4;
       display: flex;
-      gap: 8px;
+      gap: 7px;
       overflow-x: auto;
+      scroll-snap-type: x proximity;
       margin: 0 -14px 18px;
-      padding: 10px 14px;
-      background: rgba(238, 248, 247, 0.92);
+      padding: 9px 14px 11px;
+      background: rgba(246, 251, 248, 0.94);
       backdrop-filter: blur(12px);
       border-block: 1px solid rgba(27, 138, 148, 0.12);
+      scrollbar-width: none;
+    }
+
+    .toolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tabbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+      margin: 0 -14px 12px;
+      padding: 10px 14px 11px;
+      background: rgba(246, 251, 248, 0.96);
+      border-block: 1px solid rgba(27, 138, 148, 0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 8px 7px;
+      border: 1px solid rgba(17, 101, 112, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.96);
+      color: var(--aqua-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      box-shadow: 0 5px 14px rgba(23, 49, 59, 0.05);
+    }
+
+    .tab.primary {
+      background: var(--aqua);
+      color: #fff;
+      border-color: var(--aqua);
     }
 
     .chip {
       flex: 0 0 auto;
-      border: 1px solid rgba(17, 101, 112, 0.24);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      scroll-snap-align: start;
+      border: 1px solid rgba(17, 101, 112, 0.2);
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 8px 13px;
       background: #ffffff;
       color: var(--aqua-dark);
       font-size: 0.86rem;
       font-weight: 800;
       text-decoration: none;
       white-space: nowrap;
+      box-shadow: 0 5px 14px rgba(23, 49, 59, 0.05);
+    }
+
+    .chip.primary {
+      background: var(--aqua-dark);
+      border-color: var(--aqua-dark);
+      color: #ffffff;
     }
 
     .day-card {
       position: relative;
       margin-bottom: 16px;
-      padding: 16px;
+      padding: 15px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 253, 248, 0.94);
       box-shadow: 0 12px 28px rgba(23, 49, 59, 0.08);
+      scroll-margin-top: 80px;
     }
 
     .day-head {
@@ -258,7 +314,7 @@
 
     .stop {
       display: grid;
-      grid-template-columns: 72px 1fr;
+      grid-template-columns: 62px 1fr;
       gap: 10px;
       position: relative;
       padding: 0 0 14px;
@@ -267,7 +323,7 @@
     .stop::before {
       content: "";
       position: absolute;
-      left: 64px;
+      left: 54px;
       top: 23px;
       bottom: -1px;
       width: 2px;
@@ -340,12 +396,115 @@
 
     .note {
       margin-top: 13px;
-      padding: 12px;
-      border-left: 4px solid var(--sun);
+      padding: 11px 12px;
+      border: 1px solid rgba(245, 182, 75, 0.42);
       border-radius: 8px;
-      background: #fff7e4;
+      background: #fff9ea;
       color: #5f4b22;
       font-size: 0.91rem;
+    }
+
+    .note b {
+      display: block;
+      margin-bottom: 3px;
+      color: #8a6418;
+      font-size: 0.76rem;
+      letter-spacing: 0;
+    }
+
+    .section-kicker {
+      margin: -5px 2px 14px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      overflow-wrap: anywhere;
+    }
+
+    .content-section {
+      scroll-margin-top: 76px;
+      margin-top: 24px;
+    }
+
+    .supplies-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .supply-card {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid rgba(27, 138, 148, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.96);
+      box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
+    }
+
+    .supply-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 9px;
+      color: var(--aqua-dark);
+      font-size: 1rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .supply-card ul {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .supply-card li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 7px;
+      color: #35555f;
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+
+    .supply-card li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 0.42em;
+      border-radius: 50%;
+      background: var(--sun);
+    }
+
+    .supply-card.featured {
+      border-color: rgba(245, 182, 75, 0.5);
+      background: var(--sand);
+    }
+
+    .supply-card.featured h3 {
+      color: #8a6418;
+    }
+
+    .map-hub {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .map-hub .map-btn {
+      min-height: 44px;
+    }
+
+    .memo-card {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(27, 138, 148, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.96);
+      color: var(--muted);
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
     }
 
     .panel {
@@ -355,6 +514,7 @@
       background: #17313b;
       color: #f8fbfa;
       box-shadow: var(--shadow);
+      scroll-margin-top: 76px;
     }
 
     .panel h2 {
@@ -373,14 +533,14 @@
     }
 
     .food-caution {
-      background: #fff7f2;
-      color: #673324;
-      border: 1px solid rgba(232, 111, 81, 0.28);
+      background: rgba(255, 253, 248, 0.96);
+      color: var(--ink);
+      border: 1px solid var(--line);
       box-shadow: none;
     }
 
     .food-caution h2 {
-      color: #a4422a;
+      color: var(--aqua-dark);
     }
 
     footer {
@@ -431,8 +591,17 @@
         padding-inline: 24px;
       }
 
+      .tabbar {
+        margin-inline: -24px;
+        padding-inline: 24px;
+      }
+
       .day-card {
         padding: 22px;
+      }
+
+      .supplies-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -446,8 +615,8 @@
         <h1 id="title">Hawaii Family Trip</h1>
         <p class="subtitle">2026년 6월 24일부터 29일까지, 와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 모바일 일정표입니다.</p>
         <div class="hero-actions" aria-label="핵심 이동">
-          <a class="hero-cta" href="#day-0624">일정 바로 보기</a>
-          <a class="hero-cta secondary" href="#planning-rules">주의사항 보기</a>
+          <a class="hero-cta" href="#schedule">일정 바로 보기</a>
+          <a class="hero-cta secondary" href="#supplies">준비물 보기</a>
         </div>
         <div class="quick-facts" aria-label="여행 핵심 정보">
           <div class="fact"><b>기간</b><span>6/24 Wed - 6/29 Mon</span></div>
@@ -458,9 +627,17 @@
       </div>
     </section>
 
-    <h2 class="section-title">날짜별 일정</h2>
+    <nav class="tabbar" aria-label="주요 탭">
+      <a class="tab primary" href="#schedule">일정</a>
+      <a class="tab" href="#supplies">준비물</a>
+      <a class="tab" href="#maps">지도</a>
+      <a class="tab" href="#notes">메모</a>
+    </nav>
+
+    <section class="content-section" id="schedule" aria-labelledby="schedule-title">
+    <h2 class="section-title" id="schedule-title">여행 일정</h2>
     <nav class="toolbar" aria-label="날짜 바로가기">
-      <a class="chip" href="#day-0624">6/24 도착</a>
+      <a class="chip primary" href="#day-0624">6/24 도착</a>
       <a class="chip" href="#day-0625">6/25 와이키키</a>
       <a class="chip" href="#day-0626">6/26 동부</a>
       <a class="chip" href="#day-0627">6/27 진주만</a>
@@ -486,7 +663,7 @@
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Waikiki+Beach" target="_blank" rel="noopener">와이키키 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 무조건 회복을 우선합니다.</div>
+      <div class="note"><b>임산부 메모</b>비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 회복을 우선합니다.</div>
     </article>
 
     <article class="day-card" id="day-0625">
@@ -507,7 +684,7 @@
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kapiolani+Park+Honolulu" target="_blank" rel="noopener">공원 지도</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ala+Moana+Center" target="_blank" rel="noopener">알라모아나 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다.</div>
+      <div class="note"><b>가족 메모</b>쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다.</div>
     </article>
 
     <article class="day-card" id="day-0626">
@@ -529,7 +706,7 @@
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Makapuu+Lookout" target="_blank" rel="noopener">Makapuu 지도</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Lanikai+Beach" target="_blank" rel="noopener">Lanikai 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다.</div>
+      <div class="note"><b>임산부 메모</b>거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다.</div>
     </article>
 
     <article class="day-card" id="day-0627">
@@ -550,7 +727,7 @@
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Pearl+Harbor+National+Memorial" target="_blank" rel="noopener">진주만 지도</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nico%27s+Pier+38" target="_blank" rel="noopener">Nico's 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다.</div>
+      <div class="note"><b>체크포인트</b>오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다.</div>
     </article>
 
     <article class="day-card" id="day-0628">
@@ -572,7 +749,7 @@
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Haleiwa+Hawaii" target="_blank" rel="noopener">Haleiwa 지도</a>
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Laniakea+Beach" target="_blank" rel="noopener">거북이 비치 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다.</div>
+      <div class="note"><b>가족 메모</b>일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다.</div>
     </article>
 
     <article class="day-card" id="day-0629">
@@ -591,22 +768,103 @@
       <div class="actions">
         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
       </div>
-      <div class="note">임산부/가족 메모: 마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다.</div>
+      <div class="note"><b>체크포인트</b>마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다.</div>
     </article>
+    </section>
+
+    <section class="content-section" id="supplies" aria-labelledby="supplies-title">
+      <h2 class="section-title" id="supplies-title">준비물 체크리스트</h2>
+      <p class="section-kicker">6명 가족여행 기준. 현지에서 사기 쉬운 물건보다 임산부 메모, 개인 상비약, 서류를 먼저 챙깁니다.</p>
+      <div class="supplies-grid">
+        <article class="supply-card">
+          <h3>서류 / 결제</h3>
+          <ul>
+            <li>여권, ESTA, 항공권, 숙소/렌터카 바우처</li>
+            <li>여행자보험, 운전자는 한국면허증 + 국제운전면허증</li>
+            <li>해외결제 카드 2장 이상, 팁용 1달러 지폐</li>
+          </ul>
+        </article>
+        <article class="supply-card">
+          <h3>전자기기</h3>
+          <ul>
+            <li>충전기, 보조배터리, 멀티탭</li>
+            <li>eSIM/유심, 차량용 휴대폰 거치대</li>
+            <li>방수팩, 카메라, 여분 케이블</li>
+          </ul>
+        </article>
+        <article class="supply-card">
+          <h3>남자 3명</h3>
+          <ul>
+            <li>반팔 5~6벌, 반바지 3~4벌, 얇은 바람막이</li>
+            <li>수영복 2벌, 슬리퍼, 오래 걸을 운동화</li>
+            <li>면도기, 선글라스, 모자</li>
+          </ul>
+        </article>
+        <article class="supply-card">
+          <h3>여자 3명</h3>
+          <ul>
+            <li>원피스/가벼운 옷 4~6벌, 얇은 가디건</li>
+            <li>수영복/래시가드, 샌들, 쿠션 좋은 운동화</li>
+            <li>선케어, 진정팩, 개인 화장품</li>
+          </ul>
+        </article>
+        <article class="supply-card featured">
+          <h3>임산부 메모</h3>
+          <ul>
+            <li>압박스타킹, 개인 복용약/영양제, 물병</li>
+            <li>견과류/크래커/에너지바 같은 간식</li>
+            <li>산모수첩 또는 영문 진료 요약, 담당의 비행 확인</li>
+          </ul>
+        </article>
+        <article class="supply-card">
+          <h3>공용</h3>
+          <ul>
+            <li>가족 상비약, 밴드, 체온계, 소독티슈</li>
+            <li>보냉백, 텀블러, 지퍼백, 접이식 장바구니</li>
+            <li>세탁망, 작은 세제, 휴대용 티슈, 물티슈</li>
+          </ul>
+        </article>
+        <article class="supply-card">
+          <h3>해변용품</h3>
+          <ul>
+            <li>수영복, 래시가드, 아쿠아슈즈, 큰 타월</li>
+            <li>SPF 선크림, 모자, 선글라스, 휴대용 티슈</li>
+            <li>방수팩, 젖은 옷용 비닐백, 여벌 옷</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="maps" aria-labelledby="maps-title">
+      <h2 class="section-title" id="maps-title">지도 바로가기</h2>
+      <p class="section-kicker">현장에서 많이 열 곳만 모았습니다. 버튼을 누르면 Google Maps 검색으로 연결됩니다.</p>
+      <div class="map-hub">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Waikiki+Beach" target="_blank" rel="noopener">Waikiki Beach</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ala+Moana+Center" target="_blank" rel="noopener">Ala Moana Center</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Pearl+Harbor+National+Memorial" target="_blank" rel="noopener">Pearl Harbor</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Dole+Plantation" target="_blank" rel="noopener">Dole Plantation</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">HNL Airport</a>
+      </div>
+    </section>
+
+    <section class="content-section" id="notes" aria-labelledby="notes-title">
+      <h2 class="section-title" id="notes-title">메모</h2>
+      <div class="memo-card">일정은 컨디션에 따라 줄이는 방향을 기본으로 합니다. 긴 이동일에는 아침 출발 전 물, 간식, 화장실 위치, 대체 식당을 먼저 확인합니다.</div>
+    </section>
 
     <section class="panel" id="planning-rules">
-      <h2>가족 여행 기본 원칙</h2>
+      <h2>체크포인트</h2>
       <ul>
         <li>야외 활동은 오전 중심, 한낮에는 실내나 호텔 휴식으로 둡니다.</li>
-        <li>긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 제외합니다.</li>
+        <li>긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 일정에서 빼고 여유 시간을 둡니다.</li>
         <li>그늘, 화장실, 물, 주차가 쉬운 장소를 우선하고 일정 변경 여지를 남깁니다.</li>
       </ul>
     </section>
 
     <section class="panel food-caution">
-      <h2>임산부 식사 주의</h2>
+      <h2>임산부 식사 체크포인트</h2>
       <ul>
-        <li>raw fish, sushi, poke, undercooked seafood/meat, alcohol은 주의 항목으로 표시합니다.</li>
+        <li>raw fish, sushi, poke, undercooked seafood/meat, alcohol은 미리 피할 항목으로 공유합니다.</li>
         <li>해산물은 익힌 메뉴 위주로 고르고, 고기류는 충분히 익혀 먹습니다.</li>
         <li>더운 날에는 대기 시간이 긴 식당보다 예약 가능하거나 포장 가능한 곳을 우선합니다.</li>
       </ul>
