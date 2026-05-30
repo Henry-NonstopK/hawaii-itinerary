@@ -417,6 +417,30 @@
       background: #b9d8df;
       box-shadow: 0 14px 30px rgba(23, 49, 59, 0.1);
     }
+    .chat-login {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding: 16px;
+      border: 1px solid rgba(27, 138, 148, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.96);
+      box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
+    }
+    .login-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .login-grid input[type="password"] {
+      letter-spacing: 0;
+    }
+    .chat-user {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
     .chat-room-head {
       display: flex;
       align-items: center;
@@ -437,6 +461,23 @@
       color: var(--muted);
       font-size: 0.78rem;
       font-weight: 800;
+    }
+    .chat-room-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .leave-chat {
+      min-height: 32px;
+      padding: 6px 9px;
+      border: 1px solid rgba(23, 49, 59, 0.12);
+      border-radius: 8px;
+      background: #fff;
+      color: #36515a;
+      font-size: 0.76rem;
+      font-weight: 850;
+      white-space: nowrap;
     }
     .chat-list {
       display: grid;
@@ -564,6 +605,14 @@
       .chat-compose input {
         grid-column: 1 / -1;
       }
+      .chat-room-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .chat-room-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
       .bubble-wrap { max-width: 86%; }
     }
   </style>
@@ -579,6 +628,7 @@
     const SUPABASE_URL = runtimeEnv.VITE_SUPABASE_URL || "https://gvfhpkmyxpzamzubrdpr.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = runtimeEnv.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_5mhGEs-0Kmkl-m6F7I53uQ_O6MYMqgV";
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const CHAT_SESSION_KEY = "hawaii-chat-session";
 
     const tabs = [
       ["schedule", "일정"],
@@ -685,7 +735,7 @@
       return next.sort(sortRows);
     }
 
-    function useSupabaseRows(table, normalizeRow, sortRows) {
+    function useSupabaseRows(table, normalizeRow, sortRows, pollMs = 4000) {
       const [items, setItems] = useState([]);
       const [status, setStatus] = useState("loading");
       const [error, setError] = useState("");
@@ -694,8 +744,8 @@
       useEffect(() => {
         let cancelled = false;
 
-        async function loadRows() {
-          setStatus("loading");
+        async function loadRows(showLoading = false) {
+          if (showLoading) setStatus("loading");
           setError("");
           const { data, error } = await supabase
             .from(table)
@@ -712,7 +762,8 @@
           setStatus("ready");
         }
 
-        loadRows();
+        loadRows(true);
+        const pollId = window.setInterval(() => loadRows(false), pollMs);
         const channel = supabase
           .channel(`${table}-realtime`, { config: { broadcast: { self: false } } })
           .on("broadcast", { event: "row-change" }, ({ payload }) => {
@@ -736,10 +787,11 @@
 
         return () => {
           cancelled = true;
+          window.clearInterval(pollId);
           channelRef.current = null;
           supabase.removeChannel(channel);
         };
-      }, [table, normalizeRow, sortRows]);
+      }, [table, normalizeRow, sortRows, pollMs]);
 
       async function insertRow(row) {
         setError("");
@@ -885,20 +937,69 @@
     }
 
     function Chat() {
-      const { items: messages, status, error, insertRow } = useSupabaseRows("messages", normalizeMessage, byOldest);
-      const [form, setForm] = useState({ author: "", content: "" });
-      const activeAuthor = form.author.trim() || "가족";
+      const { items: messages, status, error, insertRow } = useSupabaseRows("messages", normalizeMessage, byOldest, 1500);
+      const [session, setSession] = useState(() => {
+        try {
+          return JSON.parse(sessionStorage.getItem(CHAT_SESSION_KEY) || "null");
+        } catch {
+          return null;
+        }
+      });
+      const [login, setLogin] = useState({ userId: "", password: "", displayName: "" });
+      const [content, setContent] = useState("");
+      const chatListRef = useRef(null);
+      const activeAuthor = session?.displayName || "";
+
+      useEffect(() => {
+        const node = chatListRef.current;
+        if (node) node.scrollTop = node.scrollHeight;
+      }, [messages.length, session]);
+
+      const enterChat = (event) => {
+        event.preventDefault();
+        const nextSession = {
+          userId: login.userId.trim(),
+          displayName: login.displayName.trim() || login.userId.trim()
+        };
+        if (!nextSession.userId || !login.password.trim() || !nextSession.displayName) return;
+        sessionStorage.setItem(CHAT_SESSION_KEY, JSON.stringify(nextSession));
+        setSession(nextSession);
+        setLogin({ userId: "", password: "", displayName: "" });
+      };
+
+      const leaveChat = () => {
+        sessionStorage.removeItem(CHAT_SESSION_KEY);
+        setSession(null);
+        setContent("");
+      };
+
       const submit = async (event) => {
         event.preventDefault();
-        if (!form.content.trim()) return;
+        if (!session || !content.trim()) return;
         const ok = await insertRow({
           id: crypto.randomUUID(),
-          author: form.author.trim() || "가족",
-          message: form.content.trim(),
+          author: session.displayName,
+          message: content.trim(),
           created_at: new Date().toISOString()
         });
-        if (ok) setForm({ author: form.author, content: "" });
+        if (ok) setContent("");
       };
+
+      if (!session) {
+        return React.createElement("section", null,
+          React.createElement("h2", { className: "section-title" }, "가족 채팅"),
+          React.createElement("p", { className: "section-kicker" }, "아이디와 비밀번호를 입력해 채팅방에 들어갑니다. 입장 후 이름은 채팅방을 나갈 때까지 유지됩니다."),
+          React.createElement("form", { className: "chat-login", onSubmit: enterChat },
+            React.createElement("div", { className: "login-grid" },
+              React.createElement("input", { placeholder: "아이디", value: login.userId, onChange: (e) => setLogin({ ...login, userId: e.target.value }) }),
+              React.createElement("input", { type: "password", placeholder: "비밀번호", value: login.password, onChange: (e) => setLogin({ ...login, password: e.target.value }) }),
+              React.createElement("input", { placeholder: "채팅 이름", value: login.displayName, onChange: (e) => setLogin({ ...login, displayName: e.target.value }) })
+            ),
+            React.createElement("button", { className: "primary-action", type: "submit" }, "채팅방 입장")
+          )
+        );
+      }
+
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "가족 채팅"),
         React.createElement("p", { className: "section-kicker" }, "여행 중 빠른 공유용입니다. 새 메시지는 Supabase Realtime으로 바로 동기화됩니다."),
@@ -906,9 +1007,13 @@
         React.createElement("div", { className: "chat-phone" },
           React.createElement("div", { className: "chat-room-head" },
             React.createElement("div", { className: "chat-room-title" }, "하와이 가족방"),
-            React.createElement("div", { className: "chat-count" }, `${messages.length} messages`)
+            React.createElement("div", { className: "chat-room-actions" },
+              React.createElement("div", { className: "chat-user" }, `${session.displayName} · ${session.userId}`),
+              React.createElement("div", { className: "chat-count" }, `${messages.length} messages`),
+              React.createElement("button", { className: "leave-chat", type: "button", onClick: leaveChat }, "나가기")
+            )
           ),
-          React.createElement("div", { className: "chat-list" },
+          React.createElement("div", { className: "chat-list", ref: chatListRef },
             status === "loading" ? React.createElement("div", { className: "empty" }, "메시지를 불러오는 중입니다.") :
             messages.length === 0 ? React.createElement("div", { className: "empty" }, "아직 메시지가 없습니다.") :
             messages.map((message) => {
@@ -923,8 +1028,8 @@
             })
           ),
           React.createElement("form", { className: "chat-compose", onSubmit: submit },
-            React.createElement("input", { placeholder: "이름", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
-            React.createElement("textarea", { placeholder: "메시지", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
+            React.createElement("input", { value: session.displayName, readOnly: true, "aria-label": "채팅 이름" }),
+            React.createElement("textarea", { placeholder: "메시지", value: content, onChange: (e) => setContent(e.target.value) }),
             React.createElement("button", { className: "primary-action chat-send", type: "submit" }, "전송")
           )
         )
