@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hawaii Family Trip Itinerary</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17313b;
+      --muted: #62747b;
+      --line: #d9e7e8;
+      --paper: #fffdf8;
+      --wash: #eef8f7;
+      --aqua: #1b8a94;
+      --aqua-dark: #116570;
+      --coral: #e86f51;
+      --sun: #f5b64b;
+      --leaf: #5c8f5e;
+      --shadow: 0 18px 38px rgba(23, 49, 59, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(245, 182, 75, 0.22), transparent 30rem),
+        linear-gradient(180deg, #e9f7f5 0%, #fffaf0 42%, #f7fbf8 100%);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      padding: 18px 14px 42px;
+    }
+
+    .hero {
+      min-height: 92svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 18px 4px 20px;
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      min-height: 24svh;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(23, 49, 59, 0.2)),
+        linear-gradient(135deg, #8ed8d4 0%, #f7d18b 45%, #ef876e 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto auto 0 0;
+      width: 120%;
+      height: 34%;
+      background: rgba(255, 253, 248, 0.82);
+      clip-path: polygon(0 54%, 10% 45%, 22% 62%, 36% 49%, 50% 67%, 65% 47%, 82% 61%, 100% 42%, 100% 100%, 0 100%);
+    }
+
+    .hero-visual::after {
+      height: 24%;
+      background: rgba(27, 138, 148, 0.34);
+      clip-path: polygon(0 42%, 13% 50%, 28% 36%, 43% 52%, 58% 39%, 76% 55%, 100% 38%, 100% 100%, 0 100%);
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--aqua-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 12ch;
+      font-size: clamp(2.35rem, 12vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 15px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--aqua);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-cta.secondary {
+      border: 1px solid rgba(17, 101, 112, 0.24);
+      background: rgba(255, 253, 248, 0.86);
+      color: var(--aqua-dark);
+    }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .fact {
+      min-height: 66px;
+      padding: 10px;
+      border: 1px solid rgba(27, 138, 148, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.82);
+      overflow-wrap: anywhere;
+    }
+
+    .fact b,
+    .label {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.74rem;
+      color: var(--aqua-dark);
+      font-weight: 800;
+    }
+
+    .fact span {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 8px 2px 14px;
+      font-size: 1.28rem;
+      letter-spacing: 0;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 -14px 18px;
+      padding: 10px 14px;
+      background: rgba(238, 248, 247, 0.92);
+      backdrop-filter: blur(12px);
+      border-block: 1px solid rgba(27, 138, 148, 0.12);
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      border: 1px solid rgba(17, 101, 112, 0.24);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #ffffff;
+      color: var(--aqua-dark);
+      font-size: 0.86rem;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .day-card {
+      position: relative;
+      margin-bottom: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.94);
+      box-shadow: 0 12px 28px rgba(23, 49, 59, 0.08);
+    }
+
+    .day-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .date {
+      margin: 0 0 2px;
+      color: var(--coral);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .day-card h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #fff3d6;
+      color: #805511;
+      font-size: 0.75rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .stop {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      position: relative;
+      padding: 0 0 14px;
+    }
+
+    .stop::before {
+      content: "";
+      position: absolute;
+      left: 64px;
+      top: 23px;
+      bottom: -1px;
+      width: 2px;
+      background: var(--line);
+    }
+
+    .stop:last-child {
+      padding-bottom: 0;
+    }
+
+    .stop:last-child::before {
+      display: none;
+    }
+
+    .time {
+      color: var(--aqua-dark);
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .stop-body {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .stop-body::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 8px 1px -15px;
+      border: 3px solid var(--aqua);
+      border-radius: 50%;
+      background: #ffffff;
+      vertical-align: middle;
+    }
+
+    .stop-title {
+      display: inline;
+      font-weight: 850;
+    }
+
+    .stop-note {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      background: var(--aqua);
+      color: white;
+      font-size: 0.86rem;
+      font-weight: 850;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      margin-top: 13px;
+      padding: 12px;
+      border-left: 4px solid var(--sun);
+      border-radius: 8px;
+      background: #fff7e4;
+      color: #5f4b22;
+      font-size: 0.91rem;
+    }
+
+    .panel {
+      margin: 22px 0 0;
+      padding: 16px;
+      border-radius: 8px;
+      background: #17313b;
+      color: #f8fbfa;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.14rem;
+      letter-spacing: 0;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 19px;
+    }
+
+    .panel li + li {
+      margin-top: 7px;
+    }
+
+    .food-caution {
+      background: #fff7f2;
+      color: #673324;
+      border: 1px solid rgba(232, 111, 81, 0.28);
+      box-shadow: none;
+    }
+
+    .food-caution h2 {
+      color: #a4422a;
+    }
+
+    footer {
+      padding: 24px 4px 6px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      .shell {
+        padding-inline: 24px;
+      }
+
+      .hero {
+        min-height: 78vh;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: end;
+        justify-content: initial;
+        gap: 34px;
+      }
+
+      .hero-visual {
+        min-height: 520px;
+      }
+
+      .hero-copy {
+        margin-top: 0;
+        padding-bottom: 20px;
+      }
+
+      .quick-facts {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .hero-actions {
+        display: flex;
+        max-width: 420px;
+      }
+
+      .hero-cta {
+        min-width: 180px;
+      }
+
+      .toolbar {
+        margin-inline: -24px;
+        padding-inline: 24px;
+      }
+
+      .day-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-visual" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Honolulu / Oahu only</p>
+        <h1 id="title">Hawaii Family Trip</h1>
+        <p class="subtitle">2026년 6월 24일부터 29일까지, 와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 모바일 일정표입니다.</p>
+        <div class="hero-actions" aria-label="핵심 이동">
+          <a class="hero-cta" href="#day-0624">일정 바로 보기</a>
+          <a class="hero-cta secondary" href="#planning-rules">주의사항 보기</a>
+        </div>
+        <div class="quick-facts" aria-label="여행 핵심 정보">
+          <div class="fact"><b>기간</b><span>6/24 Wed - 6/29 Mon</span></div>
+          <div class="fact"><b>그룹</b><span>6명, 임산부 동행</span></div>
+          <div class="fact"><b>베이스</b><span>Waikiki / Honolulu</span></div>
+          <div class="fact"><b>우선순위</b><span>휴식, 그늘, 짧은 동선</span></div>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title">날짜별 일정</h2>
+    <nav class="toolbar" aria-label="날짜 바로가기">
+      <a class="chip" href="#day-0624">6/24 도착</a>
+      <a class="chip" href="#day-0625">6/25 와이키키</a>
+      <a class="chip" href="#day-0626">6/26 동부</a>
+      <a class="chip" href="#day-0627">6/27 진주만</a>
+      <a class="chip" href="#day-0628">6/28 노스쇼어</a>
+      <a class="chip" href="#day-0629">6/29 출발</a>
+    </nav>
+
+    <article class="day-card" id="day-0624">
+      <div class="day-head">
+        <div>
+          <p class="date">6/24 Wed</p>
+          <h3>Arrival / Adjust</h3>
+        </div>
+        <span class="badge">낮은 강도</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">10:30</span><div class="stop-body"><span class="stop-title">HNL 도착, 입국, 호텔 이동</span><p class="stop-note">수하물 드롭 또는 체크인 후 바로 쉬는 흐름.</p></div></li>
+        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">가벼운 식사</span><p class="stop-note">도착일은 양과 이동을 줄이는 쪽으로.</p></div></li>
+        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">체크인, 낮잠, 와이키키 짧은 산책</span><p class="stop-note">첫날 쇼핑은 길게 잡지 않기.</p></div></li>
+        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Duke's Waikiki 또는 Marugame Udon</span><p class="stop-note">대기 시간이 길면 바로 대체 가능한 곳으로 이동.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Waikiki+Beach" target="_blank" rel="noopener">와이키키 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 무조건 회복을 우선합니다.</div>
+    </article>
+
+    <article class="day-card" id="day-0625">
+      <div class="day-head">
+        <div>
+          <p class="date">6/25 Thu</p>
+          <h3>Waikiki + Shopping</h3>
+        </div>
+        <span class="badge">실내 휴식</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">Kapiolani Park, Waikiki Beach 산책</span><p class="stop-note">예쁜 근처 장소 중심으로 천천히.</p></div></li>
+        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Pioneer Saloon</span><p class="stop-note">포장 후 그늘이나 호텔에서 먹는 옵션도 좋음.</p></div></li>
+        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Ala Moana Center, 호텔 휴식</span><p class="stop-note">가장 더운 시간은 실내와 호텔로 배치.</p></div></li>
+        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Monkeypod Kitchen</span><p class="stop-note">예약 가능하면 저녁 피로도를 줄일 수 있음.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kapiolani+Park+Honolulu" target="_blank" rel="noopener">공원 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ala+Moana+Center" target="_blank" rel="noopener">알라모아나 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다.</div>
+    </article>
+
+    <article class="day-card" id="day-0626">
+      <div class="day-head">
+        <div>
+          <p class="date">6/26 Fri</p>
+          <h3>East Coast Drive</h3>
+        </div>
+        <span class="badge">풍경 드라이브</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">오전</span><div class="stop-body"><span class="stop-title">Halona Blowhole, Makapuu Lookout</span><p class="stop-note">사진과 전망 위주, 긴 하이킹은 생략.</p></div></li>
+        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Kailua lunch</span><p class="stop-note">화장실과 주차가 쉬운 곳 우선.</p></div></li>
+        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Lanikai / Kailua 짧은 방문</span><p class="stop-note">물놀이는 짧고 가볍게, 대부분은 사진과 휴식.</p></div></li>
+        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">ZIGU 또는 Hula Grill Waikiki</span><p class="stop-note">와이키키 복귀 후 이동 적은 저녁.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Halona+Blowhole+Lookout" target="_blank" rel="noopener">Halona 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Makapuu+Lookout" target="_blank" rel="noopener">Makapuu 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Lanikai+Beach" target="_blank" rel="noopener">Lanikai 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다.</div>
+    </article>
+
+    <article class="day-card" id="day-0627">
+      <div class="day-head">
+        <div>
+          <p class="date">6/27 Sat</p>
+          <h3>Pearl Harbor + Rest</h3>
+        </div>
+        <span class="badge">예약 권장</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">오전</span><div class="stop-body"><span class="stop-title">USS Arizona Memorial</span><p class="stop-note">사전 예약 필수에 가깝게 보고 준비.</p></div></li>
+        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Nico's Pier 38</span><p class="stop-note">해산물은 익힌 메뉴 중심으로 선택.</p></div></li>
+        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">호텔 휴식, 와이키키 비치</span><p class="stop-note">의미 있는 오전 뒤에는 회복 시간 확보.</p></div></li>
+        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">Gyu-Kaku</span><p class="stop-note">고기는 충분히 익혀 먹기.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Pearl+Harbor+National+Memorial" target="_blank" rel="noopener">진주만 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nico%27s+Pier+38" target="_blank" rel="noopener">Nico's 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다.</div>
+    </article>
+
+    <article class="day-card" id="day-0628">
+      <div class="day-head">
+        <div>
+          <p class="date">6/28 Sun</p>
+          <h3>North Shore</h3>
+        </div>
+        <span class="badge">메인 드라이브</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">Dole Plantation</span><p class="stop-note">일찍 출발해 더위와 주말 교통을 피하기.</p></div></li>
+        <li class="stop"><span class="time">점심</span><div class="stop-body"><span class="stop-title">Haleiwa, Shrimp truck 또는 로컬 식당</span><p class="stop-note">줄이 길면 앉아서 먹는 대안으로 변경.</p></div></li>
+        <li class="stop"><span class="time">오후</span><div class="stop-body"><span class="stop-title">Turtle beach viewing, 와이키키 복귀</span><p class="stop-note">야생동물은 거리 유지, 해변 체류는 짧게.</p></div></li>
+        <li class="stop"><span class="time">저녁</span><div class="stop-body"><span class="stop-title">와이키키 가벼운 저녁</span><p class="stop-note">긴 드라이브 뒤에는 가까운 곳으로.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Dole+Plantation" target="_blank" rel="noopener">Dole 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Haleiwa+Hawaii" target="_blank" rel="noopener">Haleiwa 지도</a>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Laniakea+Beach" target="_blank" rel="noopener">거북이 비치 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다.</div>
+    </article>
+
+    <article class="day-card" id="day-0629">
+      <div class="day-head">
+        <div>
+          <p class="date">6/29 Mon</p>
+          <h3>Departure</h3>
+        </div>
+        <span class="badge">공항 우선</span>
+      </div>
+      <ol class="timeline">
+        <li class="stop"><span class="time">아침</span><div class="stop-body"><span class="stop-title">조식, 짐 정리, 짧은 산책</span><p class="stop-note">실제 관광 일정은 추가하지 않기.</p></div></li>
+        <li class="stop"><span class="time">10:30</span><div class="stop-body"><span class="stop-title">공항 도착 목표</span><p class="stop-note">렌터카 반납이 있으면 더 일찍 출발.</p></div></li>
+        <li class="stop"><span class="time">13:00</span><div class="stop-body"><span class="stop-title">Hawaii 출발</span><p class="stop-note">6/30 17:00 KST 한국 도착 예정.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Daniel+K.+Inouye+International+Airport" target="_blank" rel="noopener">공항 지도</a>
+      </div>
+      <div class="note">임산부/가족 메모: 마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다.</div>
+    </article>
+
+    <section class="panel" id="planning-rules">
+      <h2>가족 여행 기본 원칙</h2>
+      <ul>
+        <li>야외 활동은 오전 중심, 한낮에는 실내나 호텔 휴식으로 둡니다.</li>
+        <li>긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 제외합니다.</li>
+        <li>그늘, 화장실, 물, 주차가 쉬운 장소를 우선하고 일정 변경 여지를 남깁니다.</li>
+      </ul>
+    </section>
+
+    <section class="panel food-caution">
+      <h2>임산부 식사 주의</h2>
+      <ul>
+        <li>raw fish, sushi, poke, undercooked seafood/meat, alcohol은 주의 항목으로 표시합니다.</li>
+        <li>해산물은 익힌 메뉴 위주로 고르고, 고기류는 충분히 익혀 먹습니다.</li>
+        <li>더운 날에는 대기 시간이 긴 식당보다 예약 가능하거나 포장 가능한 곳을 우선합니다.</li>
+      </ul>
+    </section>
+
+    <footer>Source: hawaii-trip.md latest saved itinerary · Single-file mobile HTML</footer>
+  </main>
+</body>
+</html>
