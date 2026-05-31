@@ -28,14 +28,14 @@
     * { box-sizing: border-box; }
     html {
       scroll-behavior: smooth;
-      overscroll-behavior-y: none;
+      overscroll-behavior: none;
     }
     body {
       margin: 0;
       font-family: "Manrope", "Segoe UI", sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
-      overscroll-behavior-y: none;
+      overscroll-behavior: none;
       background:
         radial-gradient(circle at 14% 8%, rgba(245, 191, 91, 0.3), transparent 18rem),
         radial-gradient(circle at 82% 0%, rgba(142, 223, 216, 0.55), transparent 22rem),
@@ -91,8 +91,8 @@
       touch-action: pan-y pinch-zoom;
       will-change: transform, opacity;
       transform: translate3d(var(--swipe-offset, 0px), 0, 0) scale(var(--swipe-scale, 1));
-      transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
-      animation: panelFadeIn 560ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
+      animation: panelFadeIn 640ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .view-panel.is-dragging {
       transition: none;
@@ -365,6 +365,7 @@
       backdrop-filter: blur(18px);
       scrollbar-width: none;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .tabbar::-webkit-scrollbar { display: none; }
     .tabbar::after {
@@ -417,6 +418,7 @@
       border-block: 1px solid rgba(27, 138, 148, 0.12);
       scrollbar-width: none;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .toolbar::-webkit-scrollbar { display: none; }
     .chip {
@@ -746,6 +748,7 @@
         linear-gradient(180deg, #acdce0, #8fcfd3);
       scroll-behavior: smooth;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .message-row {
       display: grid;
