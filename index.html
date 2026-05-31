@@ -1633,8 +1633,9 @@
     function Schedule() {
       const [activeDay, setActiveDay] = useState(days[0].id);
       const shownDays = useMemo(() => days.filter((day) => day.id === activeDay), [activeDay]);
-      return React.createElement("section", null,
+      return React.createElement("section", { className: "tab-page" },
         React.createElement("h2", { className: "section-title" }, "여행 일정"),
+        React.createElement("p", { className: "section-kicker" }, "하루 단위로만 보여줘서 복잡하지 않게, 탭 안에서 바로 읽히도록 정리했습니다."),
         React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
           days.map((day) => React.createElement("button", {
             key: day.id,
@@ -1749,7 +1750,7 @@
         }
       }, [photos.length, viewerIndex]);
 
-      return React.createElement("section", null,
+      return React.createElement("section", { className: "tab-page" },
         React.createElement("h2", { className: "section-title" }, "사진 갤러리"),
         React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. 버킷은 공개(public)로 만들어두면 바로 보입니다."),
         galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
