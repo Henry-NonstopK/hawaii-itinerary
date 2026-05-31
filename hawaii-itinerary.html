@@ -5,33 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hawaii Family Trip App</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Manrope:wght@400;500;700;800;900&display=swap");
+
     :root {
       color-scheme: light;
-      --ink: #12323a;
-      --muted: #64767d;
-      --line: rgba(20, 92, 102, 0.16);
+      --ink: #10242d;
+      --muted: #5f6f76;
+      --line: rgba(15, 70, 84, 0.14);
       --paper: #fffdf7;
-      --wash: #eaf7f4;
-      --aqua: #128d96;
-      --aqua-dark: #0b5967;
-      --lagoon: #79d5ce;
-      --coral: #f2765b;
-      --hibiscus: #d94d70;
-      --sun: #f6bc55;
-      --sand: #fff2d2;
-      --palm: #285a45;
-      --shadow: 0 20px 46px rgba(15, 65, 76, 0.15);
+      --wash: #edf8f6;
+      --aqua: #1aa1a9;
+      --aqua-dark: #0d5963;
+      --lagoon: #8edfd8;
+      --coral: #ff8a63;
+      --hibiscus: #cb4f73;
+      --sun: #f5bf5b;
+      --sand: #fff2d4;
+      --palm: #275742;
+      --shadow: 0 24px 56px rgba(15, 65, 76, 0.14);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Manrope", "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 12% 6%, rgba(246, 188, 85, 0.34), transparent 24rem),
-        radial-gradient(circle at 88% 0%, rgba(121, 213, 206, 0.46), transparent 26rem),
-        linear-gradient(180deg, #dff7f4 0%, #fff8e8 42%, #f7fbf8 100%);
+        radial-gradient(circle at 14% 8%, rgba(245, 191, 91, 0.3), transparent 18rem),
+        radial-gradient(circle at 82% 0%, rgba(142, 223, 216, 0.55), transparent 22rem),
+        radial-gradient(circle at 100% 72%, rgba(255, 138, 99, 0.12), transparent 18rem),
+        linear-gradient(180deg, #e3fbf7 0%, #fff8ea 44%, #f4fbf8 100%);
       color: var(--ink);
       line-height: 1.5;
     }
@@ -40,24 +43,25 @@
     a { color: inherit; }
 
     .shell {
-      width: min(100%, 920px);
+      width: min(100%, 1040px);
       margin: 0 auto;
-      padding: 18px 14px 46px;
+      padding: 16px 14px 56px;
     }
     .hero {
-      min-height: 62svh;
+      min-height: 56svh;
       display: grid;
+      gap: 20px;
       align-content: end;
-      padding: 12px 2px 20px;
+      padding: 14px 2px 18px;
     }
     .hero-visual {
-      min-height: 28svh;
+      min-height: 32svh;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 30px;
       background:
-        radial-gradient(circle at 78% 24%, rgba(255, 226, 133, 0.95) 0 9%, transparent 10%),
-        linear-gradient(180deg, rgba(17, 74, 87, 0.04) 0%, rgba(17, 74, 87, 0.16) 54%, rgba(17, 74, 87, 0.28) 100%),
-        linear-gradient(135deg, #79d5ce 0%, #f8d88a 48%, #f2765b 100%);
+        radial-gradient(circle at 78% 22%, rgba(255, 226, 133, 0.98) 0 10%, transparent 11%),
+        linear-gradient(180deg, rgba(17, 74, 87, 0.02) 0%, rgba(17, 74, 87, 0.14) 54%, rgba(17, 74, 87, 0.28) 100%),
+        linear-gradient(135deg, #7fded7 0%, #f7dc93 42%, #ff8b63 100%);
       box-shadow: var(--shadow);
       position: relative;
       isolation: isolate;
@@ -79,7 +83,7 @@
     .hero-visual::after {
       z-index: 2;
       height: 24%;
-      background: rgba(18, 141, 150, 0.38);
+      background: rgba(14, 89, 99, 0.42);
       clip-path: polygon(0 42%, 13% 50%, 28% 36%, 43% 52%, 58% 39%, 76% 55%, 100% 38%, 100% 100%, 0 100%);
     }
     .hero-visual + div { position: relative; }
@@ -97,41 +101,43 @@
       pointer-events: none;
     }
     .eyebrow {
-      margin: 18px 0 8px;
+      margin: 6px 0 8px;
       color: var(--hibiscus);
       font-size: 0.78rem;
       font-weight: 900;
-      letter-spacing: 0;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
     h1 {
       margin: 0;
-      max-width: 12ch;
-      font-size: clamp(2.45rem, 12vw, 5.8rem);
-      line-height: 0.96;
-      letter-spacing: 0;
+      max-width: 11ch;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.55rem, 11vw, 5.8rem);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
       color: var(--aqua-dark);
       text-wrap: balance;
     }
     .subtitle {
-      margin: 12px 0 0;
+      margin: 14px 0 0;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       overflow-wrap: anywhere;
     }
     .quick-facts {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 9px;
-      margin-top: 14px;
+      gap: 10px;
+      margin-top: 16px;
     }
     .fact {
-      min-height: 64px;
-      padding: 11px;
-      border: 1px solid rgba(27, 138, 148, 0.18);
-      border-radius: 8px;
-      background: rgba(255, 253, 248, 0.78);
-      box-shadow: 0 8px 22px rgba(18, 89, 103, 0.08);
+      min-height: 68px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(27, 138, 148, 0.14);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(255, 247, 236, 0.86));
+      box-shadow: 0 10px 24px rgba(18, 89, 103, 0.08);
       backdrop-filter: blur(10px);
       overflow-wrap: anywhere;
     }
@@ -146,45 +152,55 @@
 
     .tabbar {
       position: sticky;
-      top: 0;
+      top: 10px;
       z-index: 5;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 7px;
-      margin: 0 -14px 14px;
-      padding: 10px 14px 11px;
-      background: rgba(255, 253, 247, 0.78);
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 -14px 16px;
+      padding: 12px 14px 12px;
+      background: rgba(255, 253, 247, 0.72);
       border-block: 1px solid rgba(27, 138, 148, 0.14);
-      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 24px rgba(18, 89, 103, 0.06);
+      backdrop-filter: blur(18px);
+      scrollbar-width: none;
+    }
+    .tabbar::-webkit-scrollbar { display: none; }
+    .tabbar::after {
+      content: "";
+      flex: 0 0 8px;
     }
     .tab {
+      flex: 0 0 auto;
       min-height: 42px;
-      padding: 8px 7px;
-      border: 1px solid rgba(17, 101, 112, 0.22);
-      border-radius: 8px;
-      background: rgba(255, 253, 248, 0.88);
+      padding: 10px 15px;
+      border: 1px solid rgba(17, 101, 112, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.9);
       color: var(--aqua-dark);
       font-size: 0.8rem;
       font-weight: 900;
       line-height: 1.1;
       text-align: center;
-      overflow-wrap: anywhere;
+      white-space: nowrap;
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
     .tab.active {
       border-color: var(--aqua);
       background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
       color: #fff;
-      box-shadow: 0 7px 16px rgba(27, 138, 148, 0.2);
+      box-shadow: 0 9px 20px rgba(27, 138, 148, 0.22);
     }
     .section-title {
       margin: 10px 2px 12px;
-      font-size: 1.28rem;
+      font-size: 1.36rem;
       letter-spacing: 0;
+      font-family: "Fraunces", Georgia, serif;
     }
     .section-kicker {
       margin: -5px 2px 14px;
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.96rem;
       overflow-wrap: anywhere;
     }
 
@@ -204,13 +220,14 @@
       flex: 0 0 auto;
       min-height: 38px;
       padding: 8px 13px;
-      border: 1px solid rgba(17, 101, 112, 0.2);
+      border: 1px solid rgba(17, 101, 112, 0.18);
       border-radius: 999px;
       background: rgba(255, 253, 248, 0.92);
       color: var(--aqua-dark);
       font-size: 0.86rem;
       font-weight: 850;
       white-space: nowrap;
+      transition: transform 140ms ease, box-shadow 140ms ease;
     }
     .chip.active {
       background: linear-gradient(135deg, var(--aqua-dark), var(--palm));
@@ -218,13 +235,13 @@
       border-color: var(--aqua-dark);
     }
 
-    .card, .day-card, .panel, .post {
-      border-radius: 8px;
+    .card, .day-card, .panel, .post, .chat-login, .chat-phone, .gallery-shell {
+      border-radius: 28px;
       background: rgba(255, 253, 248, 0.94);
-      border: 1px solid var(--line);
-      box-shadow: 0 14px 34px rgba(23, 49, 59, 0.08);
+      border: 1px solid rgba(15, 70, 84, 0.12);
+      box-shadow: 0 16px 38px rgba(23, 49, 59, 0.08);
     }
-    .day-card { margin-bottom: 16px; padding: 15px; }
+    .day-card { margin-bottom: 16px; padding: 16px; }
     .day-head {
       display: flex;
       align-items: flex-start;
@@ -247,8 +264,8 @@
       flex: 0 0 auto;
       padding: 6px 9px;
       border-radius: 999px;
-      background: #fff0c7;
-      color: #805511;
+      background: linear-gradient(135deg, #fff1c9, #ffe3a1);
+      color: #76510e;
       font-size: 0.75rem;
       font-weight: 900;
       white-space: nowrap;
@@ -308,15 +325,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 13px;
+      margin-top: 14px;
     }
     .map-btn, .primary-action, .ghost-action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
-      padding: 9px 12px;
-      border-radius: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
       background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
       color: #fff;
       border: 0;
@@ -324,17 +341,20 @@
       font-weight: 850;
       text-decoration: none;
       overflow-wrap: anywhere;
+      box-shadow: 0 10px 20px rgba(27, 138, 148, 0.16);
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
     .ghost-action {
       background: #fff;
       color: var(--aqua-dark);
-      border: 1px solid rgba(17, 101, 112, 0.22);
+      border: 1px solid rgba(17, 101, 112, 0.18);
+      box-shadow: 0 8px 18px rgba(23, 49, 59, 0.06);
     }
     .note {
       margin-top: 13px;
       padding: 11px 12px;
       border: 1px solid rgba(245, 182, 75, 0.42);
-      border-radius: 8px;
+      border-radius: 18px;
       background: linear-gradient(135deg, #fff8e8, #fff0cc);
       color: #5f4b22;
       font-size: 0.91rem;
@@ -391,7 +411,7 @@
       gap: 9px;
       margin-bottom: 14px;
       padding: 14px;
-      border-radius: 8px;
+      border-radius: 28px;
       background: rgba(255, 253, 248, 0.9);
       border: 1px solid rgba(27, 138, 148, 0.18);
     }
@@ -403,8 +423,8 @@
     input, textarea, select {
       width: 100%;
       min-height: 42px;
-      border: 1px solid rgba(17, 101, 112, 0.22);
-      border-radius: 8px;
+      border: 1px solid rgba(17, 101, 112, 0.18);
+      border-radius: 14px;
       background: rgba(255, 255, 255, 0.94);
       color: var(--ink);
       padding: 9px 10px;
@@ -442,8 +462,7 @@
     .chat-phone {
       overflow: hidden;
       border: 1px solid rgba(11, 89, 103, 0.16);
-      border-radius: 8px;
-      background: #a9d9df;
+      background: linear-gradient(180deg, #b9e4e7, #95d4d8);
       box-shadow: 0 18px 42px rgba(23, 49, 59, 0.14);
     }
     .chat-login {
@@ -452,7 +471,6 @@
       margin-bottom: 14px;
       padding: 16px;
       border: 1px solid rgba(27, 138, 148, 0.18);
-      border-radius: 8px;
       background:
         linear-gradient(135deg, rgba(255, 253, 248, 0.94), rgba(255, 242, 210, 0.92));
       box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
@@ -460,6 +478,9 @@
     .login-grid {
       display: grid;
       gap: 8px;
+    }
+    .login-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .chat-user {
       min-width: 0;
@@ -499,7 +520,7 @@
       min-height: 32px;
       padding: 6px 9px;
       border: 1px solid rgba(23, 49, 59, 0.12);
-      border-radius: 8px;
+      border-radius: 999px;
       background: #fff;
       color: #36515a;
       font-size: 0.76rem;
@@ -517,7 +538,7 @@
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)),
         radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.24), transparent 10rem),
-        #a9d9df;
+        linear-gradient(180deg, #acdce0, #8fcfd3);
       scroll-behavior: smooth;
     }
     .message-row {
@@ -542,17 +563,17 @@
     .message-row.mine .bubble-wrap { flex-direction: row-reverse; }
     .bubble {
       min-width: 0;
-      padding: 9px 11px;
-      border-radius: 6px 16px 16px 16px;
+      padding: 10px 12px;
+      border-radius: 12px 18px 18px 18px;
       background: #fffdf8;
       color: #223c45;
-      box-shadow: 0 3px 9px rgba(23, 49, 59, 0.08);
+      box-shadow: 0 4px 12px rgba(23, 49, 59, 0.08);
       overflow-wrap: anywhere;
       white-space: pre-wrap;
     }
     .message-row.mine .bubble {
-      border-radius: 16px 6px 16px 16px;
-      background: linear-gradient(135deg, #fee768, #ffd24d);
+      border-radius: 18px 12px 18px 18px;
+      background: linear-gradient(135deg, #ffe867, #ffd34f);
       color: #2d2300;
     }
     .message-time {
@@ -571,7 +592,7 @@
       border: 0;
       border-top: 1px solid rgba(23, 49, 59, 0.09);
       border-radius: 0;
-      background: rgba(255, 250, 239, 0.96);
+      background: linear-gradient(180deg, rgba(255, 250, 239, 0.98), rgba(255, 246, 229, 0.98));
     }
     .chat-compose input,
     .chat-compose textarea {
@@ -586,14 +607,182 @@
     .chat-send {
       min-width: 58px;
       align-self: stretch;
-      background: linear-gradient(135deg, #fee768, #ffd24d);
+      background: linear-gradient(135deg, #ffe867, #ffd34f);
       color: #261d00;
+    }
+    .gallery-shell {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 191, 91, 0.14), transparent 12rem),
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 248, 235, 0.96));
+    }
+    .gallery-top {
+      display: grid;
+      gap: 12px;
+    }
+    .gallery-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .stat {
+      padding: 10px 11px;
+      border: 1px solid rgba(17, 101, 112, 0.1);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(237, 248, 246, 0.95), rgba(249, 251, 251, 0.88));
+      overflow-wrap: anywhere;
+    }
+    .stat b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--aqua-dark);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .stat span {
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 850;
+    }
+    .gallery-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      gap: 12px;
+    }
+    .photo-card {
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
+    }
+    .photo-frame {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(13, 89, 99, 0.12), rgba(255, 255, 255, 0.92));
+      box-shadow: 0 16px 30px rgba(15, 65, 76, 0.12);
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-meta {
+      display: grid;
+      gap: 2px;
+      padding: 0 2px;
+    }
+    .photo-meta strong {
+      font-size: 0.86rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .photo-meta span {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+    .photo-badge {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(16, 36, 45, 0.72);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+    }
+    .photo-empty {
+      padding: 16px;
+      border: 1px dashed rgba(17, 101, 112, 0.22);
+      border-radius: 22px;
+      color: var(--muted);
+      background: rgba(245, 250, 249, 0.8);
+    }
+    .photo-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      align-items: end;
+      padding: 16px;
+      background: rgba(8, 18, 22, 0.64);
+      backdrop-filter: blur(12px);
+    }
+    .photo-modal {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 14px;
+      border-radius: 30px;
+      background: rgba(255, 253, 248, 0.98);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+      display: grid;
+      gap: 12px;
+    }
+    .photo-modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .photo-modal-title {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+    .photo-modal-title b {
+      font-size: 1rem;
+    }
+    .photo-modal-title span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .photo-stage {
+      overflow: hidden;
+      border-radius: 24px;
+      background: #0f2026;
+    }
+    .photo-stage img {
+      width: 100%;
+      max-height: 72svh;
+      object-fit: contain;
+      display: block;
+    }
+    .photo-modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+    }
+    .photo-modal-actions .group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .gallery-hint {
+      color: var(--muted);
+      font-size: 0.88rem;
     }
     .empty {
       margin: 10px 0;
       padding: 14px;
       border: 1px dashed rgba(17, 101, 112, 0.3);
-      border-radius: 8px;
+      border-radius: 18px;
       color: var(--muted);
       background: rgba(255, 253, 248, 0.72);
     }
@@ -601,7 +790,7 @@
       margin-top: 16px;
       padding: 16px;
       background:
-        linear-gradient(135deg, rgba(11, 89, 103, 0.95), rgba(40, 90, 69, 0.95));
+        linear-gradient(135deg, rgba(11, 89, 103, 0.94), rgba(40, 90, 69, 0.94));
       color: #f8fbfa;
     }
     .panel h2 { margin: 0 0 10px; font-size: 1.12rem; }
@@ -617,15 +806,17 @@
       .shell { padding-inline: 24px; }
       .hero {
         min-height: 72vh;
-        grid-template-columns: 0.9fr 1.1fr;
+        grid-template-columns: 0.95fr 1.05fr;
         align-items: end;
-        gap: 34px;
+        gap: 30px;
       }
       .hero-visual { min-height: 500px; }
       .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .chat-list { min-height: 500px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(162px, 1fr)); }
+      .gallery-shell { padding: 20px; }
     }
     @media (max-width: 520px) {
       .chat-compose {
@@ -642,7 +833,26 @@
         width: 100%;
         justify-content: space-between;
       }
+      .login-grid.three {
+        grid-template-columns: 1fr;
+      }
       .bubble-wrap { max-width: 86%; }
+      .gallery-stats { grid-template-columns: 1fr; }
+      .photo-modal {
+        width: 100%;
+        padding: 12px;
+      }
+      .photo-modal-actions {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .photo-modal-actions .group {
+        width: 100%;
+      }
+      .photo-modal-actions .group .ghost-action,
+      .photo-modal-actions .group .primary-action {
+        flex: 1 1 0;
+      }
     }
   </style>
 </head>
@@ -658,9 +868,15 @@
     const SUPABASE_PUBLISHABLE_KEY = runtimeEnv.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_5mhGEs-0Kmkl-m6F7I53uQ_O6MYMqgV";
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     const CHAT_SESSION_KEY = "hawaii-chat-session";
+    const CHAT_SYNC_KEY = "hawaii-chat-sync";
+    const chatBroadcast = "BroadcastChannel" in window ? new BroadcastChannel("hawaii-family-chat") : null;
+    const PHOTO_BUCKET = "hawaii-photos";
+    const PHOTO_FOLDER = "gallery";
+    const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
 
     const tabs = [
       ["schedule", "일정"],
+      ["photos", "사진"],
       ["supplies", "준비물"],
       ["board", "게시판"],
       ["chat", "채팅"],
@@ -729,6 +945,222 @@
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
     }
 
+    function formatBytes(bytes) {
+      if (!bytes) return "0 KB";
+      const units = ["B", "KB", "MB", "GB"];
+      const index = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(1024)));
+      const value = bytes / (1024 ** index);
+      return `${value >= 10 || index === 0 ? Math.round(value) : value.toFixed(1)} ${units[index]}`;
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error || new Error("파일을 읽을 수 없어요."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error("이미지를 불러오지 못했어요."));
+        image.src = src;
+      });
+    }
+
+    async function compressImage(file, { maxSide = 3200, targetBytes = PHOTO_MAX_UPLOAD_BYTES } = {}) {
+      const dataUrl = await readFileAsDataUrl(file);
+      const image = await loadImage(dataUrl);
+      const sourceWidth = image.naturalWidth || image.width;
+      const sourceHeight = image.naturalHeight || image.height;
+      const sourceLongestSide = Math.max(sourceWidth, sourceHeight);
+      let nextMaxSide = sourceLongestSide ? Math.min(maxSide, sourceLongestSide) : maxSide;
+      let quality = 0.92;
+      let output = {
+        dataUrl,
+        width: sourceWidth,
+        height: sourceHeight
+      };
+
+      for (let attempt = 0; attempt < 6; attempt += 1) {
+        const scale = sourceLongestSide ? Math.min(1, nextMaxSide / sourceLongestSide) : 1;
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+        canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+        const context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
+        if (!blob) break;
+        output = {
+          dataUrl: await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+          }),
+          width: canvas.width,
+          height: canvas.height,
+          blob,
+          size: blob.size
+        };
+        if (blob.size <= targetBytes) {
+          return output;
+        }
+        nextMaxSide = Math.max(1024, Math.round(nextMaxSide * 0.8));
+        quality = Math.max(0.55, Number((quality - 0.1).toFixed(2)));
+      }
+
+      return output;
+    }
+
+    function normalizePhotoObject(object) {
+      const metadata = object?.metadata || {};
+      const createdAt = object?.created_at || object?.updated_at || new Date().toISOString();
+      const path = `${PHOTO_FOLDER}/${object.name}`;
+      const publicUrl = supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl;
+      return {
+        id: object.id || path,
+        name: metadata.originalName || object.name || "사진",
+        path,
+        publicUrl,
+        size: Number(metadata.uploadSize || metadata.size || object.metadata?.uploadSize || object.metadata?.size || 0),
+        width: metadata.width || 0,
+        height: metadata.height || 0,
+        mimeType: metadata.mimeType || object.metadata?.mimetype || "image/jpeg",
+        createdAt
+      };
+    }
+
+    function useSupabasePhotoGallery() {
+      const [photos, setPhotos] = useState([]);
+      const [status, setStatus] = useState("loading");
+      const [error, setError] = useState("");
+
+      async function loadPhotos({ silent = false } = {}) {
+        if (!silent) setStatus("loading");
+        setError("");
+        const { data, error } = await supabase.storage
+          .from(PHOTO_BUCKET)
+          .list(PHOTO_FOLDER, { limit: 100, sortBy: { column: "created_at", order: "desc" } });
+
+        if (error) {
+          setStatus("error");
+          setError(error.message);
+          return [];
+        }
+
+        const next = (data || [])
+          .filter((object) => object?.name)
+          .map(normalizePhotoObject);
+        setPhotos(next);
+        setStatus("ready");
+        return next;
+      }
+
+      useEffect(() => {
+        let cancelled = false;
+
+        const refresh = async (silent = false) => {
+          if (cancelled) return;
+          await loadPhotos({ silent });
+        };
+
+        refresh(false);
+        const pollId = window.setInterval(() => refresh(true), 20000);
+        const onVisibility = () => {
+          if (!document.hidden) refresh(true);
+        };
+        document.addEventListener("visibilitychange", onVisibility);
+
+        return () => {
+          cancelled = true;
+          window.clearInterval(pollId);
+          document.removeEventListener("visibilitychange", onVisibility);
+        };
+      }, []);
+
+      async function addFiles(fileList) {
+        const files = Array.from(fileList || []).filter((file) => file.type.startsWith("image/"));
+        if (files.length === 0) return [];
+        setError("");
+        const uploaded = [];
+
+        for (const file of files) {
+          const compressed = await compressImage(file);
+          const uploadBlob = compressed.blob || await (await fetch(compressed.dataUrl)).blob();
+          if (uploadBlob.size > PHOTO_MAX_UPLOAD_BYTES) {
+            setError("50MB 이하로 압축하지 못했어요. 사진을 더 작게 잘라서 다시 올려주세요.");
+            continue;
+          }
+          const stamp = `${Date.now()}-${crypto.randomUUID()}`;
+          const path = `${PHOTO_FOLDER}/${stamp}.jpg`;
+          const { error: uploadError } = await supabase.storage.from(PHOTO_BUCKET).upload(path, uploadBlob, {
+            cacheControl: "3600",
+            contentType: "image/jpeg",
+            upsert: false,
+            metadata: {
+              originalName: file.name,
+              originalSize: String(file.size),
+              uploadSize: String(uploadBlob.size),
+              width: String(compressed.width),
+              height: String(compressed.height),
+              mimeType: "image/jpeg",
+            }
+          });
+
+          if (uploadError) {
+            setError(uploadError.message);
+            continue;
+          }
+
+          uploaded.push({
+            id: path,
+            name: file.name.replace(/\.[^.]+$/, "") || "사진",
+            path,
+            publicUrl: supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl,
+            size: uploadBlob.size,
+            width: compressed.width,
+            height: compressed.height,
+            mimeType: "image/jpeg",
+            createdAt: new Date().toISOString()
+          });
+        }
+
+        if (uploaded.length > 0) {
+          await loadPhotos({ silent: true });
+        }
+        return uploaded;
+      }
+
+      async function removePhoto(photo) {
+        if (!photo?.path) return false;
+        setError("");
+        const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove([photo.path]);
+        if (removeError) {
+          setError(removeError.message);
+          return false;
+        }
+        setPhotos((current) => current.filter((item) => item.path !== photo.path));
+        return true;
+      }
+
+      async function clearPhotos() {
+        if (!photos.length) return true;
+        setError("");
+        const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove(photos.map((photo) => photo.path));
+        if (removeError) {
+          setError(removeError.message);
+          return false;
+        }
+        setPhotos([]);
+        return true;
+      }
+
+      return { photos, status, addFiles, removePhoto, clearPhotos, error, reload: loadPhotos };
+    }
+
     function byNewest(a, b) {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     }
@@ -764,6 +1196,14 @@
       return next.sort(sortRows);
     }
 
+    function safeJson(value) {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return null;
+      }
+    }
+
     function useSupabaseRows(table, normalizeRow, sortRows, pollMs = 4000) {
       const [items, setItems] = useState([]);
       const [status, setStatus] = useState("loading");
@@ -793,6 +1233,26 @@
 
         loadRows(true);
         const pollId = window.setInterval(() => loadRows(false), pollMs);
+        const syncLocalRow = (row) => {
+          if (!row) return;
+          setItems((current) => upsertRealtimeRow(current, normalizeRow(row), sortRows));
+        };
+
+        const onStorage = (event) => {
+          if (event.key !== CHAT_SYNC_KEY) return;
+          const payload = safeJson(event.newValue);
+          if (!payload || payload.table !== table) return;
+          syncLocalRow(payload.row);
+        };
+        const onBroadcast = (event) => {
+          const payload = event.data;
+          if (!payload || payload.table !== table) return;
+          syncLocalRow(payload.row);
+        };
+
+        window.addEventListener("storage", onStorage);
+        chatBroadcast?.addEventListener("message", onBroadcast);
+
         const channel = supabase
           .channel(`${table}-realtime`, { config: { broadcast: { self: false } } })
           .on("broadcast", { event: "row-change" }, ({ payload }) => {
@@ -817,6 +1277,8 @@
         return () => {
           cancelled = true;
           window.clearInterval(pollId);
+          window.removeEventListener("storage", onStorage);
+          chatBroadcast?.removeEventListener("message", onBroadcast);
           channelRef.current = null;
           supabase.removeChannel(channel);
         };
@@ -831,6 +1293,9 @@
         }
         const savedRow = data || row;
         setItems((current) => upsertRealtimeRow(current, normalizeRow(savedRow), sortRows));
+        const localPayload = { table, row: savedRow, sentAt: Date.now() };
+        chatBroadcast?.postMessage(localPayload);
+        localStorage.setItem(CHAT_SYNC_KEY, JSON.stringify(localPayload));
         channelRef.current?.send({
           type: "broadcast",
           event: "row-change",
@@ -849,11 +1314,11 @@
           React.createElement("div", null,
             React.createElement("p", { className: "eyebrow" }, "Honolulu / Oahu only"),
             React.createElement("h1", null, "Hawaii Family Trip"),
-            React.createElement("p", { className: "subtitle" }, "2026년 6월 24일부터 29일까지, 와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 React 여행 앱입니다."),
+            React.createElement("p", { className: "subtitle" }, "와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 모바일 우선 앱. 사진은 찍자마자 올리고, 썸네일에서 탭 한 번으로 크게 볼 수 있게 설계했습니다."),
             React.createElement("div", { className: "quick-facts" },
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "기간"), React.createElement("span", null, "6/24 Wed - 6/29 Mon")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 준비물, 게시판, 채팅")),
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 사진, 게시판, 채팅")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "저장"), React.createElement("span", null, "Supabase Realtime"))
             )
           )
@@ -921,6 +1386,188 @@
       );
     }
 
+    function Photos() {
+      const { photos, status, addFiles, removePhoto, clearPhotos, error: galleryError } = useSupabasePhotoGallery();
+      const [viewerIndex, setViewerIndex] = useState(null);
+      const [busy, setBusy] = useState(false);
+      const cameraInputRef = useRef(null);
+      const libraryInputRef = useRef(null);
+      const activePhoto = viewerIndex === null ? null : photos[viewerIndex];
+      const totalBytes = photos.reduce((sum, photo) => sum + Number(photo.size || 0), 0);
+
+      useEffect(() => {
+        if (viewerIndex === null) return;
+        const onKeyDown = (event) => {
+          if (event.key === "Escape") {
+            setViewerIndex(null);
+            return;
+          }
+          if (!photos.length) return;
+          if (event.key === "ArrowRight") {
+            setViewerIndex((current) => (current + 1) % photos.length);
+          }
+          if (event.key === "ArrowLeft") {
+            setViewerIndex((current) => (current - 1 + photos.length) % photos.length);
+          }
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+      }, [viewerIndex, photos.length]);
+
+      const openPicker = (ref) => ref.current?.click();
+
+      const handlePick = async (event) => {
+        const files = event.target.files;
+        if (!files?.length) return;
+        setBusy(true);
+        try {
+          const added = await addFiles(files);
+          if (added.length > 0) {
+            setViewerIndex(0);
+          }
+        } finally {
+          setBusy(false);
+          event.target.value = "";
+        }
+      };
+
+      const closeViewer = () => setViewerIndex(null);
+      const deleteActive = async () => {
+        if (!activePhoto) return;
+        const ok = await removePhoto(activePhoto);
+        if (ok) setViewerIndex(null);
+      };
+      const clearAll = async () => {
+        if (!photos.length) return;
+        if (!window.confirm("사진을 모두 지울까요?")) return;
+        const ok = await clearPhotos();
+        if (ok) setViewerIndex(null);
+      };
+
+      useEffect(() => {
+        if (viewerIndex === null) return;
+        if (photos.length === 0) {
+          setViewerIndex(null);
+          return;
+        }
+        if (viewerIndex >= photos.length) {
+          setViewerIndex(photos.length - 1);
+        }
+      }, [photos.length, viewerIndex]);
+
+      return React.createElement("section", null,
+        React.createElement("h2", { className: "section-title" }, "사진 갤러리"),
+        React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. 버킷은 공개(public)로 만들어두면 바로 보입니다."),
+        galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
+        React.createElement("div", { className: "gallery-shell" },
+          React.createElement("div", { className: "gallery-top" },
+            React.createElement("div", { className: "gallery-actions" },
+              React.createElement("button", {
+                className: "primary-action",
+                type: "button",
+                onClick: () => openPicker(cameraInputRef)
+              }, busy ? "업로드 중..." : "카메라로 찍기"),
+              React.createElement("button", {
+                className: "ghost-action",
+                type: "button",
+                onClick: () => openPicker(libraryInputRef)
+              }, "앨범에서 선택"),
+              React.createElement("button", {
+                className: "ghost-action",
+                type: "button",
+                onClick: clearAll,
+                disabled: !photos.length
+              }, "모두 삭제")
+            ),
+            React.createElement("div", { className: "gallery-stats" },
+              React.createElement("div", { className: "stat" }, React.createElement("b", null, "사진"), React.createElement("span", null, `${photos.length}장`)),
+              React.createElement("div", { className: "stat" }, React.createElement("b", null, "용량"), React.createElement("span", null, formatBytes(totalBytes))),
+              React.createElement("div", { className: "stat" }, React.createElement("b", null, "보기"), React.createElement("span", null, status === "loading" ? "불러오는 중" : "썸네일 탭 → 확대"))
+            ),
+            React.createElement("div", { className: "gallery-hint" }, "사진은 Supabase Storage에 저장됩니다. 휴대폰 카메라로 찍은 뒤 바로 올릴 수 있고, 50MB 기준으로 자동 압축한 뒤 목록은 위에서 아래로 새 사진이 먼저 보이도록 정렬됩니다.")
+          ),
+          React.createElement("input", {
+            ref: cameraInputRef,
+            type: "file",
+            accept: "image/*",
+            capture: "environment",
+            multiple: true,
+            hidden: true,
+            onChange: handlePick
+          }),
+          React.createElement("input", {
+            ref: libraryInputRef,
+            type: "file",
+            accept: "image/*",
+            multiple: true,
+            hidden: true,
+            onChange: handlePick
+          }),
+          photos.length === 0
+            ? React.createElement("div", { className: "photo-empty" }, status === "loading" ? "사진을 불러오는 중입니다." : "아직 사진이 없어요. 카메라로 찍기 버튼을 누르면 모바일에서 바로 업로드할 수 있고, 앨범에서 선택도 가능합니다.")
+            : React.createElement("div", { className: "gallery-grid" },
+              photos.map((photo, index) => React.createElement("button", {
+                className: "photo-card",
+                type: "button",
+                key: photo.id,
+                onClick: () => setViewerIndex(index)
+              },
+                React.createElement("div", { className: "photo-frame" },
+                  React.createElement("img", { src: photo.publicUrl, alt: photo.name, loading: "lazy" }),
+                  React.createElement("span", { className: "photo-badge" }, "눌러서 확대")
+                ),
+                React.createElement("div", { className: "photo-meta" },
+                  React.createElement("strong", null, photo.name),
+                  React.createElement("span", null, `${new Date(photo.createdAt).toLocaleDateString("ko-KR")} · ${formatBytes(photo.size)}`)
+                )
+              ))
+            )
+        ),
+        activePhoto ? React.createElement("div", {
+          className: "photo-overlay",
+          role: "presentation",
+          onClick: closeViewer
+        },
+          React.createElement("div", {
+            className: "photo-modal",
+            role: "dialog",
+            "aria-modal": "true",
+            "aria-label": activePhoto.name,
+            onClick: (event) => event.stopPropagation()
+          },
+            React.createElement("div", { className: "photo-modal-head" },
+              React.createElement("div", { className: "photo-modal-title" },
+                React.createElement("b", null, activePhoto.name),
+                React.createElement("span", null, `${new Date(activePhoto.createdAt).toLocaleString("ko-KR")} · ${activePhoto.width}×${activePhoto.height}`)
+              ),
+              React.createElement("button", { className: "ghost-action", type: "button", onClick: closeViewer }, "닫기")
+            ),
+            React.createElement("div", { className: "photo-stage" },
+              React.createElement("img", { src: activePhoto.publicUrl, alt: activePhoto.name })
+            ),
+            React.createElement("div", { className: "photo-modal-actions" },
+              React.createElement("div", { className: "group" },
+                React.createElement("button", {
+                  className: "ghost-action",
+                  type: "button",
+                  onClick: () => setViewerIndex((current) => (current - 1 + photos.length) % photos.length)
+                }, "이전"),
+                React.createElement("button", {
+                  className: "ghost-action",
+                  type: "button",
+                  onClick: () => setViewerIndex((current) => (current + 1) % photos.length)
+                }, "다음")
+              ),
+              React.createElement("div", { className: "group" },
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: deleteActive }, "삭제"),
+                React.createElement("button", { className: "primary-action", type: "button", onClick: closeViewer }, "확인")
+              )
+            )
+          )
+        ) : null
+      );
+    }
+
     function Board() {
       const { items: posts, status, error, insertRow } = useSupabaseRows("posts", normalizePost, byNewest);
       const [form, setForm] = useState({ author: "", category: "일정문의", title: "", content: "" });
@@ -966,7 +1613,7 @@
     }
 
     function Chat() {
-      const { items: messages, status, error, insertRow } = useSupabaseRows("messages", normalizeMessage, byOldest, 1500);
+      const { items: messages, status, error, insertRow } = useSupabaseRows("messages", normalizeMessage, byOldest, 1000);
       const [session, setSession] = useState(() => {
         try {
           return JSON.parse(sessionStorage.getItem(CHAT_SESSION_KEY) || "null");
@@ -974,7 +1621,7 @@
           return null;
         }
       });
-      const [displayName, setDisplayName] = useState("");
+      const [login, setLogin] = useState({ userId: "", password: "", displayName: "" });
       const [content, setContent] = useState("");
       const chatListRef = useRef(null);
       const activeAuthor = session?.displayName || "";
@@ -986,13 +1633,18 @@
 
       const enterChat = (event) => {
         event.preventDefault();
+        const userId = login.userId.trim();
+        const password = login.password.trim();
+        const displayName = login.displayName.trim();
+        if (!userId || !password || !displayName) return;
         const nextSession = {
-          displayName: displayName.trim()
+          userId,
+          displayName,
+          signedInAt: new Date().toISOString()
         };
-        if (!nextSession.displayName) return;
         sessionStorage.setItem(CHAT_SESSION_KEY, JSON.stringify(nextSession));
         setSession(nextSession);
-        setDisplayName("");
+        setLogin({ userId: "", password: "", displayName: "" });
       };
 
       const leaveChat = () => {
@@ -1016,10 +1668,12 @@
       if (!session) {
         return React.createElement("section", null,
           React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-          React.createElement("p", { className: "section-kicker" }, "이름만 입력해 채팅방에 들어갑니다. 입장 후 이름은 채팅방을 나갈 때까지 유지됩니다."),
+          React.createElement("p", { className: "section-kicker" }, "아이디, 비밀번호, 이름을 입력해 채팅방에 들어갑니다. 이름은 나가기 전까지 유지됩니다."),
           React.createElement("form", { className: "chat-login", onSubmit: enterChat },
-            React.createElement("div", { className: "login-grid" },
-              React.createElement("input", { placeholder: "채팅 이름", value: displayName, onChange: (e) => setDisplayName(e.target.value) })
+            React.createElement("div", { className: "login-grid three" },
+              React.createElement("input", { placeholder: "아이디", autoComplete: "username", value: login.userId, onChange: (e) => setLogin({ ...login, userId: e.target.value }) }),
+              React.createElement("input", { placeholder: "비밀번호", type: "password", autoComplete: "current-password", value: login.password, onChange: (e) => setLogin({ ...login, password: e.target.value }) }),
+              React.createElement("input", { placeholder: "채팅 이름", value: login.displayName, onChange: (e) => setLogin({ ...login, displayName: e.target.value }) })
             ),
             React.createElement("button", { className: "primary-action", type: "submit" }, "채팅방 입장")
           )
@@ -1091,6 +1745,7 @@
       const [active, setActive] = useState("schedule");
       const view = {
         schedule: React.createElement(Schedule),
+        photos: React.createElement(Photos),
         supplies: React.createElement(Supplies),
         board: React.createElement(Board),
         chat: React.createElement(Chat),

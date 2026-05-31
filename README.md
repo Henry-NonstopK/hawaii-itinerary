@@ -10,11 +10,14 @@ Mobile-first Hawaii family trip app for GitHub Pages.
 - Google Maps shortcut tab.
 - Family bulletin board tab.
 - Family chat tab.
+- Photo gallery tab with Supabase Storage upload/view/delete.
 - Notes/checkpoints tab.
 
 ## Data Storage
 
 - Bulletin board and chat use Supabase `posts` and `messages` tables.
+- Photo gallery uses a public Supabase Storage bucket named `hawaii-photos`.
+- Photo uploads are auto-compressed before upload to stay under the 50MB limit.
 - Realtime updates are subscribed through Supabase Realtime.
 - The frontend uses only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`-style public config.
 
