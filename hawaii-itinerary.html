@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hawaii Family Trip App</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Manrope:wght@400;500;700;800;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&display=swap");
 
     :root {
       color-scheme: light;
@@ -145,46 +145,14 @@
       overflow: hidden;
       border-radius: 30px;
       background:
-        radial-gradient(circle at 78% 22%, rgba(255, 226, 133, 0.98) 0 10%, transparent 11%),
-        linear-gradient(180deg, rgba(17, 74, 87, 0.02) 0%, rgba(17, 74, 87, 0.14) 54%, rgba(17, 74, 87, 0.28) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.16), transparent 26%),
+        radial-gradient(circle at 78% 16%, rgba(255, 255, 255, 0.12), transparent 22%),
         linear-gradient(135deg, #7fded7 0%, #f7dc93 42%, #ff8b63 100%);
       box-shadow: var(--shadow);
       position: relative;
       isolation: isolate;
-      filter: saturate(1.08);
-    }
-    .hero-visual::before,
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      inset: auto auto 0 0;
-      width: 120%;
-      height: 35%;
-      background: rgba(255, 253, 248, 0.82);
-      clip-path: polygon(0 54%, 10% 45%, 22% 62%, 36% 49%, 50% 67%, 65% 47%, 82% 61%, 100% 42%, 100% 100%, 0 100%);
-    }
-    .hero-visual::before {
-      z-index: 1;
-    }
-    .hero-visual::after {
-      z-index: 2;
-      height: 24%;
-      background: rgba(14, 89, 99, 0.42);
-      clip-path: polygon(0 42%, 13% 50%, 28% 36%, 43% 52%, 58% 39%, 76% 55%, 100% 38%, 100% 100%, 0 100%);
-    }
-    .hero-visual + div { position: relative; }
-    .hero-visual + div::before {
-      content: "";
-      position: absolute;
-      right: 8px;
-      top: -22px;
-      width: 74px;
-      height: 74px;
-      border-radius: 58px 58px 8px 8px;
-      background:
-        radial-gradient(circle at 48% 48%, rgba(246, 188, 85, 0.34) 0 34%, transparent 35%),
-        radial-gradient(circle at 48% 48%, rgba(242, 118, 91, 0.22) 0 50%, transparent 51%);
-      pointer-events: none;
+      filter: saturate(1.02);
     }
     .splash {
       position: fixed;
@@ -253,8 +221,8 @@
     .splash h2 {
       margin: 0;
       color: var(--aqua-dark);
-      font-family: "Fraunces", Georgia, serif;
       font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 900;
       line-height: 0.95;
       letter-spacing: -0.03em;
     }
@@ -311,8 +279,8 @@
     h1 {
       margin: 0;
       max-width: 11ch;
-      font-family: "Fraunces", Georgia, serif;
       font-size: clamp(2.55rem, 11vw, 5.8rem);
+      font-weight: 900;
       line-height: 0.92;
       letter-spacing: -0.03em;
       color: var(--aqua-dark);
@@ -397,8 +365,8 @@
     .section-title {
       margin: 6px 4px 10px;
       font-size: 1.18rem;
+      font-weight: 900;
       letter-spacing: 0;
-      font-family: "Fraunces", Georgia, serif;
     }
     .section-kicker {
       margin: -2px 4px 12px;
@@ -1026,6 +994,195 @@
       color: var(--muted);
       font-size: 0.88rem;
     }
+    .ai-shell {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid rgba(15, 70, 84, 0.1);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 138, 99, 0.12), transparent 11rem),
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 247, 233, 0.96));
+      box-shadow: 0 16px 36px rgba(23, 49, 59, 0.08);
+    }
+    .ai-head {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .ai-kicker {
+      margin: 0 0 5px;
+      color: var(--hibiscus);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .ai-head h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.25;
+      color: var(--aqua-dark);
+    }
+    .ai-pill {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff1c9, #ffe3a1);
+      color: #76510e;
+      font-size: 0.76rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .ai-copy {
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      overflow-wrap: anywhere;
+    }
+    .ai-controls,
+    .ai-grid,
+    .ai-actions {
+      display: grid;
+      gap: 10px;
+    }
+    .ai-controls {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ai-field {
+      display: grid;
+      gap: 6px;
+    }
+    .ai-field span {
+      color: var(--aqua-dark);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .ai-field input,
+    .ai-field select {
+      min-height: 44px;
+    }
+    .ai-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ai-status {
+      display: grid;
+      gap: 8px;
+      padding: 13px 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(13, 89, 99, 0.08), rgba(255, 255, 255, 0.9));
+      border: 1px solid rgba(17, 101, 112, 0.1);
+      overflow-wrap: anywhere;
+    }
+    .ai-status-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ai-status-head b {
+      color: var(--aqua-dark);
+      font-size: 0.88rem;
+    }
+    .ai-status-head span {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .ai-progress {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(17, 101, 112, 0.1);
+      overflow: hidden;
+    }
+    .ai-progress > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--aqua), var(--coral));
+      transition: width 180ms ease;
+    }
+    .ai-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+    .ai-card {
+      padding: 12px;
+      border-radius: 22px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid rgba(17, 101, 112, 0.1);
+      box-shadow: 0 10px 22px rgba(23, 49, 59, 0.06);
+    }
+    .ai-preview {
+      display: grid;
+      gap: 10px;
+    }
+    .ai-preview img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      border-radius: 18px;
+      background: #dbeef0;
+    }
+    .ai-preview-empty {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px dashed rgba(17, 101, 112, 0.24);
+      background: rgba(245, 250, 249, 0.8);
+      color: var(--muted);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    .ai-result {
+      display: grid;
+      gap: 10px;
+    }
+    .ai-result-group {
+      display: grid;
+      gap: 6px;
+      padding: 11px 12px;
+      border-radius: 18px;
+      background: rgba(237, 248, 246, 0.82);
+      border: 1px solid rgba(17, 101, 112, 0.08);
+    }
+    .ai-result-group b {
+      font-size: 0.78rem;
+      color: var(--aqua-dark);
+      letter-spacing: 0.03em;
+    }
+    .ai-result-group p {
+      margin: 0;
+      color: #2d4750;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .ai-muted {
+      color: var(--muted);
+      font-size: 0.8rem;
+      overflow-wrap: anywhere;
+    }
+    .ai-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .ai-inline .chip-like {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(17, 101, 112, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.73rem;
+      font-weight: 900;
+    }
     .empty {
       margin: 10px 0;
       padding: 14px;
@@ -1094,6 +1251,11 @@
       .gallery-actions {
         grid-template-columns: 1fr;
       }
+      .ai-controls,
+      .ai-actions,
+      .ai-grid {
+        grid-template-columns: 1fr;
+      }
       .chat-compose .chat-send {
         min-width: 88px;
       }
@@ -1149,6 +1311,11 @@
     const PHOTO_FOLDER = "gallery";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
+    const AI_TRANSLATE_URL_KEY = "hawaii-ai-translate-url";
+    const AI_TRANSLATE_KEY_KEY = "hawaii-ai-translate-key";
+    const DEFAULT_TRANSLATE_URL = "https://libretranslate.com/translate";
+
+    let tesseractModulePromise = null;
 
     const tabs = [
       ["schedule", "일정"],
@@ -1245,6 +1412,112 @@
       const index = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(1024)));
       const value = bytes / (1024 ** index);
       return `${value >= 10 || index === 0 ? Math.round(value) : value.toFixed(1)} ${units[index]}`;
+    }
+
+    function readStoredValue(key, fallback = "") {
+      try {
+        return window.localStorage.getItem(key) ?? fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function writeStoredValue(key, value) {
+      try {
+        if (!value) {
+          window.localStorage.removeItem(key);
+        } else {
+          window.localStorage.setItem(key, value);
+        }
+      } catch {
+        return false;
+      }
+      return true;
+    }
+
+    function normalizeAnalysisText(text) {
+      return String(text || "")
+        .replace(/\r/g, "\n")
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+    }
+
+    function detectTextScript(text) {
+      const value = String(text || "");
+      const counts = {
+        ko: (value.match(/[\uac00-\ud7a3]/g) || []).length,
+        ja: (value.match(/[\u3040-\u30ff]/g) || []).length,
+        zh: (value.match(/[\u4e00-\u9fff]/g) || []).length,
+        latin: (value.match(/[A-Za-z]/g) || []).length,
+      };
+      const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+      if (!winner || winner[1] === 0) return "unknown";
+      return winner[0];
+    }
+
+    function languageLabel(code) {
+      const map = {
+        ko: "한국어",
+        en: "영어",
+        ja: "일본어",
+        zh: "중국어",
+        unknown: "자동",
+      };
+      return map[code] || code;
+    }
+
+    async function loadTesseractModule() {
+      if (!tesseractModulePromise) {
+        tesseractModulePromise = import("https://esm.sh/tesseract.js@5.1.0");
+      }
+      return tesseractModulePromise;
+    }
+
+    async function analyzeImageText(imageSrc, onProgress) {
+      const Tesseract = await loadTesseractModule();
+      const worker = await Tesseract.createWorker("eng", 1, {
+        logger: (message) => {
+          if (!onProgress) return;
+          if (message?.status) {
+            onProgress({
+              step: message.status,
+              progress: typeof message.progress === "number" ? Math.round(message.progress * 100) : null
+            });
+          }
+        }
+      });
+
+      try {
+        await worker.setParameters({ preserve_interword_spaces: "1" });
+        const result = await worker.recognize(imageSrc);
+        return result?.data || {};
+      } finally {
+        await worker.terminate();
+      }
+    }
+
+    async function translateWithLibreTranslate(text, target, { source = "auto", endpoint, apiKey } = {}) {
+      const res = await fetch(endpoint || DEFAULT_TRANSLATE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          q: text,
+          source,
+          target,
+          format: "text",
+          api_key: apiKey || undefined
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || "번역 서버가 응답하지 않았어요.");
+      }
+      return {
+        translatedText: data?.translatedText || "",
+        detectedLanguage: data?.detectedLanguage?.language || "",
+        confidence: data?.detectedLanguage?.confidence ?? null
+      };
     }
 
     function readFileAsDataUrl(file) {
@@ -1684,10 +1957,26 @@
     function Photos() {
       const { photos, status, addFiles, removePhoto, clearPhotos, error: galleryError } = useSupabasePhotoGallery();
       const [viewerIndex, setViewerIndex] = useState(null);
+      const [analysisIndex, setAnalysisIndex] = useState(0);
+      const [analysisTarget, setAnalysisTarget] = useState("ko");
+      const [analysisUrl, setAnalysisUrl] = useState(() => readStoredValue(AI_TRANSLATE_URL_KEY, DEFAULT_TRANSLATE_URL));
+      const [analysisKey, setAnalysisKey] = useState(() => readStoredValue(AI_TRANSLATE_KEY_KEY, ""));
+      const [analysisState, setAnalysisState] = useState({
+        status: "idle",
+        step: "대기 중",
+        progress: 0,
+        message: "사진을 고른 뒤 AI 분석 + 번역을 누르면 OCR과 번역 결과를 보여줍니다.",
+        ocrText: "",
+        translatedText: "",
+        detectedLanguage: "",
+        photoPath: ""
+      });
       const [busy, setBusy] = useState(false);
+      const [analysisBusy, setAnalysisBusy] = useState(false);
       const cameraInputRef = useRef(null);
       const libraryInputRef = useRef(null);
       const activePhoto = viewerIndex === null ? null : photos[viewerIndex];
+      const analysisPhoto = photos[Math.min(analysisIndex, Math.max(photos.length - 1, 0))] || null;
       const totalBytes = photos.reduce((sum, photo) => sum + Number(photo.size || 0), 0);
 
       useEffect(() => {
@@ -1709,6 +1998,48 @@
         return () => window.removeEventListener("keydown", onKeyDown);
       }, [viewerIndex, photos.length]);
 
+      useEffect(() => {
+        if (!photos.length) {
+          setAnalysisIndex(0);
+          setAnalysisState({
+            status: "idle",
+            step: "대기 중",
+            progress: 0,
+            message: "사진을 올리면 AI 분석 + 번역 패널이 활성화됩니다.",
+            ocrText: "",
+            translatedText: "",
+            detectedLanguage: "",
+            photoPath: ""
+          });
+          return;
+        }
+        if (analysisIndex >= photos.length) {
+          setAnalysisIndex(photos.length - 1);
+        }
+      }, [analysisIndex, photos.length]);
+
+      useEffect(() => {
+        writeStoredValue(AI_TRANSLATE_URL_KEY, analysisUrl.trim() || DEFAULT_TRANSLATE_URL);
+      }, [analysisUrl]);
+
+      useEffect(() => {
+        writeStoredValue(AI_TRANSLATE_KEY_KEY, analysisKey.trim());
+      }, [analysisKey]);
+
+      useEffect(() => {
+        if (!analysisPhoto) return;
+        setAnalysisState({
+          status: "idle",
+          step: "대기 중",
+          progress: 0,
+          message: `${analysisPhoto.name} 사진을 선택했어요. OCR과 번역을 시작할 준비가 됐습니다.`,
+          ocrText: "",
+          translatedText: "",
+          detectedLanguage: "",
+          photoPath: analysisPhoto.path
+        });
+      }, [analysisPhoto?.path, analysisTarget]);
+
       const openPicker = (ref) => ref.current?.click();
 
       const handlePick = async (event) => {
@@ -1718,6 +2049,7 @@
         try {
           const added = await addFiles(files);
           if (added.length > 0) {
+            setAnalysisIndex(0);
             setViewerIndex(0);
           }
         } finally {
@@ -1736,7 +2068,108 @@
         if (!photos.length) return;
         if (!window.confirm("사진을 모두 지울까요?")) return;
         const ok = await clearPhotos();
-        if (ok) setViewerIndex(null);
+        if (ok) {
+          setViewerIndex(null);
+          setAnalysisIndex(0);
+        }
+      };
+
+      const runAnalysis = async () => {
+        if (!analysisPhoto || analysisBusy) return;
+        setAnalysisBusy(true);
+        setAnalysisState({
+          status: "loading",
+          step: "사진을 불러오는 중",
+          progress: 8,
+          message: "선택한 사진을 읽어오는 중입니다.",
+          ocrText: "",
+          translatedText: "",
+          detectedLanguage: "",
+          photoPath: analysisPhoto.path
+        });
+
+        let objectUrl = "";
+        try {
+          const response = await fetch(analysisPhoto.publicUrl);
+          if (!response.ok) {
+            throw new Error("사진을 불러오지 못했어요.");
+          }
+          const blob = await response.blob();
+          objectUrl = URL.createObjectURL(blob);
+          setAnalysisState((current) => ({
+            ...current,
+            step: "글자를 읽는 중",
+            progress: 22,
+            message: "OCR 엔진이 사진 속 글자를 읽고 있어요."
+          }));
+
+          const ocr = await analyzeImageText(objectUrl, ({ step, progress }) => {
+            setAnalysisState((current) => ({
+              ...current,
+              step: step || current.step,
+              progress: Math.max(current.progress, progress ? Math.min(58, Math.round(progress * 0.58)) : current.progress)
+            }));
+          });
+          const ocrText = normalizeAnalysisText(ocr.text || "");
+          const detectedLanguage = detectTextScript(ocrText);
+
+          if (!ocrText) {
+            setAnalysisState({
+              status: "ready",
+              step: "텍스트 없음",
+              progress: 100,
+              message: "사진에서 읽을 만한 텍스트를 찾지 못했어요. 풍경 사진이면 다음 단계에서 이미지 설명용 AI를 붙일 수 있습니다.",
+              ocrText: "",
+              translatedText: "",
+              detectedLanguage: "",
+              photoPath: analysisPhoto.path
+            });
+            return;
+          }
+
+          setAnalysisState((current) => ({
+            ...current,
+            status: "loading",
+            step: "번역 중",
+            progress: 70,
+            message: "읽은 텍스트를 번역 서버로 보내는 중입니다.",
+            ocrText,
+            detectedLanguage
+          }));
+
+          const translated = await translateWithLibreTranslate(ocrText, analysisTarget, {
+            source: "auto",
+            endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
+            apiKey: analysisKey.trim()
+          });
+
+          const translatedText = normalizeAnalysisText(translated.translatedText || "");
+          setAnalysisState({
+            status: "ready",
+            step: "완료",
+            progress: 100,
+            message: translated.detectedLanguage
+              ? `번역 완료 · 감지 언어 ${languageLabel(translated.detectedLanguage)}`
+              : "번역 완료",
+            ocrText,
+            translatedText,
+            detectedLanguage: translated.detectedLanguage || detectedLanguage,
+            photoPath: analysisPhoto.path
+          });
+        } catch (error) {
+          setAnalysisState((current) => ({
+            ...current,
+            status: "error",
+            step: "실패",
+            progress: 100,
+            message: error?.message || "AI 분석 중 오류가 발생했어요. 번역 서버 주소나 API 키를 확인해 주세요.",
+            translatedText: current.translatedText || "",
+            photoPath: analysisPhoto.path
+          }));
+        } finally {
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          setAnalysisBusy(false);
+        }
       };
 
       useEffect(() => {
@@ -1752,8 +2185,115 @@
 
       return React.createElement("section", { className: "tab-page" },
         React.createElement("h2", { className: "section-title" }, "사진 갤러리"),
-        React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. 버킷은 공개(public)로 만들어두면 바로 보입니다."),
+        React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. AI 사진 번역은 OCR + 번역 서버를 연결해 같이 쓸 수 있습니다."),
         galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
+        React.createElement("div", { className: "ai-shell" },
+          React.createElement("div", { className: "ai-head" },
+            React.createElement("div", null,
+              React.createElement("p", { className: "ai-kicker" }, "AI 사진 번역"),
+              React.createElement("h3", null, "사진 속 글자를 읽고 하와이 여행용으로 바로 번역해요")
+            ),
+            React.createElement("span", { className: "ai-pill" }, "OCR + 번역")
+          ),
+          React.createElement("p", { className: "ai-copy" }, "메뉴판, 표지판, 안내문처럼 글자가 들어간 사진에 맞춘 기능입니다. 번역 서버 주소와 API 키는 필요하면 저장해 두고 다시 쓸 수 있어요."),
+          React.createElement("div", { className: "ai-controls" },
+            React.createElement("label", { className: "ai-field" },
+              React.createElement("span", null, "분석할 사진"),
+              React.createElement("select", {
+                value: analysisPhoto ? analysisIndex : 0,
+                onChange: (event) => setAnalysisIndex(Number(event.target.value))
+              },
+                photos.length === 0
+                  ? React.createElement("option", { value: 0 }, "사진이 없습니다")
+                  : photos.map((photo, index) => React.createElement("option", { key: photo.id, value: index }, `${index + 1}. ${photo.name}`))
+              )
+            ),
+            React.createElement("label", { className: "ai-field" },
+              React.createElement("span", null, "번역 대상"),
+              React.createElement("select", { value: analysisTarget, onChange: (event) => setAnalysisTarget(event.target.value) },
+                React.createElement("option", { value: "ko" }, "한국어"),
+                React.createElement("option", { value: "en" }, "영어"),
+                React.createElement("option", { value: "ja" }, "일본어"),
+                React.createElement("option", { value: "zh" }, "중국어")
+              )
+            )
+          ),
+          React.createElement("div", { className: "ai-controls" },
+            React.createElement("label", { className: "ai-field" },
+              React.createElement("span", null, "번역 API 주소"),
+              React.createElement("input", {
+                value: analysisUrl,
+                placeholder: DEFAULT_TRANSLATE_URL,
+                onChange: (event) => setAnalysisUrl(event.target.value)
+              })
+            ),
+            React.createElement("label", { className: "ai-field" },
+              React.createElement("span", null, "API Key"),
+              React.createElement("input", {
+                value: analysisKey,
+                type: "password",
+                placeholder: "없으면 self-hosted 서버용",
+                onChange: (event) => setAnalysisKey(event.target.value)
+              })
+            )
+          ),
+          React.createElement("div", { className: "ai-actions" },
+            React.createElement("button", {
+              className: "primary-action",
+              type: "button",
+              onClick: runAnalysis,
+              disabled: analysisBusy || !analysisPhoto
+            }, analysisBusy ? "AI 분석 중..." : "AI 분석 + 번역"),
+            React.createElement("button", {
+              className: "ghost-action",
+              type: "button",
+              onClick: () => {
+                if (!analysisPhoto) return;
+                setViewerIndex(analysisIndex);
+              },
+              disabled: !analysisPhoto
+            }, "선택 사진 열기")
+          ),
+          React.createElement("div", { className: "ai-status" },
+            React.createElement("div", { className: "ai-status-head" },
+              React.createElement("b", null, analysisPhoto ? analysisPhoto.name : "사진을 먼저 올려주세요"),
+              React.createElement("span", null, `${analysisState.step} · ${analysisState.progress}%`)
+            ),
+            React.createElement("div", { className: "ai-progress", "aria-hidden": "true" },
+              React.createElement("span", { style: { width: `${analysisState.progress}%` } })
+            ),
+            React.createElement("div", { className: "ai-inline" },
+              React.createElement("span", { className: "chip-like" }, `대상 ${languageLabel(analysisTarget)}`),
+              React.createElement("span", { className: "chip-like" }, `OCR ${analysisState.detectedLanguage ? languageLabel(analysisState.detectedLanguage) : "자동"}`),
+              React.createElement("span", { className: "chip-like" }, analysisUrl.trim() ? "번역 서버 저장됨" : "번역 서버 기본값")
+            ),
+            React.createElement("p", { className: "ai-muted" }, analysisState.message)
+          ),
+          React.createElement("div", { className: "ai-grid" },
+            React.createElement("article", { className: "ai-card ai-preview" },
+              analysisPhoto
+                ? React.createElement(React.Fragment, null,
+                  React.createElement("img", { src: analysisPhoto.publicUrl, alt: analysisPhoto.name }),
+                  React.createElement("div", { className: "ai-muted" }, `${analysisPhoto.name} · ${new Date(analysisPhoto.createdAt).toLocaleString("ko-KR")} · ${formatBytes(analysisPhoto.size)}`)
+                )
+                : React.createElement("div", { className: "ai-preview-empty" }, "사진을 올리면 AI 번역 미리보기가 여기에 들어갑니다.")
+            ),
+            React.createElement("article", { className: "ai-card ai-result" },
+              React.createElement("div", { className: "ai-result-group" },
+                React.createElement("b", null, "인식된 원문"),
+                React.createElement("p", null, analysisState.ocrText || (analysisBusy ? "읽는 중..." : "아직 분석 전입니다."))
+              ),
+              React.createElement("div", { className: "ai-result-group" },
+                React.createElement("b", null, "번역 결과"),
+                React.createElement("p", null, analysisState.translatedText || (analysisBusy ? "번역 중..." : "번역 결과가 여기에 표시됩니다."))
+              ),
+              React.createElement("div", { className: "ai-result-group" },
+                React.createElement("b", null, "설명"),
+                React.createElement("p", null, analysisState.message || "사진에서 글자를 찾고 번역합니다.")
+              )
+            )
+          )
+        ),
         React.createElement("div", { className: "gallery-shell" },
           React.createElement("div", { className: "gallery-top" },
             React.createElement("div", { className: "gallery-actions" },
@@ -1805,7 +2345,10 @@
                 className: "photo-card",
                 type: "button",
                 key: photo.id,
-                onClick: () => setViewerIndex(index)
+                onClick: () => {
+                  setAnalysisIndex(index);
+                  setViewerIndex(index);
+                }
               },
                 React.createElement("div", { className: "photo-frame" },
                   React.createElement("img", { src: photo.publicUrl, alt: photo.name, loading: "lazy" }),
