@@ -26,11 +26,16 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overscroll-behavior-y: none;
+    }
     body {
       margin: 0;
       font-family: "Manrope", "Segoe UI", sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
+      overscroll-behavior-y: none;
       background:
         radial-gradient(circle at 14% 8%, rgba(245, 191, 91, 0.3), transparent 18rem),
         radial-gradient(circle at 82% 0%, rgba(142, 223, 216, 0.55), transparent 22rem),
@@ -77,12 +82,20 @@
     .view-shell {
       position: relative;
       overflow: hidden;
+      touch-action: pan-y pinch-zoom;
+      overscroll-behavior: contain;
     }
     .view-panel {
       position: relative;
       padding-top: 2px;
-      touch-action: pan-y;
-      animation: panelFadeIn 340ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      touch-action: pan-y pinch-zoom;
+      will-change: transform, opacity;
+      transform: translate3d(var(--swipe-offset, 0px), 0, 0) scale(var(--swipe-scale, 1));
+      transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+      animation: panelFadeIn 560ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .view-panel.is-dragging {
+      transition: none;
     }
     .view-panel.swipe-forward {
       animation-name: slideForward;
@@ -93,7 +106,7 @@
     @keyframes panelFadeIn {
       from {
         opacity: 0;
-        transform: translateY(12px) scale(0.99);
+        transform: translate3d(0, 12px, 0) scale(0.995);
       }
       to {
         opacity: 1;
@@ -103,7 +116,7 @@
     @keyframes slideForward {
       from {
         opacity: 0;
-        transform: translate3d(24px, 0, 0) scale(0.99);
+        transform: translate3d(14px, 0, 0) scale(0.996);
       }
       to {
         opacity: 1;
@@ -113,7 +126,7 @@
     @keyframes slideBackward {
       from {
         opacity: 0;
-        transform: translate3d(-24px, 0, 0) scale(0.99);
+        transform: translate3d(-14px, 0, 0) scale(0.996);
       }
       to {
         opacity: 1;
@@ -172,6 +185,120 @@
         radial-gradient(circle at 48% 48%, rgba(246, 188, 85, 0.34) 0 34%, transparent 35%),
         radial-gradient(circle at 48% 48%, rgba(242, 118, 91, 0.22) 0 50%, transparent 51%);
       pointer-events: none;
+    }
+    .splash {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(142, 223, 216, 0.34), transparent 18rem),
+        radial-gradient(circle at 80% 24%, rgba(255, 138, 99, 0.26), transparent 16rem),
+        linear-gradient(180deg, rgba(245, 191, 91, 0.22), rgba(255, 253, 247, 0.94));
+      backdrop-filter: blur(20px);
+      animation: splashFadeOut 260ms ease forwards;
+      animation-delay: 1.12s;
+      pointer-events: none;
+    }
+    .splash-card {
+      width: min(100%, 390px);
+      padding: 24px 22px 22px;
+      border-radius: 32px;
+      background: rgba(255, 253, 248, 0.92);
+      border: 1px solid rgba(15, 70, 84, 0.12);
+      box-shadow: 0 24px 70px rgba(15, 65, 76, 0.18);
+      text-align: center;
+      transform-origin: center;
+      animation: splashRise 780ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .splash-mark {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 14px;
+      border-radius: 24px 24px 12px 12px;
+      background:
+        radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.9) 0 16%, transparent 17%),
+        linear-gradient(135deg, #7fded7 0%, #f7dc93 48%, #ff8b63 100%);
+      box-shadow: 0 14px 30px rgba(27, 138, 148, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .splash-mark::before,
+    .splash-mark::after {
+      content: "";
+      position: absolute;
+      inset: auto auto 10px 50%;
+      width: 120px;
+      height: 28px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: rgba(255, 253, 248, 0.78);
+    }
+    .splash-mark::after {
+      inset: auto auto 0 50%;
+      width: 92px;
+      height: 22px;
+      background: rgba(14, 89, 99, 0.34);
+    }
+    .splash-kicker {
+      margin: 0 0 8px;
+      color: var(--hibiscus);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .splash h2 {
+      margin: 0;
+      color: var(--aqua-dark);
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+    .splash p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .splash-bar {
+      width: min(160px, 52%);
+      height: 6px;
+      margin: 18px auto 0;
+      border-radius: 999px;
+      background: rgba(15, 70, 84, 0.08);
+      overflow: hidden;
+    }
+    .splash-bar::before {
+      content: "";
+      display: block;
+      width: 44%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--aqua), var(--coral));
+      animation: splashBar 1.05s ease-in-out infinite;
+    }
+    @keyframes splashRise {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes splashFadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+    @keyframes splashBar {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(122%); }
     }
     .eyebrow {
       margin: 6px 0 8px;
@@ -237,6 +364,7 @@
       box-shadow: 0 10px 24px rgba(18, 89, 103, 0.06);
       backdrop-filter: blur(18px);
       scrollbar-width: none;
+      overscroll-behavior: contain;
     }
     .tabbar::-webkit-scrollbar { display: none; }
     .tabbar::after {
@@ -288,6 +416,7 @@
       background: rgba(255, 253, 247, 0.8);
       border-block: 1px solid rgba(27, 138, 148, 0.12);
       scrollbar-width: none;
+      overscroll-behavior: contain;
     }
     .toolbar::-webkit-scrollbar { display: none; }
     .chip {
@@ -616,6 +745,7 @@
         radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.24), transparent 10rem),
         linear-gradient(180deg, #acdce0, #8fcfd3);
       scroll-behavior: smooth;
+      overscroll-behavior: contain;
     }
     .message-row {
       display: grid;
@@ -963,6 +1093,7 @@
     const PHOTO_BUCKET = "hawaii-photos";
     const PHOTO_FOLDER = "gallery";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+    const SPLASH_SEEN_KEY = "hawaii-splash-seen";
 
     const tabs = [
       ["schedule", "일정"],
@@ -1034,6 +1165,23 @@
 
     function mapUrl(query) {
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    }
+
+    function readSessionFlag(key) {
+      try {
+        return window.sessionStorage.getItem(key) === "1";
+      } catch {
+        return false;
+      }
+    }
+
+    function writeSessionFlag(key) {
+      try {
+        window.sessionStorage.setItem(key, "1");
+      } catch {
+        return false;
+      }
+      return true;
     }
 
     function formatBytes(bytes) {
@@ -1835,14 +1983,27 @@
     function App() {
       const [active, setActive] = useState("schedule");
       const [swipeDirection, setSwipeDirection] = useState("forward");
+      const [swipeOffset, setSwipeOffset] = useState(0);
+      const [isDragging, setIsDragging] = useState(false);
+      const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
       const touchStartRef = useRef(null);
       const activeIndex = tabIds.indexOf(active);
+      const splashTimerRef = useRef(null);
 
       const selectTab = (nextId) => {
         const nextIndex = tabIds.indexOf(nextId);
         if (nextIndex === -1 || nextIndex === activeIndex) return;
         setSwipeDirection(nextIndex > activeIndex ? "forward" : "backward");
         setActive(nextId);
+        setSwipeOffset(0);
+        setIsDragging(false);
+        touchStartRef.current = null;
+      };
+
+      const finishSplash = () => {
+        if (!showSplash) return;
+        writeSessionFlag(SPLASH_SEEN_KEY);
+        setShowSplash(false);
       };
 
       const handleTouchStart = (event) => {
@@ -1851,25 +2012,65 @@
         touchStartRef.current = {
           x: touch.clientX,
           y: touch.clientY,
-          startedAt: Date.now()
+          startedAt: Date.now(),
+          locked: false
         };
+        setIsDragging(false);
+        setSwipeOffset(0);
+      };
+
+      const handleTouchMove = (event) => {
+        const start = touchStartRef.current;
+        const touch = event.touches?.[0];
+        if (!start || !touch) return;
+        const dx = touch.clientX - start.x;
+        const dy = touch.clientY - start.y;
+        if (!start.locked) {
+          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
+        }
+        if (!start.locked) return;
+        if (event.cancelable) event.preventDefault();
+        setIsDragging(true);
+        const nextOffset = Math.max(-72, Math.min(72, dx * 0.28));
+        setSwipeOffset(nextOffset);
       };
 
       const handleTouchEnd = (event) => {
         const start = touchStartRef.current;
         const touch = event.changedTouches?.[0];
         touchStartRef.current = null;
-        if (!start || !touch) return;
+        if (!start || !touch) {
+          setIsDragging(false);
+          setSwipeOffset(0);
+          return;
+        }
         const dx = touch.clientX - start.x;
         const dy = touch.clientY - start.y;
         const dt = Date.now() - start.startedAt;
-        if (dt > 900) return;
-        if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy) * 1.15) return;
-        const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
-        if (nextIndex < 0 || nextIndex >= tabIds.length) return;
-        setSwipeDirection(dx < 0 ? "forward" : "backward");
-        setActive(tabIds[nextIndex]);
+        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
+        if (committed) {
+          const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
+          if (nextIndex >= 0 && nextIndex < tabIds.length) {
+            setSwipeDirection(dx < 0 ? "forward" : "backward");
+            setActive(tabIds[nextIndex]);
+          }
+        }
+        setIsDragging(false);
+        setSwipeOffset(0);
       };
+
+      useEffect(() => {
+        if (!showSplash) return;
+        if (splashTimerRef.current) window.clearTimeout(splashTimerRef.current);
+        splashTimerRef.current = window.setTimeout(() => {
+          writeSessionFlag(SPLASH_SEEN_KEY);
+          setShowSplash(false);
+        }, 1450);
+        return () => {
+          if (splashTimerRef.current) window.clearTimeout(splashTimerRef.current);
+        };
+      }, [showSplash]);
 
       const view = {
         schedule: React.createElement(Schedule),
@@ -1880,20 +2081,37 @@
         maps: React.createElement(Maps),
         notes: React.createElement(Notes),
       }[active];
-      return React.createElement("main", { className: "shell" },
-        React.createElement(Header),
-        React.createElement(Tabbar, { active, setActive: selectTab }),
-        React.createElement("div", {
-          className: "view-shell",
-          onTouchStart: handleTouchStart,
-          onTouchEnd: handleTouchEnd
-        },
+      return React.createElement(React.Fragment, null,
+        showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
+          React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
+            React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
+            React.createElement("p", { className: "splash-kicker" }, "Aloha · Hawaii Trip"),
+            React.createElement("h2", null, "Family Trip App"),
+            React.createElement("p", null, "조금 천천히, 조금 더 예쁘게. 스와이프와 사진을 위한 시작 화면입니다."),
+            React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
+          )
+        ) : null,
+        React.createElement("main", { className: "shell" },
+          React.createElement(Header),
+          React.createElement(Tabbar, { active, setActive: selectTab }),
           React.createElement("div", {
-            className: `view-panel ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-            key: active
-          }, view)
-        ),
-        React.createElement("footer", null, "React static app · board/chat synced with Supabase Realtime")
+            className: "view-shell",
+            onTouchStart: handleTouchStart,
+            onTouchMove: handleTouchMove,
+            onTouchEnd: handleTouchEnd,
+            onTouchCancel: handleTouchEnd
+          },
+            React.createElement("div", {
+              className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
+              key: active,
+              style: {
+                "--swipe-offset": `${swipeOffset}px`,
+                "--swipe-scale": isDragging ? "0.994" : "1"
+              }
+            }, view)
+          ),
+          React.createElement("footer", null, "React static app · board/chat synced with Supabase Realtime")
+        )
       );
     }
 
