@@ -145,10 +145,8 @@
       overflow: hidden;
       border-radius: 30px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
-        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.16), transparent 26%),
-        radial-gradient(circle at 78% 16%, rgba(255, 255, 255, 0.12), transparent 22%),
-        linear-gradient(135deg, #7fded7 0%, #f7dc93 42%, #ff8b63 100%);
+        linear-gradient(180deg, rgba(12, 42, 50, 0.08), rgba(12, 42, 50, 0.02)),
+        url("./assets/hawaii-hero.png") center center / cover no-repeat;
       box-shadow: var(--shadow);
       position: relative;
       isolation: isolate;
@@ -1128,6 +1126,120 @@
       border-radius: 18px;
       background: #dbeef0;
     }
+    .live-shell {
+      background:
+        radial-gradient(circle at top left, rgba(142, 223, 216, 0.14), transparent 11rem),
+        radial-gradient(circle at 90% 12%, rgba(255, 138, 99, 0.14), transparent 10rem),
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(239, 251, 249, 0.96));
+    }
+    .live-preview {
+      display: grid;
+      gap: 10px;
+    }
+    .live-stage {
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+      aspect-ratio: 4 / 3;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(142, 223, 216, 0.22), transparent 30%),
+        linear-gradient(135deg, #091a20 0%, #103844 56%, #0e5963 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .live-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: linear-gradient(135deg, rgba(10, 27, 33, 0.88), rgba(13, 89, 99, 0.6));
+    }
+    .live-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(8, 18, 22, 0.54), rgba(8, 18, 22, 0.82));
+    }
+    .live-placeholder strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.02rem;
+    }
+    .live-placeholder span {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .live-subtitle {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: grid;
+      gap: 5px;
+      padding: 12px 12px 10px;
+      border-radius: 18px;
+      background: rgba(7, 18, 22, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+    .live-subtitle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ce8df;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .live-subtitle strong {
+      font-size: 0.98rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .live-subtitle p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.8rem;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+    .live-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .live-meta .chip-like {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(17, 101, 112, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.73rem;
+      font-weight: 900;
+    }
+    .live-empty {
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px dashed rgba(17, 101, 112, 0.24);
+      background: rgba(245, 250, 249, 0.72);
+      color: var(--muted);
+      text-align: center;
+    }
     .ai-preview-empty {
       display: grid;
       place-items: center;
@@ -1474,7 +1586,7 @@
       return tesseractModulePromise;
     }
 
-    async function analyzeImageText(imageSrc, onProgress) {
+    async function createOcrWorker(onProgress) {
       const Tesseract = await loadTesseractModule();
       const worker = await Tesseract.createWorker("eng", 1, {
         logger: (message) => {
@@ -1488,8 +1600,14 @@
         }
       });
 
+      await worker.setParameters({ preserve_interword_spaces: "1" });
+      return worker;
+    }
+
+    async function analyzeImageText(imageSrc, onProgress) {
+      const worker = await createOcrWorker(onProgress);
+
       try {
-        await worker.setParameters({ preserve_interword_spaces: "1" });
         const result = await worker.recognize(imageSrc);
         return result?.data || {};
       } finally {
@@ -1973,11 +2091,268 @@
       });
       const [busy, setBusy] = useState(false);
       const [analysisBusy, setAnalysisBusy] = useState(false);
+      const [liveEnabled, setLiveEnabled] = useState(false);
+      const [liveState, setLiveState] = useState({
+        status: "idle",
+        step: "대기 중",
+        progress: 0,
+        message: "카메라를 켜면 실시간으로 영어 문자를 읽고 한국어로 번역합니다.",
+        sourceText: "",
+        translatedText: "",
+        detectedLanguage: "",
+        lastUpdatedAt: 0
+      });
       const cameraInputRef = useRef(null);
       const libraryInputRef = useRef(null);
+      const liveVideoRef = useRef(null);
+      const liveCanvasRef = useRef(null);
+      const liveWorkerRef = useRef(null);
+      const liveStreamRef = useRef(null);
+      const liveBusyRef = useRef(false);
+      const liveLoopRef = useRef(0);
+      const liveLastKeyRef = useRef("");
+      const liveConfigRef = useRef({
+        target: analysisTarget,
+        endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
+        apiKey: analysisKey.trim()
+      });
       const activePhoto = viewerIndex === null ? null : photos[viewerIndex];
       const analysisPhoto = photos[Math.min(analysisIndex, Math.max(photos.length - 1, 0))] || null;
       const totalBytes = photos.reduce((sum, photo) => sum + Number(photo.size || 0), 0);
+
+      useEffect(() => {
+        liveConfigRef.current = {
+          target: analysisTarget,
+          endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
+          apiKey: analysisKey.trim()
+        };
+      }, [analysisTarget, analysisUrl, analysisKey]);
+
+      useEffect(() => {
+        return () => {
+          liveBusyRef.current = false;
+          if (liveLoopRef.current) {
+            window.clearTimeout(liveLoopRef.current);
+            liveLoopRef.current = 0;
+          }
+          if (liveStreamRef.current) {
+            liveStreamRef.current.getTracks().forEach((track) => track.stop());
+            liveStreamRef.current = null;
+          }
+          if (liveVideoRef.current) {
+            liveVideoRef.current.srcObject = null;
+          }
+          if (liveWorkerRef.current) {
+            liveWorkerRef.current.terminate();
+            liveWorkerRef.current = null;
+          }
+        };
+      }, []);
+
+      useEffect(() => {
+        if (!liveEnabled || !navigator.mediaDevices?.getUserMedia) {
+          if (liveEnabled) {
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "지원 안 됨",
+              progress: 0,
+              message: "이 브라우저는 카메라 접근을 지원하지 않아요."
+            }));
+            setLiveEnabled(false);
+          }
+          return undefined;
+        }
+
+        let cancelled = false;
+
+        const stopStream = () => {
+          if (liveStreamRef.current) {
+            liveStreamRef.current.getTracks().forEach((track) => track.stop());
+            liveStreamRef.current = null;
+          }
+          if (liveVideoRef.current) {
+            liveVideoRef.current.srcObject = null;
+          }
+        };
+
+        const ensureWorker = async () => {
+          if (!liveWorkerRef.current) {
+            liveWorkerRef.current = await createOcrWorker((progress) => {
+              if (cancelled) return;
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: progress?.step ? `OCR ${progress.step}` : current.step,
+                progress: progress?.progress ? Math.min(64, Math.round(progress.progress * 0.64)) : current.progress,
+                message: "카메라 화면에서 영어 텍스트를 읽는 중입니다."
+              }));
+            });
+          }
+          return liveWorkerRef.current;
+        };
+
+        const captureFrame = async () => {
+          const video = liveVideoRef.current;
+          const canvas = liveCanvasRef.current;
+          if (!video || !canvas || video.readyState < 2 || !video.videoWidth || !video.videoHeight) {
+            return null;
+          }
+
+          const maxSide = 960;
+          const scale = Math.min(1, maxSide / Math.max(video.videoWidth, video.videoHeight));
+          canvas.width = Math.max(1, Math.round(video.videoWidth * scale));
+          canvas.height = Math.max(1, Math.round(video.videoHeight * scale));
+          const context = canvas.getContext("2d", { willReadFrequently: true });
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          return canvas;
+        };
+
+        const tick = async () => {
+          if (cancelled) return;
+          liveLoopRef.current = window.setTimeout(tick, 1400);
+          if (liveBusyRef.current) return;
+          liveBusyRef.current = true;
+
+          try {
+            const frame = await captureFrame();
+            if (!frame) {
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: "카메라 준비 중",
+                progress: current.progress || 8,
+                message: "카메라 화면이 준비되면 번역을 시작합니다."
+              }));
+              return;
+            }
+
+            setLiveState((current) => ({
+              ...current,
+              status: "loading",
+              step: "글자를 읽는 중",
+              progress: 20,
+              message: "카메라 프레임에서 읽을 수 있는 영어 문자를 찾는 중입니다."
+            }));
+
+            const worker = await ensureWorker();
+            const result = await worker.recognize(frame);
+            const rawText = normalizeAnalysisText(result?.data?.text || "");
+            const detectedLanguage = detectTextScript(rawText);
+
+            if (!rawText) {
+              liveLastKeyRef.current = "";
+              setLiveState((current) => ({
+                ...current,
+                status: "ready",
+                step: "텍스트 없음",
+                progress: 100,
+                message: "읽을 만한 문자를 찾지 못했어요. 글자에 더 가까이 비추거나 각도를 바꿔보세요.",
+                sourceText: "",
+                translatedText: "",
+                detectedLanguage: ""
+              }));
+              return;
+            }
+
+            const cacheKey = `${liveConfigRef.current.target}::${liveConfigRef.current.endpoint}::${rawText}`;
+            let translatedText = "";
+            if (liveLastKeyRef.current !== cacheKey) {
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: "번역 중",
+                progress: 72,
+                message: "읽은 영어 문장을 한국어로 번역하는 중입니다."
+              }));
+              const translated = await translateWithLibreTranslate(rawText, liveConfigRef.current.target, {
+                source: "auto",
+                endpoint: liveConfigRef.current.endpoint,
+                apiKey: liveConfigRef.current.apiKey
+              });
+              translatedText = normalizeAnalysisText(translated.translatedText || "");
+              liveLastKeyRef.current = cacheKey;
+            }
+
+            setLiveState((current) => ({
+              ...current,
+              status: "ready",
+              step: "완료",
+              progress: 100,
+              message: `실시간 번역 완료${detectedLanguage ? ` · 감지 언어 ${languageLabel(detectedLanguage)}` : ""}`,
+              sourceText: rawText,
+              translatedText: translatedText || current.translatedText,
+              detectedLanguage,
+              lastUpdatedAt: Date.now()
+            }));
+          } catch (error) {
+            if (cancelled) return;
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "실패",
+              progress: 100,
+              message: error?.message || "실시간 번역 중 문제가 생겼어요. 카메라 권한과 번역 서버를 확인해 주세요."
+            }));
+          } finally {
+            liveBusyRef.current = false;
+          }
+        };
+
+        (async () => {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: { ideal: "environment" },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+              },
+              audio: false
+            });
+            if (cancelled) {
+              stream.getTracks().forEach((track) => track.stop());
+              return;
+            }
+            liveStreamRef.current = stream;
+            if (liveVideoRef.current) {
+              liveVideoRef.current.srcObject = stream;
+              await liveVideoRef.current.play().catch(() => {});
+            }
+            setLiveState((current) => ({
+              ...current,
+              status: "ready",
+              step: "카메라 연결됨",
+              progress: 12,
+              message: "카메라가 열렸어요. 화면 속 영어를 읽고 한국어로 번역합니다."
+            }));
+            tick();
+          } catch (error) {
+            if (cancelled) return;
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "권한 실패",
+              progress: 0,
+              message: error?.message || "카메라를 열 수 없어요."
+            }));
+            setLiveEnabled(false);
+          }
+        })();
+
+        return () => {
+          cancelled = true;
+          if (liveLoopRef.current) {
+            window.clearTimeout(liveLoopRef.current);
+            liveLoopRef.current = 0;
+          }
+          stopStream();
+          if (liveWorkerRef.current) {
+            liveWorkerRef.current.terminate();
+            liveWorkerRef.current = null;
+          }
+          liveBusyRef.current = false;
+        };
+      }, [liveEnabled]);
 
       useEffect(() => {
         if (viewerIndex === null) return;
@@ -2187,6 +2562,93 @@
         React.createElement("h2", { className: "section-title" }, "사진 갤러리"),
         React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. AI 사진 번역은 OCR + 번역 서버를 연결해 같이 쓸 수 있습니다."),
         galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
+        React.createElement("div", { className: "ai-shell live-shell" },
+          React.createElement("div", { className: "ai-head" },
+            React.createElement("div", null,
+              React.createElement("p", { className: "ai-kicker" }, "실시간 카메라 번역"),
+              React.createElement("h3", null, "카메라를 켠 채로 영어 문자를 읽어서 한국어로 번역해요")
+            ),
+            React.createElement("span", { className: "ai-pill" }, "Live OCR")
+          ),
+          React.createElement("p", { className: "ai-copy" }, "표지판, 메뉴판, 안내문처럼 카메라에 보이는 영어 텍스트를 주기적으로 읽어서 번역합니다. 같은 문구는 캐시해서 번역 요청을 줄입니다."),
+          React.createElement("div", { className: "ai-actions" },
+            React.createElement("button", {
+              className: "primary-action",
+              type: "button",
+              onClick: () => {
+                liveLastKeyRef.current = "";
+                setLiveState((current) => ({
+                  ...current,
+                  status: "loading",
+                  step: "카메라 요청 중",
+                  progress: 4,
+                  message: "카메라 권한을 요청하고 있어요."
+                }));
+                setLiveEnabled(true);
+              },
+              disabled: liveEnabled
+            }, liveEnabled ? "카메라 켜짐" : "실시간 번역 시작"),
+            React.createElement("button", {
+              className: "ghost-action",
+              type: "button",
+              onClick: () => {
+                liveLastKeyRef.current = "";
+                setLiveEnabled(false);
+                setLiveState((current) => ({
+                  ...current,
+                  status: "idle",
+                  step: "중지됨",
+                  progress: 0,
+                  message: "카메라 실시간 번역을 중지했습니다."
+                }));
+              },
+              disabled: !liveEnabled
+            }, "중지")
+          ),
+          React.createElement("div", { className: "live-preview" },
+            React.createElement("div", { className: "live-stage" },
+              React.createElement("video", {
+                ref: liveVideoRef,
+                className: "live-video",
+                autoPlay: true,
+                muted: true,
+                playsInline: true
+              }),
+              !liveEnabled ? React.createElement("div", { className: "live-placeholder" },
+                React.createElement("div", null,
+                  React.createElement("strong", null, "카메라가 아직 꺼져 있어요"),
+                  React.createElement("span", null, "실시간 번역을 시작하면 카메라 화면 위에 번역 자막이 붙습니다.")
+                )
+              ) : null,
+              React.createElement("div", { className: "live-subtitle" },
+                React.createElement("span", { className: "live-subtitle-label" }, "Live Translation"),
+                React.createElement("strong", null, liveState.translatedText || (liveEnabled ? "번역 결과를 기다리는 중..." : "카메라를 시작하세요")),
+                React.createElement("p", null, liveState.sourceText || liveState.message)
+              )
+            ),
+            React.createElement("div", { className: "live-meta" },
+              React.createElement("span", { className: "chip-like" }, `상태 ${liveState.step}`),
+              React.createElement("span", { className: "chip-like" }, `대상 ${languageLabel(analysisTarget)}`),
+              React.createElement("span", { className: "chip-like" }, liveState.detectedLanguage ? `OCR ${languageLabel(liveState.detectedLanguage)}` : "OCR 자동"),
+              React.createElement("span", { className: "chip-like" }, `${liveState.progress}%`)
+            )
+          ),
+          React.createElement("div", { className: "ai-status" },
+            React.createElement("div", { className: "ai-status-head" },
+              React.createElement("b", null, liveEnabled ? "실시간 번역 중" : "실시간 번역 대기"),
+              React.createElement("span", null, liveState.lastUpdatedAt ? `${new Date(liveState.lastUpdatedAt).toLocaleTimeString("ko-KR")}` : liveState.step)
+            ),
+            React.createElement("div", { className: "ai-progress", "aria-hidden": "true" },
+              React.createElement("span", { style: { width: `${liveState.progress}%` } })
+            ),
+            React.createElement("p", { className: "ai-muted" }, liveState.message)
+          ),
+          React.createElement("canvas", {
+            ref: liveCanvasRef,
+            hidden: true,
+            "aria-hidden": "true"
+          })
+        ),
         React.createElement("div", { className: "ai-shell" },
           React.createElement("div", { className: "ai-head" },
             React.createElement("div", null,
