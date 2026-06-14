@@ -1650,17 +1650,20 @@
         .trim();
     }
 
-    function normalizeOcrStabilityText(text) {
+    function extractEnglishOcrText(text) {
       return String(text || "")
         .toLowerCase()
-        .replace(/[^0-9a-z\uac00-\ud7a3\u3040-\u30ff\u4e00-\u9fff]+/g, "")
-        .trim();
+        .match(/[0-9a-z]+(?:'[0-9a-z]+)?/g)?.join(" ") || "";
+    }
+
+    function normalizeOcrStabilityText(text) {
+      return extractEnglishOcrText(text).replace(/\s+/g, "");
     }
 
     function extractOcrTokens(text) {
       return String(text || "")
         .toLowerCase()
-        .match(/[0-9a-z\uac00-\ud7a3\u3040-\u30ff\u4e00-\u9fff]+/g) || [];
+        .match(/[0-9a-z]+(?:'[0-9a-z]+)?/g) || [];
     }
 
     function isSimilarOcrText(previousText, nextText) {
@@ -1692,15 +1695,9 @@
 
     function detectTextScript(text) {
       const value = String(text || "");
-      const counts = {
-        ko: (value.match(/[\uac00-\ud7a3]/g) || []).length,
-        ja: (value.match(/[\u3040-\u30ff]/g) || []).length,
-        zh: (value.match(/[\u4e00-\u9fff]/g) || []).length,
-        latin: (value.match(/[A-Za-z]/g) || []).length,
-      };
-      const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
-      if (!winner || winner[1] === 0) return "unknown";
-      return winner[0];
+      const latinCount = (value.match(/[A-Za-z]/g) || []).length;
+      if (latinCount === 0) return "unknown";
+      return "en";
     }
 
     function languageLabel(code) {
@@ -2382,11 +2379,12 @@
             const worker = await ensureWorker();
             const result = await worker.recognize(frame);
             const rawText = normalizeAnalysisText(result?.data?.text || "");
-            const stabilityText = normalizeOcrStabilityText(rawText);
+            const englishText = extractEnglishOcrText(rawText);
+            const stabilityText = normalizeOcrStabilityText(englishText);
             const confidence = Number(result?.data?.confidence ?? 0);
-            const detectedLanguage = detectTextScript(rawText);
+            const detectedLanguage = detectTextScript(englishText);
 
-            if (!rawText) {
+            if (!englishText) {
               liveStableRef.current = { text: "", count: 0 };
               liveLastKeyRef.current = "";
               setLiveState((current) => ({
@@ -2394,7 +2392,7 @@
                 status: "ready",
                 step: "텍스트 없음",
                 progress: 100,
-                message: "읽을 만한 문자를 찾지 못했어요. 글자에 더 가까이 비추거나 각도를 바꿔보세요.",
+                message: "영어 문자를 찾지 못했어요. 영어 표지판만 번역합니다.",
                 sourceText: "",
                 translatedText: "",
                 detectedLanguage: ""
@@ -2416,7 +2414,7 @@
                 step: "안정화 중",
                 progress: 48,
                 message: "같은 문장을 한 번 더 확인하는 중입니다. 조금만 더 기다려주세요.",
-                sourceText: rawText,
+                sourceText: englishText,
                 translatedText: current.translatedText,
                 detectedLanguage,
                 lastUpdatedAt: Date.now()
@@ -2434,7 +2432,7 @@
                 progress: 72,
                 message: "읽은 영어 문장을 한국어로 번역하는 중입니다."
               }));
-              const translated = await translateText(rawText, liveConfigRef.current.target, {
+              const translated = await translateText(englishText, liveConfigRef.current.target, {
                 source: LIVE_TRANSLATE_SOURCE
               });
               translatedText = normalizeAnalysisText(translated.translatedText || "");
@@ -2447,7 +2445,7 @@
               step: "완료",
               progress: 100,
               message: `영어→한국어 실시간 번역 완료${detectedLanguage ? ` · OCR ${languageLabel(detectedLanguage)}` : ""}`,
-              sourceText: rawText,
+              sourceText: englishText,
               translatedText: translatedText || current.translatedText,
               detectedLanguage,
               lastUpdatedAt: Date.now()
@@ -2676,14 +2674,15 @@
             }));
           });
           const ocrText = normalizeAnalysisText(ocr.text || "");
-          const detectedLanguage = detectTextScript(ocrText);
+          const englishText = extractEnglishOcrText(ocrText);
+          const detectedLanguage = detectTextScript(englishText);
 
-          if (!ocrText) {
+          if (!englishText) {
             setAnalysisState({
               status: "ready",
               step: "텍스트 없음",
               progress: 100,
-              message: "사진에서 읽을 만한 텍스트를 찾지 못했어요. 풍경 사진이면 다음 단계에서 이미지 설명용 AI를 붙일 수 있습니다.",
+              message: "사진에서 읽을 만한 영어 텍스트를 찾지 못했어요.",
               ocrText: "",
               translatedText: "",
               detectedLanguage: "",
@@ -2698,11 +2697,11 @@
             step: "번역 중",
             progress: 70,
             message: "읽은 텍스트를 Google 번역으로 보내는 중입니다.",
-            ocrText,
+            ocrText: englishText,
             detectedLanguage
           }));
 
-          const translated = await translateText(ocrText, analysisTarget, {
+          const translated = await translateText(englishText, analysisTarget, {
             source: "auto"
           });
 
@@ -2714,7 +2713,7 @@
             message: translated.detectedLanguage
               ? `번역 완료 · 감지 언어 ${languageLabel(translated.detectedLanguage)}`
               : "번역 완료",
-            ocrText,
+            ocrText: englishText,
             translatedText,
             detectedLanguage: translated.detectedLanguage || detectedLanguage,
             photoPath: analysisPhoto.path
