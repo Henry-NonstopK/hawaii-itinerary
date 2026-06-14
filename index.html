@@ -1518,9 +1518,6 @@
     const PHOTO_FOLDER = "gallery";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
-    const AI_TRANSLATE_URL_KEY = "hawaii-ai-translate-url";
-    const AI_TRANSLATE_KEY_KEY = "hawaii-ai-translate-key";
-    const DEFAULT_TRANSLATE_URL = "https://libretranslate.com/translate";
     const LIVE_TRANSLATE_SOURCE = "en";
     const LIVE_TRANSLATE_TARGET = "ko";
 
@@ -1713,29 +1710,6 @@
       }
     }
 
-    async function translateWithLibreTranslate(text, target, { source = "auto", endpoint, apiKey } = {}) {
-      const res = await fetch(endpoint || DEFAULT_TRANSLATE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          source,
-          target,
-          format: "text",
-          api_key: apiKey || undefined
-        })
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data?.error || "번역 서버가 응답하지 않았어요.");
-      }
-      return {
-        translatedText: data?.translatedText || "",
-        detectedLanguage: data?.detectedLanguage?.language || "",
-        confidence: data?.detectedLanguage?.confidence ?? null
-      };
-    }
-
     async function translateWithGoogleTranslate(text, source, target) {
       const url = new URL("https://translate.googleapis.com/translate_a/single");
       url.searchParams.set("client", "gtx");
@@ -1748,7 +1722,7 @@
         method: "GET"
       });
       if (!res.ok) {
-        throw new Error("번역 서버가 응답하지 않았어요.");
+        throw new Error("Google 번역이 응답하지 않았어요.");
       }
       const data = await res.json().catch(() => null);
       const translatedText = Array.isArray(data?.[0])
@@ -1761,16 +1735,8 @@
       };
     }
 
-    async function translateText(text, target, { source = "auto", endpoint, apiKey } = {}) {
-      try {
-        return await translateWithLibreTranslate(text, target, { source, endpoint, apiKey });
-      } catch (error) {
-        const fallback = await translateWithGoogleTranslate(text, source, target);
-        if (fallback.translatedText) {
-          return fallback;
-        }
-        throw error;
-      }
+    async function translateText(text, target, { source = "auto" } = {}) {
+      return translateWithGoogleTranslate(text, source, target);
     }
 
     function readFileAsDataUrl(file) {
@@ -2212,8 +2178,6 @@
       const [viewerIndex, setViewerIndex] = useState(null);
       const [analysisIndex, setAnalysisIndex] = useState(0);
       const [analysisTarget, setAnalysisTarget] = useState("ko");
-      const [analysisUrl, setAnalysisUrl] = useState(() => readStoredValue(AI_TRANSLATE_URL_KEY, DEFAULT_TRANSLATE_URL));
-      const [analysisKey, setAnalysisKey] = useState(() => readStoredValue(AI_TRANSLATE_KEY_KEY, ""));
       const [analysisState, setAnalysisState] = useState({
         status: "idle",
         step: "대기 중",
@@ -2249,9 +2213,7 @@
       const liveLastKeyRef = useRef("");
       const liveStableRef = useRef({ text: "", count: 0 });
       const liveConfigRef = useRef({
-        target: analysisTarget,
-        endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
-        apiKey: analysisKey.trim()
+        target: LIVE_TRANSLATE_TARGET
       });
       const activePhoto = viewerIndex === null ? null : photos[viewerIndex];
       const analysisPhoto = photos[Math.min(analysisIndex, Math.max(photos.length - 1, 0))] || null;
@@ -2259,11 +2221,9 @@
 
       useEffect(() => {
         liveConfigRef.current = {
-          target: LIVE_TRANSLATE_TARGET,
-          endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
-          apiKey: analysisKey.trim()
+          target: LIVE_TRANSLATE_TARGET
         };
-      }, [analysisUrl, analysisKey]);
+      }, []);
 
       useEffect(() => {
         if (!liveModalOpen) {
@@ -2421,7 +2381,7 @@
               return;
             }
 
-            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${liveConfigRef.current.endpoint}::${rawText}`;
+            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${rawText}`;
             let translatedText = "";
             if (liveLastKeyRef.current !== cacheKey) {
               setLiveState((current) => ({
@@ -2432,9 +2392,7 @@
                 message: "읽은 영어 문장을 한국어로 번역하는 중입니다."
               }));
               const translated = await translateText(rawText, liveConfigRef.current.target, {
-                source: LIVE_TRANSLATE_SOURCE,
-                endpoint: liveConfigRef.current.endpoint,
-                apiKey: liveConfigRef.current.apiKey
+                source: LIVE_TRANSLATE_SOURCE
               });
               translatedText = normalizeAnalysisText(translated.translatedText || "");
               liveLastKeyRef.current = cacheKey;
@@ -2458,7 +2416,7 @@
               status: "error",
               step: "실패",
               progress: 100,
-              message: error?.message || "실시간 번역 중 문제가 생겼어요. 카메라 권한과 번역 서버를 확인해 주세요."
+              message: error?.message || "실시간 번역 중 문제가 생겼어요. 카메라 권한을 확인해 주세요."
             }));
           } finally {
             liveBusyRef.current = false;
@@ -2559,14 +2517,6 @@
           setAnalysisIndex(photos.length - 1);
         }
       }, [analysisIndex, photos.length]);
-
-      useEffect(() => {
-        writeStoredValue(AI_TRANSLATE_URL_KEY, analysisUrl.trim() || DEFAULT_TRANSLATE_URL);
-      }, [analysisUrl]);
-
-      useEffect(() => {
-        writeStoredValue(AI_TRANSLATE_KEY_KEY, analysisKey.trim());
-      }, [analysisKey]);
 
       useEffect(() => {
         if (!analysisPhoto) return;
@@ -2704,15 +2654,13 @@
             status: "loading",
             step: "번역 중",
             progress: 70,
-            message: "읽은 텍스트를 번역 서버로 보내는 중입니다.",
+            message: "읽은 텍스트를 Google 번역으로 보내는 중입니다.",
             ocrText,
             detectedLanguage
           }));
 
           const translated = await translateText(ocrText, analysisTarget, {
-            source: "auto",
-            endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
-            apiKey: analysisKey.trim()
+            source: "auto"
           });
 
           const translatedText = normalizeAnalysisText(translated.translatedText || "");
@@ -2734,7 +2682,7 @@
             status: "error",
             step: "실패",
             progress: 100,
-            message: error?.message || "AI 분석 중 오류가 발생했어요. 번역 서버 주소나 API 키를 확인해 주세요.",
+            message: error?.message || "AI 분석 중 오류가 발생했어요. 번역 기능을 다시 시도해 주세요.",
             translatedText: current.translatedText || "",
             photoPath: analysisPhoto.path
           }));
@@ -2915,7 +2863,7 @@
             ),
             React.createElement("span", { className: "ai-pill" }, "OCR + 번역")
           ),
-          React.createElement("p", { className: "ai-copy" }, "메뉴판, 표지판, 안내문처럼 글자가 들어간 사진에 맞춘 기능입니다. 번역 서버 주소와 API 키는 필요하면 저장해 두고 다시 쓸 수 있어요."),
+          React.createElement("p", { className: "ai-copy" }, "메뉴판, 표지판, 안내문처럼 글자가 들어간 사진에 맞춘 기능입니다. 번역은 Google 번역 API를 바로 사용합니다."),
           React.createElement("div", { className: "ai-controls" },
             React.createElement("label", { className: "ai-field" },
               React.createElement("span", null, "분석할 사진"),
@@ -2940,20 +2888,10 @@
           ),
           React.createElement("div", { className: "ai-controls" },
             React.createElement("label", { className: "ai-field" },
-              React.createElement("span", null, "번역 API 주소"),
+              React.createElement("span", null, "번역 방식"),
               React.createElement("input", {
-                value: analysisUrl,
-                placeholder: DEFAULT_TRANSLATE_URL,
-                onChange: (event) => setAnalysisUrl(event.target.value)
-              })
-            ),
-            React.createElement("label", { className: "ai-field" },
-              React.createElement("span", null, "API Key"),
-              React.createElement("input", {
-                value: analysisKey,
-                type: "password",
-                placeholder: "없으면 self-hosted 서버용",
-                onChange: (event) => setAnalysisKey(event.target.value)
+                value: "Google 번역 API",
+                readOnly: true
               })
             )
           ),
@@ -2985,7 +2923,7 @@
             React.createElement("div", { className: "ai-inline" },
               React.createElement("span", { className: "chip-like" }, `대상 ${languageLabel(analysisTarget)}`),
               React.createElement("span", { className: "chip-like" }, `OCR ${analysisState.detectedLanguage ? languageLabel(analysisState.detectedLanguage) : "자동"}`),
-              React.createElement("span", { className: "chip-like" }, analysisUrl.trim() ? "번역 서버 저장됨" : "번역 서버 기본값")
+              React.createElement("span", { className: "chip-like" }, "번역 방식 Google API")
             ),
             React.createElement("p", { className: "ai-muted" }, analysisState.message)
           ),
