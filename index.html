@@ -1650,6 +1650,13 @@
         .trim();
     }
 
+    function normalizeOcrStabilityText(text) {
+      return String(text || "")
+        .toLowerCase()
+        .replace(/[^0-9a-z\uac00-\ud7a3\u3040-\u30ff\u4e00-\u9fff]+/g, "")
+        .trim();
+    }
+
     function detectTextScript(text) {
       const value = String(text || "");
       const counts = {
@@ -2342,6 +2349,7 @@
             const worker = await ensureWorker();
             const result = await worker.recognize(frame);
             const rawText = normalizeAnalysisText(result?.data?.text || "");
+            const stabilityText = normalizeOcrStabilityText(rawText);
             const detectedLanguage = detectTextScript(rawText);
 
             if (!rawText) {
@@ -2361,10 +2369,10 @@
             }
 
             const stable = liveStableRef.current;
-            if (stable.text === rawText) {
+            if (stable.text === stabilityText) {
               stable.count += 1;
             } else {
-              liveStableRef.current = { text: rawText, count: 1 };
+              liveStableRef.current = { text: stabilityText, count: 1 };
             }
             if (liveStableRef.current.count < 2) {
               setLiveState((current) => ({
@@ -2381,7 +2389,7 @@
               return;
             }
 
-            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${rawText}`;
+            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${stabilityText}`;
             let translatedText = "";
             if (liveLastKeyRef.current !== cacheKey) {
               setLiveState((current) => ({
