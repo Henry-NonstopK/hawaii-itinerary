@@ -1657,6 +1657,39 @@
         .trim();
     }
 
+    function extractOcrTokens(text) {
+      return String(text || "")
+        .toLowerCase()
+        .match(/[0-9a-z\uac00-\ud7a3\u3040-\u30ff\u4e00-\u9fff]+/g) || [];
+    }
+
+    function isSimilarOcrText(previousText, nextText) {
+      const previous = normalizeOcrStabilityText(previousText);
+      const next = normalizeOcrStabilityText(nextText);
+      if (!previous || !next) return false;
+      if (previous === next) return true;
+      if ((previous.includes(next) || next.includes(previous)) && Math.min(previous.length, next.length) >= 8) {
+        return true;
+      }
+
+      const previousTokens = extractOcrTokens(previousText);
+      const nextTokens = extractOcrTokens(nextText);
+      if (!previousTokens.length || !nextTokens.length) return false;
+
+      const previousSet = new Set(previousTokens);
+      const nextSet = new Set(nextTokens);
+      let shared = 0;
+      for (const token of previousSet) {
+        if (nextSet.has(token)) shared += 1;
+      }
+
+      const overlap = shared / Math.max(previousSet.size, nextSet.size);
+      const previousLength = previousTokens.join("").length;
+      const nextLength = nextTokens.join("").length;
+      const lengthGap = Math.abs(previousLength - nextLength) / Math.max(previousLength, nextLength);
+      return overlap >= 0.6 || (overlap >= 0.4 && lengthGap <= 0.35);
+    }
+
     function detectTextScript(text) {
       const value = String(text || "");
       const counts = {
@@ -2350,6 +2383,7 @@
             const result = await worker.recognize(frame);
             const rawText = normalizeAnalysisText(result?.data?.text || "");
             const stabilityText = normalizeOcrStabilityText(rawText);
+            const confidence = Number(result?.data?.confidence ?? 0);
             const detectedLanguage = detectTextScript(rawText);
 
             if (!rawText) {
@@ -2369,12 +2403,13 @@
             }
 
             const stable = liveStableRef.current;
-            if (stable.text === stabilityText) {
+            if (isSimilarOcrText(stable.text, stabilityText)) {
               stable.count += 1;
             } else {
               liveStableRef.current = { text: stabilityText, count: 1 };
             }
-            if (liveStableRef.current.count < 2) {
+            const readyToTranslate = liveStableRef.current.count >= 2 || (confidence >= 55 && stabilityText.length >= 10);
+            if (!readyToTranslate) {
               setLiveState((current) => ({
                 ...current,
                 status: "ready",
