@@ -1147,21 +1147,22 @@
       position: fixed;
       inset: 0;
       z-index: 80;
-      display: grid;
-      place-items: center;
-      padding: 16px;
+      display: block;
       background: rgba(8, 18, 22, 0.58);
       backdrop-filter: blur(14px);
     }
     .live-modal-card {
-      width: min(100%, 780px);
+      width: 100vw;
+      height: 100svh;
       display: grid;
-      gap: 14px;
+      grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+      gap: 12px;
       padding: 16px;
-      border-radius: 28px;
-      background: rgba(255, 253, 248, 0.98);
-      border: 1px solid rgba(15, 70, 84, 0.12);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      border-radius: 0;
+      background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(246, 250, 249, 0.98));
+      border: 0;
+      box-shadow: none;
+      overflow: hidden;
     }
     .live-modal-head {
       display: flex;
@@ -1186,12 +1187,14 @@
     .live-preview {
       display: grid;
       gap: 10px;
+      min-height: 0;
     }
     .live-stage {
       position: relative;
       overflow: hidden;
-      min-height: 240px;
-      aspect-ratio: 4 / 3;
+      min-height: 0;
+      aspect-ratio: auto;
+      height: 100%;
       border-radius: 22px;
       background:
         radial-gradient(circle at 18% 18%, rgba(142, 223, 216, 0.18), transparent 30%),
@@ -1460,13 +1463,6 @@
       .ai-grid {
         grid-template-columns: 1fr;
       }
-      .live-modal {
-        padding: 12px;
-      }
-      .live-modal-card {
-        width: 100%;
-        padding: 12px;
-      }
       .chat-compose .chat-send {
         min-width: 88px;
       }
@@ -1525,6 +1521,8 @@
     const AI_TRANSLATE_URL_KEY = "hawaii-ai-translate-url";
     const AI_TRANSLATE_KEY_KEY = "hawaii-ai-translate-key";
     const DEFAULT_TRANSLATE_URL = "https://libretranslate.com/translate";
+    const LIVE_TRANSLATE_SOURCE = "en";
+    const LIVE_TRANSLATE_TARGET = "ko";
 
     let tesseractModulePromise = null;
 
@@ -1736,6 +1734,43 @@
         detectedLanguage: data?.detectedLanguage?.language || "",
         confidence: data?.detectedLanguage?.confidence ?? null
       };
+    }
+
+    async function translateWithGoogleTranslate(text, source, target) {
+      const url = new URL("https://translate.googleapis.com/translate_a/single");
+      url.searchParams.set("client", "gtx");
+      url.searchParams.set("sl", source || "auto");
+      url.searchParams.set("tl", target);
+      url.searchParams.set("dt", "t");
+      url.searchParams.set("q", text);
+
+      const res = await fetch(url.toString(), {
+        method: "GET"
+      });
+      if (!res.ok) {
+        throw new Error("번역 서버가 응답하지 않았어요.");
+      }
+      const data = await res.json().catch(() => null);
+      const translatedText = Array.isArray(data?.[0])
+        ? data[0].map((part) => part?.[0] || "").join("")
+        : "";
+      return {
+        translatedText,
+        detectedLanguage: data?.[2] || "",
+        confidence: null
+      };
+    }
+
+    async function translateText(text, target, { source = "auto", endpoint, apiKey } = {}) {
+      try {
+        return await translateWithLibreTranslate(text, target, { source, endpoint, apiKey });
+      } catch (error) {
+        const fallback = await translateWithGoogleTranslate(text, source, target);
+        if (fallback.translatedText) {
+          return fallback;
+        }
+        throw error;
+      }
     }
 
     function readFileAsDataUrl(file) {
@@ -2224,11 +2259,11 @@
 
       useEffect(() => {
         liveConfigRef.current = {
-          target: analysisTarget,
+          target: LIVE_TRANSLATE_TARGET,
           endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
           apiKey: analysisKey.trim()
         };
-      }, [analysisTarget, analysisUrl, analysisKey]);
+      }, [analysisUrl, analysisKey]);
 
       useEffect(() => {
         if (!liveModalOpen) {
@@ -2386,18 +2421,18 @@
               return;
             }
 
-            const cacheKey = `${liveConfigRef.current.target}::${liveConfigRef.current.endpoint}::${rawText}`;
+            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${liveConfigRef.current.endpoint}::${rawText}`;
             let translatedText = "";
             if (liveLastKeyRef.current !== cacheKey) {
               setLiveState((current) => ({
                 ...current,
                 status: "loading",
-                step: "번역 중",
+                step: "영어→한국어 번역 중",
                 progress: 72,
                 message: "읽은 영어 문장을 한국어로 번역하는 중입니다."
               }));
-              const translated = await translateWithLibreTranslate(rawText, liveConfigRef.current.target, {
-                source: "auto",
+              const translated = await translateText(rawText, liveConfigRef.current.target, {
+                source: LIVE_TRANSLATE_SOURCE,
                 endpoint: liveConfigRef.current.endpoint,
                 apiKey: liveConfigRef.current.apiKey
               });
@@ -2410,7 +2445,7 @@
               status: "ready",
               step: "완료",
               progress: 100,
-              message: `실시간 번역 완료${detectedLanguage ? ` · 감지 언어 ${languageLabel(detectedLanguage)}` : ""}`,
+              message: `영어→한국어 실시간 번역 완료${detectedLanguage ? ` · OCR ${languageLabel(detectedLanguage)}` : ""}`,
               sourceText: rawText,
               translatedText: translatedText || current.translatedText,
               detectedLanguage,
@@ -2455,7 +2490,7 @@
               status: "ready",
               step: "카메라 연결됨",
               progress: 12,
-              message: "카메라가 열렸어요. 화면 속 영어를 읽고 한국어로 번역합니다."
+              message: "카메라가 열렸어요. 영어를 읽어서 한국어로 번역합니다."
             }));
             tick();
           } catch (error) {
@@ -2551,12 +2586,12 @@
       const openLiveModal = () => {
         liveStableRef.current = { text: "", count: 0 };
         liveLastKeyRef.current = "";
-        setLiveEnabled(false);
+        setLiveEnabled(true);
         setLiveState({
-          status: "idle",
-          step: "대기 중",
-          progress: 0,
-          message: "카메라를 켜면 실시간으로 영어 문자를 읽고 한국어로 번역합니다.",
+          status: "loading",
+          step: "카메라 요청 중",
+          progress: 4,
+          message: "카메라 권한을 요청하고 있어요.",
           sourceText: "",
           translatedText: "",
           detectedLanguage: "",
@@ -2674,7 +2709,7 @@
             detectedLanguage
           }));
 
-          const translated = await translateWithLibreTranslate(ocrText, analysisTarget, {
+          const translated = await translateText(ocrText, analysisTarget, {
             source: "auto",
             endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
             apiKey: analysisKey.trim()
@@ -2730,15 +2765,15 @@
         React.createElement("p", { className: "section-kicker" }, pageKicker),
         showGallery && galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
         showLiveTranslator ? React.createElement(React.Fragment, null,
-          React.createElement("div", { className: "ai-shell live-shell" },
+            React.createElement("div", { className: "ai-shell live-shell" },
             React.createElement("div", { className: "ai-head" },
               React.createElement("div", null,
                 React.createElement("p", { className: "ai-kicker" }, "실시간 카메라 번역"),
-                React.createElement("h3", null, "모달로 열어서 더 천천히, 더 또렷하게 번역해요")
+                React.createElement("h3", null, "영어를 한국어로 풀사이즈 번역해요")
               ),
               React.createElement("span", { className: "ai-pill" }, "Live OCR")
             ),
-            React.createElement("p", { className: "ai-copy" }, "표지판, 메뉴판, 안내문처럼 카메라에 보이는 영어 텍스트를 천천히 읽고 번역합니다. 같은 문장은 안정화가 될 때만 번역해서 깜빡임을 줄입니다."),
+            React.createElement("p", { className: "ai-copy" }, "표지판, 메뉴판, 안내문처럼 카메라에 보이는 영어 텍스트를 읽고 한국어로 번역합니다. 영어 → 한국어만 고정해서 보여줍니다."),
             React.createElement("div", { className: "ai-actions" },
               React.createElement("button", {
                 className: "primary-action",
@@ -2783,7 +2818,7 @@
               React.createElement("div", { className: "live-modal-head" },
                 React.createElement("div", { className: "live-modal-title" },
                   React.createElement("b", null, "실시간 카메라 번역"),
-                  React.createElement("span", null, "카메라를 켠 뒤 텍스트가 안정되면 번역합니다. 닫으면 카메라도 함께 멈춥니다.")
+                  React.createElement("span", null, "영어 → 한국어 번역을 풀사이즈 화면으로 보여줍니다. 닫으면 카메라도 함께 멈춥니다.")
                 ),
                 React.createElement("button", { className: "ghost-action", type: "button", onClick: closeLiveModal }, "닫기")
               ),
@@ -2797,14 +2832,14 @@
                     setLiveState((current) => ({
                       ...current,
                       status: "loading",
-                      step: "카메라 요청 중",
+                      step: "다시 시작 중",
                       progress: 4,
-                      message: "카메라 권한을 요청하고 있어요."
+                      message: "영어 → 한국어 번역을 다시 시작합니다."
                     }));
                     setLiveEnabled(true);
                   },
                   disabled: liveEnabled
-                }, liveEnabled ? "카메라 켜짐" : "실시간 번역 시작"),
+                }, liveEnabled ? "카메라 켜짐" : "다시 시작"),
                 React.createElement("button", {
                   className: "ghost-action",
                   type: "button",
@@ -2842,14 +2877,14 @@
                     )
                   ) : null,
                   React.createElement("div", { className: "live-subtitle" },
-                    React.createElement("span", { className: "live-subtitle-label" }, "Live Translation"),
+                    React.createElement("span", { className: "live-subtitle-label" }, "English → Korean"),
                     React.createElement("strong", null, liveState.translatedText || (liveEnabled ? "번역 결과를 기다리는 중..." : "카메라를 시작하세요")),
                     React.createElement("p", null, liveState.sourceText || liveState.message)
                   )
                 ),
                 React.createElement("div", { className: "live-meta" },
                   React.createElement("span", { className: "chip-like" }, `상태 ${liveState.step}`),
-                  React.createElement("span", { className: "chip-like" }, `대상 ${languageLabel(analysisTarget)}`),
+                  React.createElement("span", { className: "chip-like" }, "대상 한국어"),
                   React.createElement("span", { className: "chip-like" }, liveState.detectedLanguage ? `OCR ${languageLabel(liveState.detectedLanguage)}` : "OCR 자동"),
                   React.createElement("span", { className: "chip-like" }, `${liveState.progress}%`)
                 )
