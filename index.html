@@ -2137,7 +2137,6 @@
           React.createElement("div", null,
             React.createElement("p", { className: "eyebrow" }, "Hong's Trip · Honolulu"),
             React.createElement("h1", null, "Hong's 햅삐한 하와이여행"),
-            React.createElement("p", { className: "subtitle" }, "와이키키 중심으로 천천히 움직이는 가족 여행 앱. 일정은 단정하게, 사진은 가볍게, AI 번역은 따로 꺼내서 씁니다."),
             React.createElement("div", { className: "quick-facts" },
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "기간"), React.createElement("span", null, "6/24 Wed - 6/29 Mon")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
@@ -2161,18 +2160,90 @@
 
     function Schedule() {
       const [activeDay, setActiveDay] = useState(days[0].id);
+      const [daySwipeDirection, setDaySwipeDirection] = useState("forward");
+      const [daySwipeOffset, setDaySwipeOffset] = useState(0);
+      const [isDayDragging, setIsDayDragging] = useState(false);
+      const dayTouchStartRef = useRef(null);
+      const activeDayIndex = days.findIndex((day) => day.id === activeDay);
       const shownDays = useMemo(() => days.filter((day) => day.id === activeDay), [activeDay]);
-      return React.createElement("section", { className: "tab-page" },
+      const selectDay = (nextId) => {
+        const nextIndex = days.findIndex((day) => day.id === nextId);
+        if (nextIndex === -1 || nextIndex === activeDayIndex) return;
+        setDaySwipeDirection(nextIndex > activeDayIndex ? "forward" : "backward");
+        setActiveDay(nextId);
+        setDaySwipeOffset(0);
+        setIsDayDragging(false);
+        dayTouchStartRef.current = null;
+      };
+      const handleDayTouchStart = (event) => {
+        const touch = event.touches?.[0];
+        if (!touch) return;
+        dayTouchStartRef.current = { x: touch.clientX, y: touch.clientY, startedAt: Date.now(), locked: false };
+        setIsDayDragging(false);
+        setDaySwipeOffset(0);
+      };
+      const handleDayTouchMove = (event) => {
+        const start = dayTouchStartRef.current;
+        const touch = event.touches?.[0];
+        if (!start || !touch) return;
+        const dx = touch.clientX - start.x;
+        const dy = touch.clientY - start.y;
+        if (!start.locked) {
+          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
+        }
+        if (!start.locked) return;
+        if (event.cancelable) event.preventDefault();
+        setIsDayDragging(true);
+        setDaySwipeOffset(Math.max(-72, Math.min(72, dx * 0.28)));
+      };
+      const handleDayTouchEnd = (event) => {
+        const start = dayTouchStartRef.current;
+        const touch = event.changedTouches?.[0];
+        dayTouchStartRef.current = null;
+        if (!start || !touch) {
+          setIsDayDragging(false);
+          setDaySwipeOffset(0);
+          return;
+        }
+        const dx = touch.clientX - start.x;
+        const dy = touch.clientY - start.y;
+        const dt = Date.now() - start.startedAt;
+        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
+        if (committed) {
+          const nextIndex = dx < 0 ? activeDayIndex + 1 : activeDayIndex - 1;
+          if (nextIndex >= 0 && nextIndex < days.length) {
+            setDaySwipeDirection(dx < 0 ? "forward" : "backward");
+            setActiveDay(days[nextIndex].id);
+          }
+        }
+        setIsDayDragging(false);
+        setDaySwipeOffset(0);
+      };
+      return React.createElement("section", {
+        className: "tab-page",
+        onTouchStart: handleDayTouchStart,
+        onTouchMove: handleDayTouchMove,
+        onTouchEnd: handleDayTouchEnd,
+        onTouchCancel: handleDayTouchEnd
+      },
         React.createElement("h2", { className: "section-title" }, "여행 일정"),
-        React.createElement("p", { className: "section-kicker" }, "하루 단위로만 보여줘서 복잡하지 않게, 탭 안에서 바로 읽히도록 정리했습니다."),
         React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
           days.map((day) => React.createElement("button", {
             key: day.id,
             className: `chip ${activeDay === day.id ? "active" : ""}`,
-            onClick: () => setActiveDay(day.id)
+            onClick: () => selectDay(day.id)
           }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
         ),
-        shownDays.map((day) => React.createElement("article", { className: "day-card", key: day.id },
+        shownDays.map((day) => React.createElement("article", {
+          className: "day-card",
+          key: day.id,
+          style: {
+            animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
+            transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
+            transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+          }
+        },
           React.createElement("div", { className: "day-head" },
             React.createElement("div", null,
               React.createElement("p", { className: "date" }, day.date),
@@ -2219,7 +2290,7 @@
         status: "idle",
         step: "대기 중",
         progress: 0,
-        message: "사진을 고른 뒤 AI 분석 + 번역을 누르면 OCR과 번역 결과를 보여줍니다.",
+        message: "대기 중",
         ocrText: "",
         translatedText: "",
         detectedLanguage: "",
@@ -2233,7 +2304,7 @@
         status: "idle",
         step: "대기 중",
         progress: 0,
-        message: "카메라를 켜면 실시간으로 영어 문자를 읽고 한국어로 번역합니다.",
+        message: "대기 중",
         sourceText: "",
         translatedText: "",
         detectedLanguage: "",
@@ -3123,7 +3194,6 @@
       };
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "가족 게시판"),
-        React.createElement("p", { className: "section-kicker" }, "Supabase Realtime으로 가족 모두에게 공유됩니다."),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
         React.createElement("form", { className: "form", onSubmit: submit },
           React.createElement("div", { className: "form-row" },
@@ -3206,7 +3276,6 @@
       if (!session) {
         return React.createElement("section", null,
           React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-          React.createElement("p", { className: "section-kicker" }, "아이디, 비밀번호, 이름을 입력해 채팅방에 들어갑니다. 이름은 나가기 전까지 유지됩니다."),
           React.createElement("form", { className: "chat-login", onSubmit: enterChat },
             React.createElement("div", { className: "login-grid three" },
               React.createElement("input", { placeholder: "아이디", autoComplete: "username", value: login.userId, onChange: (e) => setLogin({ ...login, userId: e.target.value }) }),
@@ -3220,7 +3289,6 @@
 
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-        React.createElement("p", { className: "section-kicker" }, "여행 중 빠른 공유용입니다. 새 메시지는 Supabase Realtime으로 바로 동기화됩니다."),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
         React.createElement("div", { className: "chat-phone" },
           React.createElement("div", { className: "chat-room-head" },
@@ -3385,9 +3453,7 @@
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
-            React.createElement("p", { className: "splash-kicker" }, "Aloha · Hong's Trip"),
             React.createElement("h2", null, "Hong's 햅삐한 하와이여행"),
-            React.createElement("p", null, "조금 더 심플하게, 조금 더 현대적으로. 스와이프와 사진, AI 번역을 위한 시작 화면입니다."),
             React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
           )
         ) : null,
@@ -3396,10 +3462,10 @@
           React.createElement(Tabbar, { active, setActive: selectTab }),
           React.createElement("div", {
             className: "view-shell",
-            onTouchStart: handleTouchStart,
-            onTouchMove: handleTouchMove,
-            onTouchEnd: handleTouchEnd,
-            onTouchCancel: handleTouchEnd
+            onTouchStart: active === "schedule" ? undefined : handleTouchStart,
+            onTouchMove: active === "schedule" ? undefined : handleTouchMove,
+            onTouchEnd: active === "schedule" ? undefined : handleTouchEnd,
+            onTouchCancel: active === "schedule" ? undefined : handleTouchEnd
           },
             React.createElement("div", {
               className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
@@ -3410,7 +3476,6 @@
               }
             }, view)
           ),
-          React.createElement("footer", null, "React static app · board/chat synced with Supabase Realtime")
         )
       );
     }
