@@ -3760,8 +3760,15 @@
       const [isDragging, setIsDragging] = useState(false);
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
       const touchStartRef = useRef(null);
-      const activeIndex = tabIds.indexOf(active);
+      const safeActive = tabIds.includes(active) ? active : tabIds[0];
+      const activeIndex = tabIds.indexOf(safeActive);
       const splashTimerRef = useRef(null);
+
+      useEffect(() => {
+        if (active !== safeActive) {
+          setActive(safeActive);
+        }
+      }, [active, safeActive]);
 
       const selectTab = (nextId) => {
         const nextIndex = tabIds.indexOf(nextId);
@@ -3850,7 +3857,7 @@
         ai: React.createElement(Photos, { showGallery: false, showPhotoAnalysis: true, showLiveTranslator: true }),
         supplies: React.createElement(Supplies),
         maps: React.createElement(TravelInfo),
-      }[active];
+      }[safeActive];
       return React.createElement(React.Fragment, null,
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
@@ -3861,17 +3868,17 @@
         ) : null,
         React.createElement("main", { className: "shell" },
           React.createElement(Header),
-          React.createElement(Tabbar, { active, setActive: selectTab }),
+          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
           React.createElement("div", {
             className: "view-shell",
-            onTouchStart: active === "schedule" ? undefined : handleTouchStart,
-            onTouchMove: active === "schedule" ? undefined : handleTouchMove,
-            onTouchEnd: active === "schedule" ? undefined : handleTouchEnd,
-            onTouchCancel: active === "schedule" ? undefined : handleTouchEnd
+            onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
+            onTouchMove: safeActive === "schedule" ? undefined : handleTouchMove,
+            onTouchEnd: safeActive === "schedule" ? undefined : handleTouchEnd,
+            onTouchCancel: safeActive === "schedule" ? undefined : handleTouchEnd
           },
             React.createElement("div", {
               className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-              key: active,
+              key: safeActive,
               style: {
                 "--swipe-offset": `${swipeOffset}px`,
                 "--swipe-scale": isDragging ? "0.994" : "1"
