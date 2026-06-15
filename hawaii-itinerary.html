@@ -1850,7 +1850,6 @@
 
     const tabs = [
       ["schedule", "일정"],
-      ["ai", "AI 번역"],
       ["supplies", "준비물"],
       ["maps", "여행정보"],
     ];
@@ -2648,13 +2647,12 @@
                 React.createElement("span", { className: "title-main" }, "Hong's"),
                 React.createElement("span", { className: "title-sub" }, "햅삐한 하와이여행")
               ),
-              React.createElement("div", { className: "hero-meta-note" }, "일정과 준비물, 여행정보를 한 화면에 묶은 가족 여행 허브입니다.")
+            React.createElement("div", { className: "hero-meta-note" }, "일정과 준비물을 한 화면에 묶은 가족 여행 허브입니다.")
             ),
             React.createElement("div", { className: "quick-facts" },
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "기간"), React.createElement("span", null, "6/24 Wed - 6/29 Mon")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, AI 번역, 준비물")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "저장"), React.createElement("span", null, "Supabase Realtime"))
+              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 준비물"))
             )
           )
         )
@@ -4140,7 +4138,6 @@
 
       const view = {
         schedule: React.createElement(Schedule),
-        ai: React.createElement(Photos, { showGallery: false, showPhotoAnalysis: true, showLiveTranslator: true }),
         supplies: React.createElement(Supplies),
         maps: React.createElement(TravelInfo),
       }[safeActive];
