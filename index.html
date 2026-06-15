@@ -631,6 +631,196 @@
       font-size: 0.76rem;
     }
 
+    .supply-page {
+      position: relative;
+      padding-bottom: 96px;
+    }
+    .supply-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .supply-filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 0 14px;
+      padding: 2px 0 4px;
+      scrollbar-width: none;
+    }
+    .supply-filters::-webkit-scrollbar { display: none; }
+    .supply-filter {
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 9px 14px;
+      border: 1px solid rgba(36, 56, 67, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 253, 0.94);
+      color: var(--aqua-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+      white-space: nowrap;
+    }
+    .supply-filter.active {
+      background: linear-gradient(135deg, var(--aqua), var(--palm));
+      color: #fff;
+      border-color: var(--aqua-dark);
+    }
+    .supply-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .supply-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .supply-section-head h3 {
+      margin: 0;
+      font-family: var(--headline);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .supply-section-count {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .check-item-top {
+      display: grid;
+      gap: 3px;
+    }
+    .check-item-owner {
+      color: var(--muted);
+      font-size: 0.77rem;
+      font-weight: 800;
+    }
+    .check-item-controls {
+      display: grid;
+      gap: 7px;
+      min-width: 134px;
+    }
+    .check-item-controls select {
+      width: 100%;
+      min-width: 0;
+      min-height: 38px;
+      padding-block: 7px;
+      font-size: 0.82rem;
+    }
+    .supply-dock {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      pointer-events: none;
+    }
+    .supply-dock button {
+      pointer-events: auto;
+      width: min(100%, 1080px);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--aqua-dark), var(--palm));
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 800;
+      box-shadow: 0 18px 36px rgba(24, 38, 45, 0.2);
+    }
+    .supply-dock button::before {
+      content: "+";
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .supply-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      align-items: end;
+      background: rgba(8, 18, 22, 0.5);
+      backdrop-filter: blur(10px);
+    }
+    .supply-sheet {
+      display: grid;
+      gap: 12px;
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 14px 14px calc(14px + env(safe-area-inset-bottom));
+      border-radius: 26px 26px 0 0;
+      background: rgba(255, 255, 253, 0.98);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 -18px 50px rgba(24, 38, 45, 0.18);
+      animation: sheetRise 240ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .supply-sheet-head {
+      display: grid;
+      gap: 4px;
+      justify-items: start;
+    }
+    .supply-sheet-handle {
+      width: 46px;
+      height: 5px;
+      margin: 0 auto 4px;
+      border-radius: 999px;
+      background: rgba(36, 56, 67, 0.18);
+    }
+    .supply-sheet-title {
+      margin: 0;
+      font-family: var(--headline);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .supply-sheet-subtitle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+    .supply-sheet-body {
+      display: grid;
+      gap: 10px;
+    }
+    .supply-field {
+      display: grid;
+      gap: 6px;
+    }
+    .supply-field span {
+      color: var(--aqua-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .supply-sheet-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      padding-top: 2px;
+    }
+    .supply-sheet-actions .primary-action,
+    .supply-sheet-actions .ghost-action {
+      flex: 1 1 0;
+    }
+    @keyframes sheetRise {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .grid {
       display: grid;
       gap: 12px;
@@ -1651,6 +1841,8 @@
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
     const SUPPLY_STATE_KEY = "hawaii-supply-state";
+    const SUPPLY_PEOPLE = ["은애", "상봉", "문식", "은경", "아빠", "엄마"];
+    const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
     const LIVE_TRANSLATE_SOURCE = "en";
     const LIVE_TRANSLATE_TARGET = "ko";
 
@@ -1759,6 +1951,21 @@
         ]
       }
     ];
+
+    function normalizeSupplyItem(item) {
+      return {
+        ...item,
+        owner: SUPPLY_PEOPLE.includes(item.owner) ? item.owner : (item.owner || SUPPLY_PEOPLE[0]),
+        status: item.status === "완료" ? "완료" : "미완료"
+      };
+    }
+
+    function normalizeSupplySection(section) {
+      return {
+        ...section,
+        items: (section.items || []).map(normalizeSupplyItem)
+      };
+    }
 
     const travelInfo = [
       {
@@ -2579,28 +2786,28 @@
         try {
           const stored = JSON.parse(readStoredValue(SUPPLY_STATE_KEY, "null"));
           if (!stored || !Array.isArray(stored.sections)) throw new Error("no saved state");
-          return stored.sections;
+          return stored.sections.map(normalizeSupplySection);
         } catch {
-          return supplySections.map((section) => ({
-            ...section,
-            items: section.items.map((item) => ({ ...item }))
-          }));
+          return supplySections.map(normalizeSupplySection);
         }
       });
       const [draft, setDraft] = useState({
         sectionId: supplySections[0].id,
         label: "",
-        note: ""
+        note: "",
+        owner: SUPPLY_PEOPLE[0]
       });
+      const [statusFilter, setStatusFilter] = useState("전체");
+      const [sheetOpen, setSheetOpen] = useState(false);
 
       useEffect(() => {
         writeStoredValue(SUPPLY_STATE_KEY, JSON.stringify({ sections }));
       }, [sections]);
 
-      const updateStatus = (sectionId, itemId, status) => {
+      const updateItem = (sectionId, itemId, updates) => {
         setSections((current) => current.map((section) => section.id !== sectionId ? section : ({
           ...section,
-          items: section.items.map((item) => item.id !== itemId ? item : ({ ...item, status }))
+          items: section.items.map((item) => item.id !== itemId ? item : ({ ...item, ...updates }))
         })));
       };
 
@@ -2616,53 +2823,132 @@
               id: crypto.randomUUID(),
               label,
               status: "미완료",
+              owner: draft.owner || SUPPLY_PEOPLE[0],
               note: draft.note.trim()
             }
           ]
         })));
         setDraft((current) => ({ ...current, label: "", note: "" }));
+        setSheetOpen(false);
       };
 
       const doneCount = sections.reduce((sum, section) => sum + section.items.filter((item) => item.status === "완료").length, 0);
       const totalCount = sections.reduce((sum, section) => sum + section.items.length, 0);
+      const visibleSections = sections
+        .map((section) => ({
+          ...section,
+          items: section.items.filter((item) => statusFilter === "전체" || item.status === statusFilter)
+        }))
+        .filter((section) => section.items.length > 0 || statusFilter === "전체");
+      const visibleCount = visibleSections.reduce((sum, section) => sum + section.items.length, 0);
 
-      return React.createElement("section", null,
-        React.createElement("h2", { className: "section-title" }, "준비사항"),
-        React.createElement("div", { className: "ai-inline", style: { marginBottom: "14px" } },
-          React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
-          React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
-          React.createElement("span", { className: "chip-like" }, "드롭박스 상태")
-        ),
-        React.createElement("form", { className: "form", onSubmit: addItem, style: { marginBottom: "16px" } },
-          React.createElement("div", { className: "form-row" },
-            React.createElement("select", { value: draft.sectionId, onChange: (e) => setDraft((current) => ({ ...current, sectionId: e.target.value })) },
-              sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
-            ),
-            React.createElement("input", { placeholder: "추가 항목", value: draft.label, onChange: (e) => setDraft((current) => ({ ...current, label: e.target.value })) })
+      return React.createElement(React.Fragment, null,
+        React.createElement("section", { className: "supply-page" },
+          React.createElement("h2", { className: "section-title" }, "준비사항"),
+          React.createElement("div", { className: "supply-stats" },
+            React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
+            React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
+            React.createElement("span", { className: "chip-like" }, `표시 ${visibleCount}`)
           ),
-          React.createElement("input", { placeholder: "비고", value: draft.note, onChange: (e) => setDraft((current) => ({ ...current, note: e.target.value })) }),
-          React.createElement("button", { className: "primary-action", type: "submit" }, "항목 추가")
+          React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
+            SUPPLY_FILTERS.map((filter) => React.createElement("button", {
+              key: filter,
+              type: "button",
+              className: `supply-filter ${statusFilter === filter ? "active" : ""}`,
+              onClick: () => setStatusFilter(filter)
+            }, filter))
+          ),
+          visibleSections.length ? React.createElement("div", { className: "supply-grid" },
+            visibleSections.map((section) => React.createElement("article", { className: `card ${section.featured ? "featured" : ""}`, key: section.id },
+              React.createElement("div", { className: "supply-section-head" },
+                React.createElement("h3", null, section.title),
+                React.createElement("span", { className: "supply-section-count" }, `${section.items.length}개`)
+              ),
+              React.createElement("ul", { className: "checklist" },
+                section.items.map((item) => React.createElement("li", { key: item.id, className: "check-item" },
+                  React.createElement("div", { className: "check-item-main" },
+                    React.createElement("div", { className: "check-item-top" },
+                      React.createElement("strong", null, item.label),
+                      React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`)
+                    ),
+                    item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
+                  ),
+                  React.createElement("div", { className: "check-item-controls" },
+                    React.createElement("select", {
+                      value: item.owner || SUPPLY_PEOPLE[0],
+                      onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                    },
+                      SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                    ),
+                    React.createElement("select", {
+                      value: item.status,
+                      onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
+                    },
+                      React.createElement("option", { value: "미완료" }, "미완료"),
+                      React.createElement("option", { value: "완료" }, "완료")
+                    )
+                  )
+                ))
+              )
+            ))
+          ) : React.createElement("div", { className: "empty" }, "현재 필터에 맞는 준비물이 없어요.")
         ),
-        React.createElement("div", { className: "grid" },
-          sections.map((section) => React.createElement("article", { className: `card ${section.featured ? "featured" : ""}`, key: section.id },
-            React.createElement("h3", null, section.title),
-            React.createElement("ul", { className: "checklist" },
-              section.items.map((item) => React.createElement("li", { key: item.id, className: "check-item" },
-                React.createElement("div", { className: "check-item-main" },
-                  React.createElement("strong", null, item.label),
-                  item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
-                ),
+        React.createElement("div", { className: "supply-dock" },
+          React.createElement("button", { type: "button", onClick: () => setSheetOpen(true) }, "준비물 등록")
+        ),
+        sheetOpen ? React.createElement("div", { className: "supply-sheet-overlay", role: "presentation", onClick: () => setSheetOpen(false) },
+          React.createElement("form", {
+            className: "supply-sheet",
+            onSubmit: addItem,
+            onClick: (e) => e.stopPropagation()
+          },
+            React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
+            React.createElement("div", { className: "supply-sheet-head" },
+              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록"),
+              React.createElement("div", { className: "supply-sheet-subtitle" }, "아래에서 위로 올라오는 모달에서 바로 추가합니다. 새 항목은 미완료로 저장돼요.")
+            ),
+            React.createElement("div", { className: "supply-sheet-body" },
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "카테고리"),
                 React.createElement("select", {
-                  value: item.status,
-                  onChange: (e) => updateStatus(section.id, item.id, e.target.value)
+                  value: draft.sectionId,
+                  onChange: (e) => setDraft((current) => ({ ...current, sectionId: e.target.value }))
                 },
-                  React.createElement("option", { value: "미완료" }, "미완료"),
-                  React.createElement("option", { value: "완료" }, "완료")
+                  sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
                 )
-              ))
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "준비자"),
+                React.createElement("select", {
+                  value: draft.owner,
+                  onChange: (e) => setDraft((current) => ({ ...current, owner: e.target.value }))
+                },
+                  SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                )
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "항목"),
+                React.createElement("input", {
+                  placeholder: "추가 항목",
+                  value: draft.label,
+                  onChange: (e) => setDraft((current) => ({ ...current, label: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "비고"),
+                React.createElement("textarea", {
+                  placeholder: "메모",
+                  value: draft.note,
+                  onChange: (e) => setDraft((current) => ({ ...current, note: e.target.value }))
+                })
+              )
+            ),
+            React.createElement("div", { className: "supply-sheet-actions" },
+              React.createElement("button", { className: "ghost-action", type: "button", onClick: () => setSheetOpen(false) }, "닫기"),
+              React.createElement("button", { className: "primary-action", type: "submit" }, "등록")
             )
-          ))
-        )
+          )
+        ) : null
       );
     }
 
