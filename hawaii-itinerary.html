@@ -1878,6 +1878,8 @@
     const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
     const LIVE_TRANSLATE_SOURCE = "en";
     const LIVE_TRANSLATE_TARGET = "ko";
+    const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
+    const GOOGLE_MAPS_URL = "https://www.google.com/maps?hl=ko";
 
     let tesseractModulePromise = null;
 
@@ -2908,6 +2910,20 @@
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
           React.createElement("h2", { className: "section-title" }, "준비사항"),
+          React.createElement("div", { className: "map-hub" },
+            React.createElement("a", {
+              className: "map-btn",
+              href: GOOGLE_TRANSLATE_URL,
+              target: "_blank",
+              rel: "noopener"
+            }, "구글 번역 (영→한)"),
+            React.createElement("a", {
+              className: "map-btn",
+              href: GOOGLE_MAPS_URL,
+              target: "_blank",
+              rel: "noopener"
+            }, "구글 지도")
+          ),
           React.createElement("div", { className: "supply-stats" },
             React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
             React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
