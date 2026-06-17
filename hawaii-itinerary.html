@@ -1840,29 +1840,29 @@
       white-space: pre-line;
     }
     .check-item-controls {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      align-items: center;
+      display: grid;
+      gap: 6px;
       min-width: 0;
     }
     .check-item-controls-label {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 6px;
       color: var(--muted);
       font-size: 0.72rem;
       font-weight: 800;
     }
     .check-item-controls-label span {
-      flex: 1 1 0;
       min-width: 0;
       text-align: center;
     }
+    .check-item-controls-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      align-items: center;
+    }
     .check-item-controls select {
-      flex: 1 1 0;
       min-width: 0;
       width: auto;
       min-height: 38px;
@@ -1954,6 +1954,9 @@
         gap: 6px;
       }
       .check-item-controls-label {
+        gap: 6px;
+      }
+      .check-item-controls-row {
         gap: 6px;
       }
       .check-item-controls select { min-height: 42px; }
@@ -3135,20 +3138,21 @@
                   React.createElement("span", null, "담당"),
                   React.createElement("span", null, "상태")
                 ),
-                React.createElement("select", {
-                  value: item.owner || SUPPLY_PEOPLE[0],
-                  onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                },
-                      SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                    ),
-                    React.createElement("select", {
-                      value: item.status,
-                      onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
-                    },
-                      React.createElement("option", { value: "미완료" }, "미완료"),
-                      React.createElement("option", { value: "완료" }, "완료")
-                    )
+                React.createElement("div", { className: "check-item-controls-row" },
+                  React.createElement("select", {
+                    value: item.owner || SUPPLY_PEOPLE[0],
+                    onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                  },
+                    SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                  ),
+                  React.createElement("select", {
+                    value: item.status,
+                    onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
+                  },
+                    React.createElement("option", { value: "미완료" }, "미완료"),
+                    React.createElement("option", { value: "완료" }, "완료")
                   )
+                )
                 ))
               )
             ))
