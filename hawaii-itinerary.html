@@ -3,46 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hawaii Family Trip App</title>
+  <title>Hong's 햅삐한 하와이여행</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap");
 
     :root {
       color-scheme: light;
-      --ink: #10242d;
-      --muted: #5f6f76;
-      --line: rgba(15, 70, 84, 0.14);
-      --paper: #fffdf7;
-      --wash: #edf8f6;
-      --aqua: #1aa1a9;
-      --aqua-dark: #0d5963;
-      --lagoon: #8edfd8;
-      --coral: #ff8a63;
-      --hibiscus: #cb4f73;
-      --sun: #f5bf5b;
-      --sand: #fff2d4;
-      --palm: #275742;
-      --shadow: 0 24px 56px rgba(15, 65, 76, 0.14);
+      --ink: #18262d;
+      --muted: #65747c;
+      --line: rgba(24, 38, 45, 0.1);
+      --paper: #fbfbfa;
+      --wash: #eef1ef;
+      --aqua: #4e8f98;
+      --aqua-dark: #223843;
+      --lagoon: #9ccfc9;
+      --coral: #c97562;
+      --hibiscus: #8e5b73;
+      --sun: #cda85b;
+      --sand: #f3eee6;
+      --palm: #3b5650;
+      --headline: "Manrope", "Noto Sans KR", sans-serif;
+      --shadow: 0 22px 52px rgba(24, 38, 45, 0.12);
     }
 
     * { box-sizing: border-box; }
     html {
+      font-size: 15px;
       scroll-behavior: smooth;
       overscroll-behavior: none;
     }
     body {
       margin: 0;
-      font-family: "Manrope", "Segoe UI", sans-serif;
+      font-family: "Noto Sans KR", "Manrope", sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
       overscroll-behavior: none;
       background:
-        radial-gradient(circle at 14% 8%, rgba(245, 191, 91, 0.3), transparent 18rem),
-        radial-gradient(circle at 82% 0%, rgba(142, 223, 216, 0.55), transparent 22rem),
-        radial-gradient(circle at 100% 72%, rgba(255, 138, 99, 0.12), transparent 18rem),
-        linear-gradient(180deg, #e3fbf7 0%, #fff8ea 44%, #f4fbf8 100%);
+        radial-gradient(circle at 12% 10%, rgba(205, 168, 91, 0.22), transparent 16rem),
+        radial-gradient(circle at 82% 0%, rgba(156, 207, 201, 0.38), transparent 20rem),
+        radial-gradient(circle at 100% 78%, rgba(201, 117, 98, 0.1), transparent 18rem),
+        linear-gradient(180deg, #f5f6f4 0%, #f0ede7 42%, #f7f7f5 100%);
       color: var(--ink);
-      line-height: 1.5;
+      line-height: 1.45;
     }
     body::before,
     body::after {
@@ -51,31 +53,31 @@
       pointer-events: none;
       z-index: 0;
       border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.8;
+      filter: blur(12px);
+      opacity: 0.65;
     }
     body::before {
       left: -8rem;
-      top: 20vh;
-      width: 18rem;
-      height: 18rem;
-      background: radial-gradient(circle, rgba(142, 223, 216, 0.24), transparent 70%);
+      top: 18vh;
+      width: 20rem;
+      height: 20rem;
+      background: radial-gradient(circle, rgba(156, 207, 201, 0.14), transparent 68%);
     }
     body::after {
-      right: -7rem;
-      top: 8vh;
-      width: 16rem;
-      height: 16rem;
-      background: radial-gradient(circle, rgba(255, 138, 99, 0.2), transparent 70%);
+      right: -6rem;
+      top: 7vh;
+      width: 18rem;
+      height: 18rem;
+      background: radial-gradient(circle, rgba(201, 117, 98, 0.12), transparent 70%);
     }
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
     a { color: inherit; }
 
     .shell {
-      width: min(100%, 1040px);
+      width: min(100%, 1080px);
       margin: 0 auto;
-      padding: 16px 14px 56px;
+      padding: 18px 16px 58px;
       position: relative;
       z-index: 1;
     }
@@ -134,25 +136,49 @@
       }
     }
     .hero {
-      min-height: 56svh;
+      min-height: 60svh;
       display: grid;
-      gap: 20px;
-      align-content: end;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 18px;
+      align-items: stretch;
       padding: 14px 2px 18px;
     }
     .hero-visual {
-      min-height: 32svh;
+      min-height: 34svh;
       overflow: hidden;
-      border-radius: 30px;
+      border-radius: 34px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
-        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.16), transparent 26%),
-        radial-gradient(circle at 78% 16%, rgba(255, 255, 255, 0.12), transparent 22%),
-        linear-gradient(135deg, #7fded7 0%, #f7dc93 42%, #ff8b63 100%);
+        linear-gradient(180deg, rgba(12, 42, 50, 0.02), rgba(12, 42, 50, 0.16)),
+        url("./assets/hawaii-hero.png") center center / cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.26);
       box-shadow: var(--shadow);
       position: relative;
       isolation: isolate;
-      filter: saturate(1.02);
+      filter: saturate(1.01) contrast(1.01);
+    }
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 42%;
+      background: linear-gradient(180deg, transparent, rgba(8, 24, 28, 0.16));
+      pointer-events: none;
+    }
+    .hero-copy {
+      display: grid;
+      align-content: end;
+      gap: 14px;
+      padding: 6px 0 4px;
+    }
+    .hero-panel {
+      display: grid;
+      gap: 14px;
+      padding: 18px 18px 16px;
+      border-radius: 28px;
+      background: rgba(255, 255, 253, 0.92);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 16px 36px rgba(24, 38, 45, 0.08);
+      backdrop-filter: blur(16px);
     }
     .splash {
       position: fixed;
@@ -162,10 +188,10 @@
       place-items: center;
       padding: 20px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(142, 223, 216, 0.34), transparent 18rem),
-        radial-gradient(circle at 80% 24%, rgba(255, 138, 99, 0.26), transparent 16rem),
-        linear-gradient(180deg, rgba(245, 191, 91, 0.22), rgba(255, 253, 247, 0.94));
-      backdrop-filter: blur(20px);
+        radial-gradient(circle at 20% 20%, rgba(156, 207, 201, 0.28), transparent 18rem),
+        radial-gradient(circle at 80% 24%, rgba(201, 117, 98, 0.2), transparent 16rem),
+        linear-gradient(180deg, rgba(205, 168, 91, 0.18), rgba(255, 255, 253, 0.94));
+      backdrop-filter: blur(18px);
       animation: splashFadeOut 260ms ease forwards;
       animation-delay: 1.12s;
       pointer-events: none;
@@ -174,9 +200,9 @@
       width: min(100%, 390px);
       padding: 24px 22px 22px;
       border-radius: 32px;
-      background: rgba(255, 253, 248, 0.92);
-      border: 1px solid rgba(15, 70, 84, 0.12);
-      box-shadow: 0 24px 70px rgba(15, 65, 76, 0.18);
+      background: rgba(255, 255, 253, 0.94);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 22px 60px rgba(24, 38, 45, 0.16);
       text-align: center;
       transform-origin: center;
       animation: splashRise 780ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -188,8 +214,8 @@
       border-radius: 24px 24px 12px 12px;
       background:
         radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.9) 0 16%, transparent 17%),
-        linear-gradient(135deg, #7fded7 0%, #f7dc93 48%, #ff8b63 100%);
-      box-shadow: 0 14px 30px rgba(27, 138, 148, 0.18);
+        linear-gradient(135deg, #9ccfc9 0%, #d7c08c 48%, #c97562 100%);
+      box-shadow: 0 14px 28px rgba(24, 38, 45, 0.12);
       position: relative;
       overflow: hidden;
     }
@@ -202,13 +228,13 @@
       height: 28px;
       border-radius: 999px;
       transform: translateX(-50%);
-      background: rgba(255, 253, 248, 0.78);
+      background: rgba(255, 255, 253, 0.78);
     }
     .splash-mark::after {
       inset: auto auto 0 50%;
       width: 92px;
       height: 22px;
-      background: rgba(14, 89, 99, 0.34);
+      background: rgba(36, 56, 67, 0.28);
     }
     .splash-kicker {
       margin: 0 0 8px;
@@ -221,22 +247,23 @@
     .splash h2 {
       margin: 0;
       color: var(--aqua-dark);
+      font-family: var(--headline);
       font-size: clamp(2rem, 8vw, 3rem);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
     }
     .splash p {
       margin: 12px 0 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.88rem;
     }
     .splash-bar {
       width: min(160px, 52%);
       height: 6px;
       margin: 18px auto 0;
       border-radius: 999px;
-      background: rgba(15, 70, 84, 0.08);
+      background: rgba(24, 38, 45, 0.08);
       overflow: hidden;
     }
     .splash-bar::before {
@@ -269,43 +296,63 @@
       50% { transform: translateX(122%); }
     }
     .eyebrow {
-      margin: 6px 0 8px;
+      margin: 0;
       color: var(--hibiscus);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
     }
-    h1 {
+    .hero-title {
       margin: 0;
-      max-width: 11ch;
-      font-size: clamp(2.55rem, 11vw, 5.8rem);
-      font-weight: 900;
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      color: var(--aqua-dark);
+      display: grid;
+      gap: 8px;
       text-wrap: balance;
     }
+    .hero-title .title-kicker {
+      color: var(--aqua-dark);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .hero-title .title-main {
+      max-width: 9ch;
+      color: var(--aqua-dark);
+      font-family: var(--headline);
+      font-size: clamp(2.3rem, 9vw, 4.6rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+    .hero-title .title-sub {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
     .subtitle {
-      margin: 14px 0 0;
+      margin: 0;
       color: var(--muted);
-      font-size: 1.02rem;
+      font-size: 0.92rem;
       overflow-wrap: anywhere;
     }
     .quick-facts {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 0;
     }
     .fact {
-      min-height: 68px;
-      padding: 12px 12px 11px;
-      border: 1px solid rgba(27, 138, 148, 0.14);
+      min-height: 62px;
+      padding: 10px 11px 10px;
+      border: 1px solid rgba(36, 56, 67, 0.08);
       border-radius: 18px;
       background:
-        linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(255, 247, 236, 0.86));
-      box-shadow: 0 10px 24px rgba(18, 89, 103, 0.08);
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
       backdrop-filter: blur(10px);
       overflow-wrap: anywhere;
     }
@@ -313,10 +360,20 @@
       display: block;
       margin-bottom: 3px;
       color: var(--aqua-dark);
-      font-size: 0.74rem;
-      font-weight: 900;
+      font-size: 0.7rem;
+      font-weight: 800;
     }
-    .fact span { font-size: 0.9rem; font-weight: 800; }
+    .fact span { font-size: 0.84rem; font-weight: 800; }
+    .hero-meta-note {
+      padding: 11px 13px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(201, 117, 98, 0.06));
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
 
     .tabbar {
       position: sticky;
@@ -327,9 +384,9 @@
       overflow-x: auto;
       margin: 0 -14px 16px;
       padding: 12px 14px 12px;
-      background: rgba(255, 253, 247, 0.72);
-      border-block: 1px solid rgba(27, 138, 148, 0.14);
-      box-shadow: 0 10px 24px rgba(18, 89, 103, 0.06);
+      background: rgba(255, 255, 253, 0.82);
+      border-block: 1px solid rgba(36, 56, 67, 0.08);
+      box-shadow: 0 12px 26px rgba(24, 38, 45, 0.08);
       backdrop-filter: blur(18px);
       scrollbar-width: none;
       overscroll-behavior: contain;
@@ -344,45 +401,44 @@
       flex: 0 0 auto;
       min-height: 44px;
       padding: 10px 18px;
-      border: 1px solid rgba(17, 101, 112, 0.18);
+      border: 1px solid rgba(36, 56, 67, 0.1);
       border-radius: 999px;
-      background: rgba(255, 253, 248, 0.9);
+      background: rgba(255, 255, 253, 0.94);
       color: var(--aqua-dark);
-      font-size: 0.82rem;
-      font-weight: 900;
+      font-size: 0.76rem;
+      font-weight: 800;
       line-height: 1.1;
       text-align: center;
       white-space: nowrap;
-      box-shadow: 0 9px 20px rgba(18, 89, 103, 0.08);
+      box-shadow: 0 9px 20px rgba(24, 38, 45, 0.08);
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
     .tab.active {
       border-color: var(--aqua);
       background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
       color: #fff;
-      box-shadow: 0 9px 20px rgba(27, 138, 148, 0.22);
+      box-shadow: 0 9px 20px rgba(24, 38, 45, 0.16);
     }
     .section-title {
       margin: 6px 4px 10px;
-      font-size: 1.18rem;
-      font-weight: 900;
+      font-size: 1rem;
+      font-weight: 800;
       letter-spacing: 0;
     }
     .section-kicker {
       margin: -2px 4px 12px;
       color: var(--muted);
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       overflow-wrap: anywhere;
     }
     .tab-page {
       display: grid;
       gap: 14px;
       padding: 16px;
-      border: 1px solid rgba(15, 70, 84, 0.1);
-      border-radius: 28px;
-      background:
-        linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 249, 239, 0.92));
-      box-shadow: 0 16px 36px rgba(23, 49, 59, 0.08);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 26px;
+      background: rgba(255, 255, 253, 0.96);
+      box-shadow: 0 16px 34px rgba(24, 38, 45, 0.08);
       backdrop-filter: blur(14px);
     }
     .tab-page .section-title {
@@ -399,8 +455,8 @@
       scroll-snap-type: x proximity;
       margin: 0 -14px 14px;
       padding: 10px 14px 12px;
-      background: linear-gradient(180deg, rgba(255, 253, 247, 0.84), rgba(255, 250, 243, 0.94));
-      border-block: 1px solid rgba(27, 138, 148, 0.12);
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.9), rgba(242, 244, 241, 0.96));
+      border-block: 1px solid rgba(36, 56, 67, 0.08);
       scrollbar-width: none;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
@@ -410,14 +466,14 @@
       flex: 0 0 auto;
       min-height: 44px;
       padding: 10px 16px;
-      border: 1px solid rgba(17, 101, 112, 0.18);
+      border: 1px solid rgba(36, 56, 67, 0.1);
       border-radius: 999px;
-      background: rgba(255, 253, 248, 0.92);
+      background: rgba(255, 255, 253, 0.94);
       color: var(--aqua-dark);
       font-size: 0.86rem;
       font-weight: 850;
       white-space: nowrap;
-      box-shadow: 0 8px 18px rgba(18, 89, 103, 0.05);
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
       transition: transform 140ms ease, box-shadow 140ms ease;
     }
     .chip.active {
@@ -427,18 +483,18 @@
     }
 
     .card, .day-card, .panel, .post, .chat-login, .chat-phone, .gallery-shell {
-      border-radius: 30px;
-      background: rgba(255, 253, 248, 0.94);
-      border: 1px solid rgba(15, 70, 84, 0.12);
-      box-shadow: 0 16px 38px rgba(23, 49, 59, 0.08);
-      backdrop-filter: blur(14px);
+      border-radius: 26px;
+      background: rgba(255, 255, 253, 0.96);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 14px 32px rgba(24, 38, 45, 0.08);
+      backdrop-filter: blur(12px);
     }
     .day-card { margin-bottom: 16px; padding: 16px; }
     .day-card {
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 247, 236, 0.96));
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.96));
     }
     .day-card::before {
       content: "";
@@ -463,14 +519,16 @@
     }
     .day-card h3 {
       margin: 0;
+      font-family: var(--headline);
       font-size: 1.06rem;
       line-height: 1.2;
+      letter-spacing: -0.02em;
     }
     .badge {
       flex: 0 0 auto;
       padding: 6px 9px;
       border-radius: 999px;
-      background: linear-gradient(135deg, #fff1c9, #ffe3a1);
+      background: linear-gradient(135deg, #ece6cf, #ddd0ad);
       color: #76510e;
       font-size: 0.75rem;
       font-weight: 900;
@@ -526,51 +584,247 @@
     .stop-note {
       margin: 2px 0 0;
       color: var(--muted);
-      font-size: 0.84rem;
+      font-size: 0.8rem;
     }
     .actions, .map-hub {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 12px;
     }
     .map-btn, .primary-action, .ghost-action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 12px 18px;
+      min-height: 44px;
+      padding: 10px 16px;
       border-radius: 20px;
-      background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
+      background: linear-gradient(135deg, var(--aqua), var(--palm));
       color: #fff;
       border: 0;
-      font-size: 0.92rem;
-      font-weight: 850;
+      font-size: 0.84rem;
+      font-weight: 800;
       text-decoration: none;
       overflow-wrap: anywhere;
-      box-shadow: 0 12px 24px rgba(27, 138, 148, 0.18);
+      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.1);
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
     .ghost-action {
       background: #fff;
       color: var(--aqua-dark);
-      border: 1px solid rgba(17, 101, 112, 0.18);
-      box-shadow: 0 8px 18px rgba(23, 49, 59, 0.06);
+      border: 1px solid rgba(36, 56, 67, 0.1);
+      box-shadow: 0 8px 16px rgba(24, 38, 45, 0.05);
     }
     .note {
       margin-top: 13px;
       padding: 11px 12px;
-      border: 1px solid rgba(245, 182, 75, 0.42);
+      border: 1px solid rgba(205, 168, 91, 0.32);
       border-radius: 18px;
-      background: linear-gradient(135deg, #fff8e8, #fff0cc);
-      color: #5f4b22;
+      background: linear-gradient(135deg, #f5f0e2, #ece3cd);
+      color: #56492a;
       font-size: 0.91rem;
     }
     .note b {
       display: block;
       margin-bottom: 3px;
-      color: #8a6418;
+      color: #7b662d;
       font-size: 0.76rem;
+    }
+
+    .supply-page {
+      position: relative;
+      padding-bottom: 96px;
+    }
+    .supply-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .supply-filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 0 14px;
+      padding: 2px 0 4px;
+      scrollbar-width: none;
+    }
+    .supply-filters::-webkit-scrollbar { display: none; }
+    .supply-filter {
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 9px 14px;
+      border: 1px solid rgba(36, 56, 67, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 253, 0.94);
+      color: var(--aqua-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+      white-space: nowrap;
+    }
+    .supply-filter.active {
+      background: linear-gradient(135deg, var(--aqua), var(--palm));
+      color: #fff;
+      border-color: var(--aqua-dark);
+    }
+    .supply-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .supply-grid .card {
+      padding: 13px;
+    }
+    .supply-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .supply-section-head h3 {
+      margin: 0;
+      font-family: var(--headline);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .supply-section-count {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .check-item-top {
+      display: grid;
+      gap: 3px;
+    }
+    .check-item-owner {
+      color: var(--muted);
+      font-size: 0.77rem;
+      font-weight: 800;
+    }
+    .check-item-controls {
+      display: grid;
+      gap: 7px;
+      min-width: 134px;
+    }
+    .check-item-controls select {
+      width: 100%;
+      min-width: 0;
+      min-height: 38px;
+      padding-block: 7px;
+      font-size: 0.82rem;
+    }
+    .supply-dock {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      pointer-events: none;
+    }
+    .supply-dock button {
+      pointer-events: auto;
+      width: min(100%, 1080px);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--aqua-dark), var(--palm));
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 800;
+      box-shadow: 0 18px 36px rgba(24, 38, 45, 0.2);
+    }
+    .supply-dock button::before {
+      content: "+";
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .supply-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      align-items: end;
+      background: rgba(8, 18, 22, 0.5);
+      backdrop-filter: blur(10px);
+    }
+    .supply-sheet {
+      display: grid;
+      gap: 12px;
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 14px 14px calc(14px + env(safe-area-inset-bottom));
+      max-height: min(88svh, 760px);
+      border-radius: 26px 26px 0 0;
+      background: rgba(255, 255, 253, 0.98);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 -18px 50px rgba(24, 38, 45, 0.18);
+      animation: sheetRise 240ms cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+    .supply-sheet-head {
+      display: grid;
+      gap: 4px;
+      justify-items: start;
+    }
+    .supply-sheet-handle {
+      width: 46px;
+      height: 5px;
+      margin: 0 auto 4px;
+      border-radius: 999px;
+      background: rgba(36, 56, 67, 0.18);
+    }
+    .supply-sheet-title {
+      margin: 0;
+      font-family: var(--headline);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .supply-sheet-subtitle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+    .supply-sheet-body {
+      display: grid;
+      gap: 10px;
+    }
+    .supply-field {
+      display: grid;
+      gap: 6px;
+    }
+    .supply-field span {
+      color: var(--aqua-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .supply-sheet-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      padding-top: 2px;
+    }
+    .supply-sheet-actions .primary-action,
+    .supply-sheet-actions .ghost-action {
+      flex: 1 1 0;
+    }
+    @keyframes sheetRise {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .grid {
@@ -580,9 +834,11 @@
     .card { padding: 14px; }
     .card h3 {
       margin: 0 0 9px;
+      font-family: var(--headline);
       color: var(--aqua-dark);
       font-size: 1rem;
       line-height: 1.25;
+      letter-spacing: -0.02em;
       overflow-wrap: anywhere;
     }
     .card ul {
@@ -618,9 +874,9 @@
       gap: 9px;
       margin-bottom: 14px;
       padding: 14px;
-      border-radius: 28px;
-      background: rgba(255, 253, 248, 0.9);
-      border: 1px solid rgba(27, 138, 148, 0.18);
+      border-radius: 24px;
+      background: rgba(255, 255, 253, 0.94);
+      border: 1px solid rgba(24, 38, 45, 0.08);
     }
     .form-row {
       display: grid;
@@ -630,7 +886,7 @@
     input, textarea, select {
       width: 100%;
       min-height: 42px;
-      border: 1px solid rgba(17, 101, 112, 0.18);
+      border: 1px solid rgba(36, 56, 67, 0.1);
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.94);
       color: var(--ink);
@@ -668,19 +924,19 @@
     }
     .chat-phone {
       overflow: hidden;
-      border: 1px solid rgba(11, 89, 103, 0.16);
-      background: linear-gradient(180deg, #b9e4e7, #95d4d8);
-      box-shadow: 0 18px 42px rgba(23, 49, 59, 0.14);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: linear-gradient(180deg, #dce2df, #c8d0cc);
+      box-shadow: 0 18px 42px rgba(24, 38, 45, 0.12);
     }
     .chat-login {
       display: grid;
       gap: 10px;
       margin-bottom: 14px;
       padding: 16px;
-      border: 1px solid rgba(27, 138, 148, 0.18);
+      border: 1px solid rgba(24, 38, 45, 0.08);
       background:
-        linear-gradient(135deg, rgba(255, 253, 248, 0.94), rgba(255, 242, 210, 0.92));
-      box-shadow: 0 10px 24px rgba(23, 49, 59, 0.07);
+        linear-gradient(135deg, rgba(255, 255, 253, 0.96), rgba(243, 238, 230, 0.94));
+      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.07);
     }
     .login-grid {
       display: grid;
@@ -703,12 +959,14 @@
       gap: 10px;
       min-height: 48px;
       padding: 10px 13px;
-      background: rgba(255, 250, 239, 0.95);
-      border-bottom: 1px solid rgba(23, 49, 59, 0.09);
+      background: rgba(255, 255, 253, 0.96);
+      border-bottom: 1px solid rgba(24, 38, 45, 0.08);
     }
     .chat-room-title {
       min-width: 0;
+      font-family: var(--headline);
       font-weight: 900;
+      letter-spacing: -0.02em;
       overflow-wrap: anywhere;
     }
     .chat-count {
@@ -726,12 +984,12 @@
     .leave-chat {
       min-height: 32px;
       padding: 6px 9px;
-      border: 1px solid rgba(23, 49, 59, 0.12);
+      border: 1px solid rgba(36, 56, 67, 0.1);
       border-radius: 999px;
       background: #fff;
-      color: #36515a;
-      font-size: 0.76rem;
-      font-weight: 850;
+      color: var(--aqua-dark);
+      font-size: 0.72rem;
+      font-weight: 800;
       white-space: nowrap;
     }
     .chat-list {
@@ -758,7 +1016,7 @@
     .message-row.mine { justify-items: end; }
     .message-author {
       margin: 0 0 3px 4px;
-      color: rgba(23, 49, 59, 0.72);
+      color: rgba(24, 38, 45, 0.72);
       font-size: 0.75rem;
       font-weight: 850;
     }
@@ -775,8 +1033,8 @@
       padding: 10px 12px;
       border-radius: 12px 18px 18px 18px;
       background: #fffdf8;
-      color: #223c45;
-      box-shadow: 0 4px 12px rgba(23, 49, 59, 0.08);
+      color: #243840;
+      box-shadow: 0 4px 12px rgba(24, 38, 45, 0.08);
       overflow-wrap: anywhere;
       white-space: pre-wrap;
     }
@@ -787,7 +1045,7 @@
     }
     .message-time {
       flex: 0 0 auto;
-      color: rgba(23, 49, 59, 0.58);
+      color: rgba(24, 38, 45, 0.58);
       font-size: 0.68rem;
       font-weight: 750;
       white-space: nowrap;
@@ -799,13 +1057,13 @@
       margin: 0;
       padding: 10px;
       border: 0;
-      border-top: 1px solid rgba(23, 49, 59, 0.09);
+      border-top: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 0;
-      background: linear-gradient(180deg, rgba(255, 250, 239, 0.98), rgba(255, 246, 229, 0.98));
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.98));
     }
     .chat-compose input,
     .chat-compose textarea {
-      border-color: rgba(23, 49, 59, 0.12);
+      border-color: rgba(36, 56, 67, 0.1);
       background: #fff;
     }
     .chat-compose textarea {
@@ -823,12 +1081,10 @@
       display: grid;
       gap: 16px;
       padding: 16px;
-      border: 1px solid rgba(15, 70, 84, 0.1);
-      border-radius: 26px;
-      background:
-        radial-gradient(circle at top right, rgba(245, 191, 91, 0.14), transparent 12rem),
-        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 248, 235, 0.96));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: rgba(255, 255, 253, 0.96);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
     }
     .gallery-top {
       display: grid;
@@ -841,9 +1097,9 @@
     }
     .stat {
       padding: 10px 11px;
-      border: 1px solid rgba(17, 101, 112, 0.1);
+      border: 1px solid rgba(36, 56, 67, 0.08);
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(237, 248, 246, 0.95), rgba(249, 251, 251, 0.88));
+      background: linear-gradient(180deg, rgba(245, 246, 244, 0.96), rgba(240, 238, 234, 0.92));
       overflow-wrap: anywhere;
     }
     .stat b {
@@ -876,10 +1132,10 @@
       display: grid;
       gap: 8px;
       padding: 10px;
-      border: 1px solid rgba(15, 70, 84, 0.1);
+      border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 22px;
-      background: rgba(255, 253, 248, 0.9);
-      box-shadow: 0 12px 26px rgba(23, 49, 59, 0.08);
+      background: rgba(255, 255, 253, 0.94);
+      box-shadow: 0 12px 26px rgba(24, 38, 45, 0.08);
       text-align: left;
     }
     .photo-frame {
@@ -887,8 +1143,8 @@
       overflow: hidden;
       aspect-ratio: 1 / 1.18;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(13, 89, 99, 0.12), rgba(255, 255, 255, 0.92));
-      box-shadow: 0 10px 24px rgba(15, 65, 76, 0.12);
+      background: linear-gradient(135deg, rgba(78, 143, 152, 0.1), rgba(255, 255, 255, 0.92));
+      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.12);
     }
     .photo-frame img {
       width: 100%;
@@ -925,10 +1181,10 @@
     }
     .photo-empty {
       padding: 18px 16px;
-      border: 1px dashed rgba(17, 101, 112, 0.22);
+      border: 1px dashed rgba(36, 56, 67, 0.16);
       border-radius: 20px;
       color: var(--muted);
-      background: rgba(245, 250, 249, 0.8);
+      background: rgba(245, 246, 244, 0.8);
     }
     .photo-overlay {
       position: fixed;
@@ -944,9 +1200,9 @@
       width: min(100%, 720px);
       margin: 0 auto;
       padding: 14px;
-      border-radius: 30px;
-      background: rgba(255, 253, 248, 0.98);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+      border-radius: 26px;
+      background: rgba(255, 255, 253, 0.98);
+      box-shadow: 0 30px 80px rgba(24, 38, 45, 0.28);
       display: grid;
       gap: 12px;
     }
@@ -962,7 +1218,9 @@
       gap: 2px;
     }
     .photo-modal-title b {
+      font-family: var(--headline);
       font-size: 1rem;
+      letter-spacing: -0.02em;
     }
     .photo-modal-title span {
       color: var(--muted);
@@ -998,12 +1256,10 @@
       display: grid;
       gap: 14px;
       padding: 16px;
-      border: 1px solid rgba(15, 70, 84, 0.1);
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at top right, rgba(255, 138, 99, 0.12), transparent 11rem),
-        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 247, 233, 0.96));
-      box-shadow: 0 16px 36px rgba(23, 49, 59, 0.08);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: rgba(255, 255, 253, 0.96);
+      box-shadow: 0 16px 36px rgba(24, 38, 45, 0.08);
     }
     .ai-head {
       display: flex;
@@ -1021,15 +1277,17 @@
     }
     .ai-head h3 {
       margin: 0;
+      font-family: var(--headline);
       font-size: 1.02rem;
       line-height: 1.25;
+      letter-spacing: -0.02em;
       color: var(--aqua-dark);
     }
     .ai-pill {
       flex: 0 0 auto;
       padding: 7px 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, #fff1c9, #ffe3a1);
+      background: linear-gradient(135deg, #ece6cf, #ddd0ad);
       color: #76510e;
       font-size: 0.76rem;
       font-weight: 900;
@@ -1072,8 +1330,8 @@
       gap: 8px;
       padding: 13px 14px;
       border-radius: 20px;
-      background: linear-gradient(135deg, rgba(13, 89, 99, 0.08), rgba(255, 255, 255, 0.9));
-      border: 1px solid rgba(17, 101, 112, 0.1);
+      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(255, 255, 253, 0.92));
+      border: 1px solid rgba(24, 38, 45, 0.08);
       overflow-wrap: anywhere;
     }
     .ai-status-head {
@@ -1096,7 +1354,7 @@
       width: 100%;
       height: 7px;
       border-radius: 999px;
-      background: rgba(17, 101, 112, 0.1);
+      background: rgba(36, 56, 67, 0.1);
       overflow: hidden;
     }
     .ai-progress > span {
@@ -1112,9 +1370,9 @@
     .ai-card {
       padding: 12px;
       border-radius: 22px;
-      background: rgba(255, 253, 248, 0.94);
-      border: 1px solid rgba(17, 101, 112, 0.1);
-      box-shadow: 0 10px 22px rgba(23, 49, 59, 0.06);
+      background: rgba(255, 255, 253, 0.94);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 10px 22px rgba(24, 38, 45, 0.06);
     }
     .ai-preview {
       display: grid;
@@ -1126,7 +1384,180 @@
       object-fit: cover;
       display: block;
       border-radius: 18px;
-      background: #dbeef0;
+      background: #dce2df;
+    }
+    .live-shell {
+      background: rgba(255, 255, 253, 0.96);
+    }
+    .live-launch {
+      display: grid;
+      gap: 10px;
+    }
+    .live-launch-card {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(245, 246, 244, 0.96), rgba(240, 238, 234, 0.94));
+      border: 1px solid rgba(24, 38, 45, 0.08);
+    }
+    .live-launch-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      overflow-wrap: anywhere;
+    }
+    .live-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: block;
+      background: rgba(8, 18, 22, 0.52);
+      backdrop-filter: blur(12px);
+    }
+    .live-modal-card {
+      width: 100vw;
+      height: 100svh;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(246, 247, 245, 0.98));
+      border: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+    .live-modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .live-modal-title {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+    .live-modal-title b {
+      color: var(--aqua-dark);
+      font-size: 1rem;
+    }
+    .live-modal-title span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      overflow-wrap: anywhere;
+    }
+    .live-preview {
+      display: grid;
+      gap: 10px;
+      min-height: 0;
+    }
+    .live-stage {
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+      aspect-ratio: auto;
+      height: 100%;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(156, 207, 201, 0.16), transparent 30%),
+        linear-gradient(135deg, #0b191f 0%, #17333d 56%, #274a52 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .live-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: linear-gradient(135deg, rgba(10, 27, 33, 0.88), rgba(39, 74, 82, 0.6));
+    }
+    .live-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(8, 18, 22, 0.48), rgba(8, 18, 22, 0.8));
+    }
+    .live-placeholder strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.02rem;
+    }
+    .live-placeholder span {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .live-subtitle {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: grid;
+      gap: 5px;
+      padding: 12px 12px 10px;
+      border-radius: 18px;
+      background: rgba(7, 18, 22, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+    .live-subtitle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ce8df;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .live-subtitle strong {
+      font-size: 0.98rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .live-subtitle p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.8rem;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+    .live-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .live-meta .chip-like {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(36, 56, 67, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.73rem;
+      font-weight: 900;
+    }
+    .live-empty {
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px dashed rgba(36, 56, 67, 0.18);
+      background: rgba(245, 246, 244, 0.72);
+      color: var(--muted);
+      text-align: center;
     }
     .ai-preview-empty {
       display: grid;
@@ -1134,8 +1565,8 @@
       min-height: 180px;
       padding: 20px;
       border-radius: 18px;
-      border: 1px dashed rgba(17, 101, 112, 0.24);
-      background: rgba(245, 250, 249, 0.8);
+      border: 1px dashed rgba(36, 56, 67, 0.18);
+      background: rgba(245, 246, 244, 0.8);
       color: var(--muted);
       text-align: center;
       overflow-wrap: anywhere;
@@ -1149,8 +1580,8 @@
       gap: 6px;
       padding: 11px 12px;
       border-radius: 18px;
-      background: rgba(237, 248, 246, 0.82);
-      border: 1px solid rgba(17, 101, 112, 0.08);
+      background: rgba(245, 246, 244, 0.9);
+      border: 1px solid rgba(24, 38, 45, 0.08);
     }
     .ai-result-group b {
       font-size: 0.78rem;
@@ -1178,7 +1609,7 @@
     .ai-inline .chip-like {
       padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(17, 101, 112, 0.08);
+      background: rgba(36, 56, 67, 0.08);
       color: var(--aqua-dark);
       font-size: 0.73rem;
       font-weight: 900;
@@ -1186,10 +1617,10 @@
     .empty {
       margin: 10px 0;
       padding: 14px;
-      border: 1px dashed rgba(17, 101, 112, 0.3);
+      border: 1px dashed rgba(36, 56, 67, 0.18);
       border-radius: 18px;
       color: var(--muted);
-      background: rgba(255, 253, 248, 0.72);
+      background: rgba(245, 246, 244, 0.72);
     }
     .panel {
       margin-top: 16px;
@@ -1198,9 +1629,89 @@
         linear-gradient(135deg, rgba(11, 89, 103, 0.94), rgba(40, 90, 69, 0.94));
       color: #f8fbfa;
     }
-    .panel h2 { margin: 0 0 10px; font-size: 1.12rem; }
+    .panel h2 {
+      margin: 0 0 10px;
+      font-family: var(--headline);
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+    }
     .panel ul { margin: 0; padding-left: 19px; }
     .panel li + li { margin-top: 7px; }
+    .hero-visual {
+      filter: saturate(1.01) contrast(1.01);
+    }
+    .eyebrow {
+      margin: 0;
+      color: var(--hibiscus);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 36rem;
+    }
+    .quick-facts {
+      display: grid;
+      gap: 10px;
+      margin-top: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fact {
+      min-height: 68px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
+      backdrop-filter: blur(10px);
+      overflow-wrap: anywhere;
+    }
+    .fact b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--aqua-dark);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+    .fact span {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 850;
+    }
+    .checklist {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .check-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 13px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 18px;
+      background: rgba(255, 255, 253, 0.78);
+    }
+    .check-item-main {
+      display: grid;
+      gap: 3px;
+    }
+    .check-item-note {
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: pre-line;
+    }
+    .check-item select {
+      min-width: 92px;
+    }
     footer {
       padding: 24px 4px 6px;
       color: var(--muted);
@@ -1211,11 +1722,13 @@
       .shell { padding-inline: 24px; }
       .hero {
         min-height: 72vh;
-        grid-template-columns: 0.95fr 1.05fr;
-        align-items: end;
-        gap: 30px;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: stretch;
+        gap: 20px;
       }
-      .hero-visual { min-height: 500px; }
+      .hero-visual { min-height: 100%; }
+      .hero-copy { padding: 8px 0 6px; }
+      .hero-panel { padding: 20px 20px 18px; }
       .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1224,6 +1737,25 @@
       .gallery-shell { padding: 18px; }
     }
     @media (max-width: 520px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .hero-visual {
+        min-height: 240px;
+        border-radius: 28px;
+      }
+      .hero-panel {
+        padding: 16px;
+        border-radius: 24px;
+      }
+      .hero-title .title-main {
+        max-width: 100%;
+        font-size: clamp(2.5rem, 18vw, 4rem);
+      }
+      .hero-title .title-sub {
+        font-size: clamp(1.8rem, 10vw, 2.4rem);
+      }
       .tab-page {
         padding: 14px;
       }
@@ -1240,6 +1772,36 @@
       .chat-room-actions {
         width: 100%;
         justify-content: space-between;
+      }
+      .supply-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      .supply-grid {
+        gap: 10px;
+      }
+      .supply-section-head {
+        align-items: flex-start;
+      }
+      .check-item {
+        grid-template-columns: 1fr;
+      }
+      .check-item-controls {
+        min-width: 0;
+        grid-template-columns: 1fr 1fr;
+      }
+      .check-item-controls select {
+        min-height: 42px;
+      }
+      .supply-sheet {
+        width: 100%;
+        padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+        border-radius: 22px 22px 0 0;
+      }
+      .supply-sheet-actions {
+        flex-direction: column;
+      }
+      .supply-dock {
+        padding-inline: 12px;
       }
       .gallery-actions .primary-action,
       .gallery-actions .ghost-action,
@@ -1311,80 +1873,302 @@
     const PHOTO_FOLDER = "gallery";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
-    const AI_TRANSLATE_URL_KEY = "hawaii-ai-translate-url";
-    const AI_TRANSLATE_KEY_KEY = "hawaii-ai-translate-key";
-    const DEFAULT_TRANSLATE_URL = "https://libretranslate.com/translate";
-    const GOOGLE_TRANSLATE_URL = "https://translate.google.com/?sl=en&tl=ko&op=translate";
-    const GOOGLE_MAPS_URL = "https://www.google.com/maps";
+    const SUPPLY_STATE_KEY = "hawaii-supply-state";
+    const SUPPLY_PEOPLE = ["은애", "상봉", "문식", "은경", "아빠", "엄마"];
+    const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
+    const LIVE_TRANSLATE_SOURCE = "en";
+    const LIVE_TRANSLATE_TARGET = "ko";
+    const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
+    const GOOGLE_MAPS_URL = "https://www.google.com/maps?hl=ko";
+    const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
 
     let tesseractModulePromise = null;
 
     const tabs = [
       ["schedule", "일정"],
-      ["photos", "사진"],
       ["supplies", "준비물"],
-      ["board", "게시판"],
-      ["chat", "채팅"],
-      ["maps", "지도"],
-      ["notes", "메모"],
+      ["eunae-gmap", "은애's gmap"],
+      ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
 
     const days = [
       {
-        id: "0624", date: "6/24 Wed", title: "Arrival / Adjust", badge: "낮은 강도",
-        stops: [["10:30", "HNL 도착, 입국, 호텔 이동", "수하물 드롭 또는 체크인 후 바로 쉬는 흐름."], ["점심", "가벼운 식사", "도착일은 양과 이동을 줄이는 쪽으로."], ["오후", "체크인, 낮잠, 와이키키 짧은 산책", "첫날 쇼핑은 길게 잡지 않기."], ["저녁", "Duke's Waikiki 또는 Marugame Udon", "대기 시간이 길면 바로 대체 가능한 곳으로 이동."]],
-        maps: [["공항 지도", "Daniel K. Inouye International Airport"], ["와이키키 지도", "Waikiki Beach"]],
-        memoTitle: "임산부 메모", memo: "비행 직후에는 걷는 양을 짧게 유지하고, 도착일에는 회복을 우선합니다."
+        id: "0623", date: "6/23 Tue", title: "Departure / Airport", badge: "출국",
+        stops: [["18:00", "공항 도착", "출국 수속과 짐 정리를 먼저 끝냅니다."], ["21:00", "비행기 출발", "하와이 이동 시작."]],
+        maps: [["공항 지도", "Daniel K. Inouye International Airport"]],
+        memoTitle: "체크포인트", memo: "여권, ESTA, 국제운전면허증, eSIM, 충전기를 미리 확인합니다."
       },
       {
-        id: "0625", date: "6/25 Thu", title: "Waikiki + Shopping", badge: "실내 휴식",
-        stops: [["아침", "Kapiolani Park, Waikiki Beach 산책", "예쁜 근처 장소 중심으로 천천히."], ["점심", "Pioneer Saloon", "포장 후 그늘이나 호텔에서 먹는 옵션도 좋음."], ["오후", "Ala Moana Center, 호텔 휴식", "가장 더운 시간은 실내와 호텔로 배치."], ["저녁", "Monkeypod Kitchen", "예약 가능하면 저녁 피로도를 줄일 수 있음."]],
-        maps: [["공원 지도", "Kapiolani Park Honolulu"], ["알라모아나 지도", "Ala Moana Center"]],
-        memoTitle: "가족 메모", memo: "쇼핑은 쉬는 의자가 많은 구역 위주로 움직이고, 더운 시간 야외 이동을 줄입니다."
+        id: "0624", date: "6/24 Wed", title: "Arrival / Check-in", badge: "도착",
+        stops: [["11:00", "비행기 도착, 하와이 도착", "도착 후 동선은 짧게 잡습니다."], ["12:00", "공항에서 차 한잔(되면)", "입국 전 잠깐 쉬어갑니다."], ["13:00", "입국수속 (렌터카 픽업)", "차량 확보 후 바로 숙소로 이동합니다."], ["14:00", "늦은 점심", "무리하지 않는 메뉴로 간단히."], ["16:00", "숙소 체크인", "짐을 풀고 컨디션을 맞춥니다."], ["17:00", "휴식", "첫날은 회복 우선."], ["20:00", "저녁식사(술한잔)", "가볍게 외식 후 복귀."], ["22:00", "휴식", "다음 일정 대비."]],
+        maps: [["숙소 주변", "Honolulu Hawaii"], ["와이키키 지도", "Waikiki Beach"]],
+        memoTitle: "임산부 메모", memo: "도착일은 걷는 양을 줄이고 수분과 휴식을 우선합니다."
       },
       {
-        id: "0626", date: "6/26 Fri", title: "East Coast Drive", badge: "풍경 드라이브",
-        stops: [["오전", "Halona Blowhole, Makapuu Lookout", "사진과 전망 위주, 긴 하이킹은 생략."], ["점심", "Kailua lunch", "화장실과 주차가 쉬운 곳 우선."], ["오후", "Lanikai / Kailua 짧은 방문", "물놀이는 짧고 가볍게, 대부분은 사진과 휴식."], ["저녁", "ZIGU 또는 Hula Grill Waikiki", "와이키키 복귀 후 이동 적은 저녁."]],
-        maps: [["Halona 지도", "Halona Blowhole Lookout"], ["Makapuu 지도", "Makapuu Lookout"], ["Lanikai 지도", "Lanikai Beach"]],
-        memoTitle: "임산부 메모", memo: "거친 해양 액티비티와 긴 산책은 피하고, 차 안 휴식과 그늘 시간을 넉넉히 둡니다."
+        id: "0625", date: "6/25 Thu", title: "Waikiki / Shopping", badge: "도심",
+        stops: [["07:00", "숙소 즐기기(수영)", "이른 시간에 숙소에서 가볍게 시작합니다."], ["12:00", "점심 - 옥동식", "식사는 이동이 적은 곳 위주로."], ["14:00", "숙소 휴식", "한낮에는 쉬는 시간 확보."], ["17:00", "월마트 쇼핑", "필요한 물품만 빠르게."], ["18:00", "다이아몬드 헤드 야경", "인당 1달러, 주차비 5달러 확인."], ["19:00", "저녁 - 도쿄", "식사 후 바로 복귀."], ["20:00", "저녁식사(술한잔)", "가볍게 마무리."]],
+        maps: [["다이아몬드 헤드", "Diamond Head"], ["와이키키 지도", "Waikiki Beach"], ["월마트", "Walmart Honolulu"]],
+        memoTitle: "가족 메모", memo: "더운 시간은 실내와 숙소에 두고, 밤에 가볍게 움직입니다."
       },
       {
-        id: "0627", date: "6/27 Sat", title: "Pearl Harbor + Rest", badge: "예약 권장",
-        stops: [["오전", "USS Arizona Memorial", "사전 예약 필수에 가깝게 보고 준비."], ["점심", "Nico's Pier 38", "해산물은 익힌 메뉴 중심으로 선택."], ["오후", "호텔 휴식, 와이키키 비치", "의미 있는 오전 뒤에는 회복 시간 확보."], ["저녁", "Gyu-Kaku", "고기는 충분히 익혀 먹기."]],
-        maps: [["진주만 지도", "Pearl Harbor National Memorial"], ["Nico's 지도", "Nico's Pier 38"]],
-        memoTitle: "체크포인트", memo: "오전 관람 후 오후를 비워 체력 소모를 회복합니다. 예약 시간 전후 이동 여유를 둡니다."
+        id: "0626", date: "6/26 Fri", title: "Kualoa / East Coast", badge: "동부",
+        stops: [["10:00", "쿠알로아 렌치", "동부 대표 코스 먼저."], ["13:00", "북부여행 시작", "이동 시간을 넉넉히 잡습니다."], ["14:00", "돌 플렌테이션", "잠깐 쉬어가기 좋은 구간."], ["15:00", "새우트럭", "짧게 들러 식사."], ["16:00", "라니아케아 비치(거북이)", "거북이 구경은 거리 유지."], ["18:00", "저녁산책", "숙소 복귀 전 가볍게."]],
+        maps: [["쿠알로아", "Kualoa Ranch"], ["돌 플랜테이션", "Dole Plantation"], ["라니아케아", "Laniakea Beach"]],
+        memoTitle: "임산부 메모", memo: "긴 드라이브는 중간중간 쉬어가며 짧게 끊습니다."
+      },
+      {
+        id: "0627", date: "6/27 Sat", title: "Hanauma Bay / Rest", badge: "예약 권장",
+        stops: [["09:00", "브런치 카페", "가벼운 시작"], ["10:00", "하나우마베이", "예약 필수에 가깝게 보고 준비."], ["12:00", "하나우마베이", "오전 동선 유지."], ["13:00", "하나우마베이", "물놀이는 짧게."], ["18:00", "저녁 - 니코스38", "해산물은 익힌 메뉴 중심."], ["22:00", "휴식", "일정 마감."]],
+        maps: [["하나우마베이", "Hanauma Bay"], ["니코스38", "Nico's Pier 38"]],
+        memoTitle: "체크포인트", memo: "오전 관람 후 오후는 회복 위주로 비웁니다."
       },
       {
         id: "0628", date: "6/28 Sun", title: "North Shore", badge: "메인 드라이브",
         stops: [["아침", "Dole Plantation", "일찍 출발해 더위와 주말 교통을 피하기."], ["점심", "Haleiwa, Shrimp truck 또는 로컬 식당", "줄이 길면 앉아서 먹는 대안으로 변경."], ["오후", "Turtle beach viewing, 와이키키 복귀", "야생동물은 거리 유지, 해변 체류는 짧게."], ["저녁", "와이키키 가벼운 저녁", "긴 드라이브 뒤에는 가까운 곳으로."]],
         maps: [["Dole 지도", "Dole Plantation"], ["Haleiwa 지도", "Haleiwa Hawaii"], ["거북이 비치 지도", "Laniakea Beach"]],
-        memoTitle: "가족 메모", memo: "일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다. 무리하면 중간 지점에서 바로 복귀합니다."
+        memoTitle: "가족 메모", memo: "일요일 교통, 화장실, 그늘, 수분 보충을 전제로 움직입니다."
       },
       {
         id: "0629", date: "6/29 Mon", title: "Departure", badge: "공항 우선",
         stops: [["아침", "조식, 짐 정리, 짧은 산책", "실제 관광 일정은 추가하지 않기."], ["10:30", "공항 도착 목표", "렌터카 반납이 있으면 더 일찍 출발."], ["13:00", "Hawaii 출발", "6/30 17:00 KST 한국 도착 예정."]],
         maps: [["공항 지도", "Daniel K. Inouye International Airport"]],
-        memoTitle: "체크포인트", memo: "마지막 날은 공항 이동 안정성이 최우선입니다. 조식 후 체크아웃과 이동에 집중합니다."
+        memoTitle: "체크포인트", memo: "마지막 날은 공항 이동 안정성이 최우선입니다."
       },
     ];
 
-    const supplies = [
-      ["서류 / 결제", ["여권, ESTA, 항공권, 숙소/렌터카 바우처", "여행자보험, 운전자는 한국면허증 + 국제운전면허증", "해외결제 카드 2장 이상, 팁용 1달러 지폐"]],
-      ["전자기기", ["충전기, 보조배터리, 멀티탭", "eSIM/유심, 차량용 휴대폰 거치대", "방수팩, 카메라, 여분 케이블"]],
-      ["남자 3명", ["반팔 5~6벌, 반바지 3~4벌, 얇은 바람막이", "수영복 2벌, 슬리퍼, 오래 걸을 운동화", "면도기, 선글라스, 모자"]],
-      ["여자 3명", ["원피스/가벼운 옷 4~6벌, 얇은 가디건", "수영복/래시가드, 샌들, 쿠션 좋은 운동화", "선케어, 진정팩, 개인 화장품"]],
-      ["임산부 메모", ["압박스타킹, 개인 복용약/영양제, 물병", "견과류/크래커/에너지바 같은 간식", "산모수첩 또는 영문 진료 요약, 담당의 비행 확인"], true],
-      ["공용", ["가족 상비약, 밴드, 체온계, 소독티슈", "보냉백, 텀블러, 지퍼백, 접이식 장바구니", "세탁망, 작은 세제, 휴대용 티슈, 물티슈"]],
-      ["해변용품", ["수영복, 래시가드, 아쿠아슈즈, 큰 타월", "SPF 선크림, 모자, 선글라스, 휴대용 티슈", "방수팩, 젖은 옷용 비닐백, 여벌 옷"]],
+    const supplySections = [
+      {
+        id: "prep",
+        title: "준비물",
+        featured: false,
+        items: [
+          { id: "prep-esim", label: "Esim", status: "완료", note: "은애, 문식 / 은애, 은경, 엄마, 아빠" },
+          { id: "prep-lodging", label: "숙소 정보", status: "완료", note: "프린트하기" },
+          { id: "prep-esta", label: "ESTA 비자", status: "미완료", note: "프린트하기\n은애 : 엄마, 아빠, 은애, 문식\n은경 : 본인 것" },
+          { id: "prep-beachtowel", label: "비치 타올", status: "미완료", note: "" },
+          { id: "prep-shower", label: "샤워기 필터", status: "미완료", note: "" },
+          { id: "prep-meds", label: "비상약", status: "미완료", note: "" },
+          { id: "prep-bug", label: "벌레퇴치제", status: "미완료", note: "" },
+          { id: "prep-insurance", label: "여행자 보험", status: "미완료", note: "" },
+          { id: "prep-idp", label: "국제운전면허증", status: "미완료", note: "" },
+        ]
+      },
+      {
+        id: "personal",
+        title: "개인준비물",
+        featured: true,
+        items: [
+          { id: "personal-passport", label: "여권", status: "완료", note: "" },
+          { id: "personal-sunscreen", label: "선크림", status: "미완료", note: "SP 지수 높은 거" },
+          { id: "personal-swim", label: "수영복", status: "미완료", note: "" },
+          { id: "personal-adapter", label: "멀티 어댑터", status: "미완료", note: "" },
+          { id: "personal-waterproof", label: "방수팩", status: "미완료", note: "" },
+          { id: "personal-aquashoes", label: "아쿠아슈즈", status: "미완료", note: "" },
+          { id: "personal-rashguard", label: "래시가드 & 수영복", status: "미완료", note: "인당 2벌 이상 필요" },
+          { id: "personal-battery", label: "보조 배터리", status: "미완료", note: "용량과 정보가 명확히 표기되어있는 것" },
+          { id: "personal-jacket", label: "얇은 겉옷", status: "미완료", note: "" },
+          { id: "personal-glasses", label: "선글라스 & 모자", status: "미완료", note: "" },
+          { id: "personal-clothes", label: "개인 옷", status: "미완료", note: "날이 더워 나시, 반바지 추천" },
+          { id: "personal-supplement", label: "개인 영양제 & 약", status: "미완료", note: "" },
+        ]
+      },
+      {
+        id: "request",
+        title: "요청사항",
+        featured: false,
+        items: [
+          { id: "request-newbalance-coat", label: "뉴발란스 외투 2벌", status: "완료", note: "은애" },
+          { id: "request-newbalance-shoes", label: "뉴발란스 축구화", status: "완료", note: "은애" },
+          { id: "request-glasses", label: "축구 안경", status: "미완료", note: "은경" },
+          { id: "request-kiddo", label: "키드오 과자", status: "완료", note: "은애" },
+          { id: "request-sacheon", label: "사천짜파게티", status: "미완료", note: "은애" },
+          { id: "request-jajang", label: "짜장범벅", status: "미완료", note: "은애" },
+        ]
+      }
     ];
 
-    const mapLinks = [
-      ["Waikiki Beach", "Waikiki Beach"],
-      ["Ala Moana Center", "Ala Moana Center"],
-      ["Pearl Harbor", "Pearl Harbor National Memorial"],
-      ["Dole Plantation", "Dole Plantation"],
-      ["HNL Airport", "Daniel K. Inouye International Airport"],
+    function normalizeSupplyItem(item) {
+      return {
+        ...item,
+        owner: SUPPLY_PEOPLE.includes(item.owner) ? item.owner : (item.owner || SUPPLY_PEOPLE[0]),
+        status: item.status === "완료" ? "완료" : "미완료"
+      };
+    }
+
+    function normalizeSupplySection(section) {
+      return {
+        ...section,
+        items: (section.items || []).map(normalizeSupplyItem)
+      };
+    }
+
+    const travelInfo = [
+      {
+        category: "숙소",
+        day: "6/24",
+        phase: "도착 / 체크인",
+        title: "에어비앤비",
+        hours: "체크인 : 4:00 PM · 체크아웃 : 11:00 AM",
+        location: "남부",
+        address: "444 Niu Street Honolulu, HI 96815",
+        info: [
+          "비치 장비 제공(비치타올, 의자, 파라솔)",
+          "루프탑 수영장, 비치의자, 바베큐 공간, 헬스장",
+          "주차장 일 45달러, 건물 앞 노상주차 무료(*6시까지 차 옮겨야함)",
+          "세탁기, 건조기(세제 제공)",
+        ],
+        links: []
+      },
+      {
+        category: "식당",
+        day: "6/24",
+        phase: "점심 / 식사",
+        title: "옥동식",
+        hours: "",
+        location: "남부",
+        address: "Honolulu, HI",
+        info: [],
+        links: []
+      },
+      {
+        category: "식당",
+        day: "6/24",
+        phase: "저녁",
+        title: "다나카 오브 도쿄 센트럴",
+        hours: "",
+        location: "남부",
+        address: "Honolulu, HI",
+        info: [],
+        links: []
+      },
+      {
+        category: "식당",
+        day: "6/24",
+        phase: "아침 / 여유",
+        title: "헤븐리 아일랜드 라이프 스타일",
+        hours: "07:00 AM ~ 02:00 PM · 04:00 PM ~ 10:00 PM",
+        location: "남부",
+        address: "Honolulu, HI",
+        info: ["아침과 저녁 모두 쓰기 좋은 식당"],
+        links: []
+      },
+      {
+        category: "관광지",
+        day: "6/25",
+        phase: "와이키키",
+        title: "다이아몬드 헤드",
+        hours: "",
+        location: "남부",
+        address: "Diamond Head, Honolulu, HI",
+        info: ["야경과 전망 위주로 가볍게 들르는 코스"],
+        links: []
+      },
+      {
+        category: "식당",
+        day: "6/25",
+        phase: "아침",
+        title: "스위트 이스카페",
+        hours: "",
+        location: "남부",
+        address: "Honolulu, HI",
+        info: ["숙소에서 차로 10분거리, 아침식사 전문", "주말엔 대기 존재, 테이크아웃 가능"],
+        links: [{ label: "지도", href: "https://maps.app.goo.gl/DKKm3X7ShDhXYts78" }]
+      },
+      {
+        category: "관광지",
+        day: "6/25",
+        phase: "장보기",
+        title: "월마트",
+        hours: "",
+        location: "도심",
+        address: "Honolulu, HI",
+        info: ["필요한 물품을 한 번에 채우는 쇼핑 포인트"],
+        links: []
+      },
+      {
+        category: "관광지",
+        day: "6/26",
+        phase: "동부",
+        title: "쿠알로아 랜치",
+        hours: "",
+        location: "동부",
+        address: "49-560 Kamehameha Hwy, Kaneohe, Oahu, HI 96744-5152",
+        info: ["차로 이동하는 동부 코스의 핵심 지점"],
+        links: [{ label: "블로그", href: "https://blog.naver.com/urimalo_/224290378049" }]
+      },
+      {
+        category: "관광지",
+        day: "6/26",
+        phase: "동부",
+        title: "시크릿 섬",
+        hours: "",
+        location: "동부",
+        address: "Kaneohe, HI",
+        info: [],
+        links: []
+      },
+      {
+        category: "관광지",
+        day: "6/27",
+        phase: "휴식 / 해변",
+        title: "하나우마베이",
+        hours: "06:45~16:00",
+        location: "남동부",
+        address: "100 Hanauma Bay Rd, Honolulu, Oahu, HI 96825-2005",
+        info: [
+          "예약 필수, 방문 2일전, 인당 입장료 25달러, 예약 실패 시 예약 대행 사이트 이용",
+          "돌이 많아 긴 래시가드 추천",
+        ],
+        links: [
+          { label: "공식", href: "https://web5.hnl.info/pros-ticketing/event/hbay-online-reservation" },
+          { label: "대행", href: "https://experiences.myrealtrip.com/products/3442814?mylink_id=1900136&t_scope=86400&utm_source=mktpartner" }
+        ]
+      },
+      {
+        category: "식당",
+        day: "6/27",
+        phase: "저녁",
+        title: "니코스38",
+        hours: "",
+        location: "남부",
+        address: "1133 N Nimitz Hwy, Honolulu, HI 96817",
+        info: ["해산물 식당, 항구에서 멋진 뷰와 함께 식사 가능"],
+        links: [{ label: "지도", href: "https://maps.app.goo.gl/ctAEjzPbUZ8dztSbA" }]
+      },
+      {
+        category: "관광지",
+        day: "6/28",
+        phase: "북부",
+        title: "Dole Plantation",
+        hours: "",
+        location: "북부",
+        address: "64-1550 Kamehameha Hwy, Wahiawa, HI 96786",
+        info: ["북부 이동 중 쉬어가기 좋은 포인트"],
+        links: []
+      },
+      {
+        category: "식당",
+        day: "6/28",
+        phase: "북부 식사",
+        title: "지오반니 새우 트럭",
+        hours: "",
+        location: "북부",
+        address: "56-505 Kamehameha Hwy, Kahuku, HI 96731",
+        info: ["북부에서 간단히 먹기 좋은 곳"],
+        links: []
+      },
+      {
+        category: "관광지",
+        day: "6/28",
+        phase: "북부",
+        title: "라니아케아 비치",
+        hours: "",
+        location: "북부",
+        address: "5742-5804 Kamehameha Hwy, Haleiwa, HI 96712",
+        info: ["거북이 구경, 거리 유지"],
+        links: []
+      }
     ];
 
     function mapUrl(query) {
@@ -1445,17 +2229,54 @@
         .trim();
     }
 
+    function extractEnglishOcrText(text) {
+      return String(text || "")
+        .toLowerCase()
+        .match(/[0-9a-z]+(?:'[0-9a-z]+)?/g)?.join(" ") || "";
+    }
+
+    function normalizeOcrStabilityText(text) {
+      return extractEnglishOcrText(text).replace(/\s+/g, "");
+    }
+
+    function extractOcrTokens(text) {
+      return String(text || "")
+        .toLowerCase()
+        .match(/[0-9a-z]+(?:'[0-9a-z]+)?/g) || [];
+    }
+
+    function isSimilarOcrText(previousText, nextText) {
+      const previous = normalizeOcrStabilityText(previousText);
+      const next = normalizeOcrStabilityText(nextText);
+      if (!previous || !next) return false;
+      if (previous === next) return true;
+      if ((previous.includes(next) || next.includes(previous)) && Math.min(previous.length, next.length) >= 8) {
+        return true;
+      }
+
+      const previousTokens = extractOcrTokens(previousText);
+      const nextTokens = extractOcrTokens(nextText);
+      if (!previousTokens.length || !nextTokens.length) return false;
+
+      const previousSet = new Set(previousTokens);
+      const nextSet = new Set(nextTokens);
+      let shared = 0;
+      for (const token of previousSet) {
+        if (nextSet.has(token)) shared += 1;
+      }
+
+      const overlap = shared / Math.max(previousSet.size, nextSet.size);
+      const previousLength = previousTokens.join("").length;
+      const nextLength = nextTokens.join("").length;
+      const lengthGap = Math.abs(previousLength - nextLength) / Math.max(previousLength, nextLength);
+      return overlap >= 0.6 || (overlap >= 0.4 && lengthGap <= 0.35);
+    }
+
     function detectTextScript(text) {
       const value = String(text || "");
-      const counts = {
-        ko: (value.match(/[\uac00-\ud7a3]/g) || []).length,
-        ja: (value.match(/[\u3040-\u30ff]/g) || []).length,
-        zh: (value.match(/[\u4e00-\u9fff]/g) || []).length,
-        latin: (value.match(/[A-Za-z]/g) || []).length,
-      };
-      const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
-      if (!winner || winner[1] === 0) return "unknown";
-      return winner[0];
+      const latinCount = (value.match(/[A-Za-z]/g) || []).length;
+      if (latinCount === 0) return "unknown";
+      return "en";
     }
 
     function languageLabel(code) {
@@ -1476,7 +2297,7 @@
       return tesseractModulePromise;
     }
 
-    async function analyzeImageText(imageSrc, onProgress) {
+    async function createOcrWorker(onProgress) {
       const Tesseract = await loadTesseractModule();
       const worker = await Tesseract.createWorker("eng", 1, {
         logger: (message) => {
@@ -1490,8 +2311,14 @@
         }
       });
 
+      await worker.setParameters({ preserve_interword_spaces: "1" });
+      return worker;
+    }
+
+    async function analyzeImageText(imageSrc, onProgress) {
+      const worker = await createOcrWorker(onProgress);
+
       try {
-        await worker.setParameters({ preserve_interword_spaces: "1" });
         const result = await worker.recognize(imageSrc);
         return result?.data || {};
       } finally {
@@ -1499,27 +2326,33 @@
       }
     }
 
-    async function translateWithLibreTranslate(text, target, { source = "auto", endpoint, apiKey } = {}) {
-      const res = await fetch(endpoint || DEFAULT_TRANSLATE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          source,
-          target,
-          format: "text",
-          api_key: apiKey || undefined
-        })
+    async function translateWithGoogleTranslate(text, source, target) {
+      const url = new URL("https://translate.googleapis.com/translate_a/single");
+      url.searchParams.set("client", "gtx");
+      url.searchParams.set("sl", source || "auto");
+      url.searchParams.set("tl", target);
+      url.searchParams.set("dt", "t");
+      url.searchParams.set("q", text);
+
+      const res = await fetch(url.toString(), {
+        method: "GET"
       });
-      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data?.error || "번역 서버가 응답하지 않았어요.");
+        throw new Error("Google 번역이 응답하지 않았어요.");
       }
+      const data = await res.json().catch(() => null);
+      const translatedText = Array.isArray(data?.[0])
+        ? data[0].map((part) => part?.[0] || "").join("")
+        : "";
       return {
-        translatedText: data?.translatedText || "",
-        detectedLanguage: data?.detectedLanguage?.language || "",
-        confidence: data?.detectedLanguage?.confidence ?? null
+        translatedText,
+        detectedLanguage: data?.[2] || "",
+        confidence: null
       };
+    }
+
+    async function translateText(text, target, { source = "auto" } = {}) {
+      return translateWithGoogleTranslate(text, source, target);
     }
 
     function readFileAsDataUrl(file) {
@@ -1880,18 +2713,17 @@
       return (
         React.createElement("section", { className: "hero" },
           React.createElement("div", { className: "hero-visual", "aria-hidden": "true" }),
-          React.createElement("div", null,
-            React.createElement("p", { className: "eyebrow" }, "Honolulu / Oahu only"),
-            React.createElement("h1", null, "Hawaii Family Trip"),
-            React.createElement("p", { className: "subtitle" }, "와이키키를 기준으로 무리 없는 가족 여행 리듬에 맞춘 모바일 우선 앱. 사진은 찍자마자 올리고, 썸네일에서 탭 한 번으로 크게 볼 수 있게 설계했습니다."),
-            React.createElement("div", { className: "quick-facts" },
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기간"), React.createElement("span", null, "6/24 Wed - 6/29 Mon")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 사진, 게시판, 채팅")),
-              React.createElement("div", { className: "fact" }, React.createElement("b", null, "저장"), React.createElement("span", null, "Supabase Realtime"))
+          React.createElement("div", { className: "hero-copy" },
+            React.createElement("div", { className: "hero-panel" },
+              React.createElement("p", { className: "eyebrow" }, "Hong's Trip · Honolulu"),
+              React.createElement("h1", { className: "hero-title" },
+                React.createElement("span", { className: "title-kicker" }, "Hawaii Family Plan"),
+                React.createElement("span", { className: "title-main" }, "Hong's"),
+                React.createElement("span", { className: "title-sub" }, "햅삐한 하와이여행")
+              )
             ),
             React.createElement("div", { className: "actions", "aria-label": "메인 바로가기" },
-              React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역(영→한)"),
+              React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역 (영→한)"),
               React.createElement("a", { className: "primary-action", href: GOOGLE_MAPS_URL, target: "_blank", rel: "noopener" }, "구글 지도")
             )
           )
@@ -1911,18 +2743,90 @@
 
     function Schedule() {
       const [activeDay, setActiveDay] = useState(days[0].id);
+      const [daySwipeDirection, setDaySwipeDirection] = useState("forward");
+      const [daySwipeOffset, setDaySwipeOffset] = useState(0);
+      const [isDayDragging, setIsDayDragging] = useState(false);
+      const dayTouchStartRef = useRef(null);
+      const activeDayIndex = days.findIndex((day) => day.id === activeDay);
       const shownDays = useMemo(() => days.filter((day) => day.id === activeDay), [activeDay]);
-      return React.createElement("section", { className: "tab-page" },
+      const selectDay = (nextId) => {
+        const nextIndex = days.findIndex((day) => day.id === nextId);
+        if (nextIndex === -1 || nextIndex === activeDayIndex) return;
+        setDaySwipeDirection(nextIndex > activeDayIndex ? "forward" : "backward");
+        setActiveDay(nextId);
+        setDaySwipeOffset(0);
+        setIsDayDragging(false);
+        dayTouchStartRef.current = null;
+      };
+      const handleDayTouchStart = (event) => {
+        const touch = event.touches?.[0];
+        if (!touch) return;
+        dayTouchStartRef.current = { x: touch.clientX, y: touch.clientY, startedAt: Date.now(), locked: false };
+        setIsDayDragging(false);
+        setDaySwipeOffset(0);
+      };
+      const handleDayTouchMove = (event) => {
+        const start = dayTouchStartRef.current;
+        const touch = event.touches?.[0];
+        if (!start || !touch) return;
+        const dx = touch.clientX - start.x;
+        const dy = touch.clientY - start.y;
+        if (!start.locked) {
+          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
+        }
+        if (!start.locked) return;
+        if (event.cancelable) event.preventDefault();
+        setIsDayDragging(true);
+        setDaySwipeOffset(Math.max(-72, Math.min(72, dx * 0.28)));
+      };
+      const handleDayTouchEnd = (event) => {
+        const start = dayTouchStartRef.current;
+        const touch = event.changedTouches?.[0];
+        dayTouchStartRef.current = null;
+        if (!start || !touch) {
+          setIsDayDragging(false);
+          setDaySwipeOffset(0);
+          return;
+        }
+        const dx = touch.clientX - start.x;
+        const dy = touch.clientY - start.y;
+        const dt = Date.now() - start.startedAt;
+        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
+        if (committed) {
+          const nextIndex = dx < 0 ? activeDayIndex + 1 : activeDayIndex - 1;
+          if (nextIndex >= 0 && nextIndex < days.length) {
+            setDaySwipeDirection(dx < 0 ? "forward" : "backward");
+            setActiveDay(days[nextIndex].id);
+          }
+        }
+        setIsDayDragging(false);
+        setDaySwipeOffset(0);
+      };
+      return React.createElement("section", {
+        className: "tab-page",
+        onTouchStart: handleDayTouchStart,
+        onTouchMove: handleDayTouchMove,
+        onTouchEnd: handleDayTouchEnd,
+        onTouchCancel: handleDayTouchEnd
+      },
         React.createElement("h2", { className: "section-title" }, "여행 일정"),
-        React.createElement("p", { className: "section-kicker" }, "하루 단위로만 보여줘서 복잡하지 않게, 탭 안에서 바로 읽히도록 정리했습니다."),
         React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
           days.map((day) => React.createElement("button", {
             key: day.id,
             className: `chip ${activeDay === day.id ? "active" : ""}`,
-            onClick: () => setActiveDay(day.id)
+            onClick: () => selectDay(day.id)
           }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
         ),
-        shownDays.map((day) => React.createElement("article", { className: "day-card", key: day.id },
+        shownDays.map((day) => React.createElement("article", {
+          className: "day-card",
+          key: day.id,
+          style: {
+            animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
+            transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
+            transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+          }
+        },
           React.createElement("div", { className: "day-head" },
             React.createElement("div", null,
               React.createElement("p", { className: "date" }, day.date),
@@ -1948,30 +2852,212 @@
     }
 
     function Supplies() {
-      return React.createElement("section", null,
-        React.createElement("h2", { className: "section-title" }, "준비물 체크리스트"),
-        React.createElement("p", { className: "section-kicker" }, "6명 가족여행 기준. 현지에서 사기 쉬운 물건보다 임산부 메모, 개인 상비약, 서류를 먼저 챙깁니다."),
-        React.createElement("div", { className: "grid" },
-          supplies.map(([title, items, featured]) => React.createElement("article", { className: `card ${featured ? "featured" : ""}`, key: title },
-            React.createElement("h3", null, title),
-            React.createElement("ul", null, items.map((item) => React.createElement("li", { key: item }, item)))
-          ))
+      const [sections, setSections] = useState(() => {
+        try {
+          const stored = JSON.parse(readStoredValue(SUPPLY_STATE_KEY, "null"));
+          if (!stored || !Array.isArray(stored.sections)) throw new Error("no saved state");
+          return stored.sections.map(normalizeSupplySection);
+        } catch {
+          return supplySections.map(normalizeSupplySection);
+        }
+      });
+      const [draft, setDraft] = useState({
+        sectionId: supplySections[0].id,
+        label: "",
+        note: "",
+        owner: SUPPLY_PEOPLE[0]
+      });
+      const [statusFilter, setStatusFilter] = useState("전체");
+      const [sheetOpen, setSheetOpen] = useState(false);
+
+      useEffect(() => {
+        writeStoredValue(SUPPLY_STATE_KEY, JSON.stringify({ sections }));
+      }, [sections]);
+
+      const updateItem = (sectionId, itemId, updates) => {
+        setSections((current) => current.map((section) => section.id !== sectionId ? section : ({
+          ...section,
+          items: section.items.map((item) => item.id !== itemId ? item : ({ ...item, ...updates }))
+        })));
+      };
+
+      const addItem = (event) => {
+        event.preventDefault();
+        const label = draft.label.trim();
+        if (!label) return;
+        setSections((current) => current.map((section) => section.id !== draft.sectionId ? section : ({
+          ...section,
+          items: [
+            ...section.items,
+            {
+              id: crypto.randomUUID(),
+              label,
+              status: "미완료",
+              owner: draft.owner || SUPPLY_PEOPLE[0],
+              note: draft.note.trim()
+            }
+          ]
+        })));
+        setDraft((current) => ({ ...current, label: "", note: "" }));
+        setSheetOpen(false);
+      };
+
+      const doneCount = sections.reduce((sum, section) => sum + section.items.filter((item) => item.status === "완료").length, 0);
+      const totalCount = sections.reduce((sum, section) => sum + section.items.length, 0);
+      const visibleSections = sections
+        .map((section) => ({
+          ...section,
+          items: section.items.filter((item) => statusFilter === "전체" || item.status === statusFilter)
+        }))
+        .filter((section) => section.items.length > 0 || statusFilter === "전체");
+      const visibleCount = visibleSections.reduce((sum, section) => sum + section.items.length, 0);
+
+      return React.createElement(React.Fragment, null,
+        React.createElement("section", { className: "supply-page" },
+          React.createElement("h2", { className: "section-title" }, "준비사항"),
+          React.createElement("div", { className: "card featured supply-summary" },
+            React.createElement("h3", null, "한눈에 보기"),
+            React.createElement("ul", { className: "checklist" },
+              React.createElement("li", null, "오른쪽 드롭다운에서 담당자와 상태를 바로 바꿀 수 있어요."),
+              React.createElement("li", null, "필터 버튼으로 미완료, 완료만 빠르게 골라 볼 수 있어요."),
+              React.createElement("li", null, "준비물 등록은 화면 맨 아래 고정 버튼으로 분리했어요.")
+            )
+          ),
+          React.createElement("div", { className: "supply-stats" },
+            React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
+            React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
+            React.createElement("span", { className: "chip-like" }, `표시 ${visibleCount}`)
+          ),
+          React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
+            SUPPLY_FILTERS.map((filter) => React.createElement("button", {
+              key: filter,
+              type: "button",
+              className: `supply-filter ${statusFilter === filter ? "active" : ""}`,
+              onClick: () => setStatusFilter(filter)
+            }, filter))
+          ),
+          visibleSections.length ? React.createElement("div", { className: "supply-grid" },
+            visibleSections.map((section) => React.createElement("article", { className: `card ${section.featured ? "featured" : ""}`, key: section.id },
+              React.createElement("div", { className: "supply-section-head" },
+                React.createElement("h3", null, section.title),
+                React.createElement("span", { className: "supply-section-count" }, `${section.items.length}개`)
+              ),
+              React.createElement("ul", { className: "checklist" },
+                section.items.map((item) => React.createElement("li", { key: item.id, className: "check-item" },
+                  React.createElement("div", { className: "check-item-main" },
+                    React.createElement("div", { className: "check-item-top" },
+                      React.createElement("strong", null, item.label),
+                      React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`)
+                    ),
+                    item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
+                  ),
+                  React.createElement("div", { className: "check-item-controls" },
+                    React.createElement("select", {
+                      value: item.owner || SUPPLY_PEOPLE[0],
+                      onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                    },
+                      SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                    ),
+                    React.createElement("select", {
+                      value: item.status,
+                      onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
+                    },
+                      React.createElement("option", { value: "미완료" }, "미완료"),
+                      React.createElement("option", { value: "완료" }, "완료")
+                    )
+                  )
+                ))
+              )
+            ))
+          ) : React.createElement("div", { className: "empty" }, "현재 필터에 맞는 준비물이 없어요.")
+        ),
+        React.createElement("div", { className: "supply-dock" },
+          React.createElement("button", { type: "button", onClick: () => setSheetOpen(true) }, "준비물 등록")
+        ),
+        sheetOpen ? React.createElement("div", { className: "supply-sheet-overlay", role: "presentation", onClick: () => setSheetOpen(false) },
+          React.createElement("form", {
+            className: "supply-sheet",
+            onSubmit: addItem,
+            onClick: (e) => e.stopPropagation()
+          },
+            React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
+            React.createElement("div", { className: "supply-sheet-head" },
+              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록"),
+              React.createElement("div", { className: "supply-sheet-subtitle" }, "아래에서 위로 올라오는 모달에서 바로 추가합니다. 새 항목은 미완료로 저장돼요.")
+            ),
+            React.createElement("div", { className: "supply-sheet-body" },
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "카테고리"),
+                React.createElement("select", {
+                  value: draft.sectionId,
+                  onChange: (e) => setDraft((current) => ({ ...current, sectionId: e.target.value }))
+                },
+                  sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
+                )
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "준비자"),
+                React.createElement("select", {
+                  value: draft.owner,
+                  onChange: (e) => setDraft((current) => ({ ...current, owner: e.target.value }))
+                },
+                  SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                )
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "항목"),
+                React.createElement("input", {
+                  placeholder: "추가 항목",
+                  value: draft.label,
+                  onChange: (e) => setDraft((current) => ({ ...current, label: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "비고"),
+                React.createElement("textarea", {
+                  placeholder: "메모",
+                  value: draft.note,
+                  onChange: (e) => setDraft((current) => ({ ...current, note: e.target.value }))
+                })
+              )
+            ),
+            React.createElement("div", { className: "supply-sheet-actions" },
+              React.createElement("button", { className: "ghost-action", type: "button", onClick: () => setSheetOpen(false) }, "닫기"),
+              React.createElement("button", { className: "primary-action", type: "submit" }, "등록")
+            )
+          )
+        ) : null
+      );
+    }
+
+    function EunaeGmap() {
+      return React.createElement("section", { className: "tab-page" },
+        React.createElement("h2", { className: "section-title" }, "은애's gmap"),
+        React.createElement("p", { className: "section-kicker" }, "하와이 · 은애"),
+        React.createElement("div", { className: "card featured" },
+          React.createElement("p", { className: "note" }, "하와이에서 바로 여는 개인 지도 링크입니다."),
+          React.createElement("div", { className: "map-hub" },
+            React.createElement("a", {
+              className: "map-btn",
+              href: EUNAE_GMAP_URL,
+              target: "_blank",
+              rel: "noopener"
+            }, "지도 열기")
+          )
         )
       );
     }
 
-    function Photos() {
+    function Photos({ showGallery = true, showPhotoAnalysis = true, showLiveTranslator = false } = {}) {
       const { photos, status, addFiles, removePhoto, clearPhotos, error: galleryError } = useSupabasePhotoGallery();
       const [viewerIndex, setViewerIndex] = useState(null);
       const [analysisIndex, setAnalysisIndex] = useState(0);
       const [analysisTarget, setAnalysisTarget] = useState("ko");
-      const [analysisUrl, setAnalysisUrl] = useState(() => readStoredValue(AI_TRANSLATE_URL_KEY, DEFAULT_TRANSLATE_URL));
-      const [analysisKey, setAnalysisKey] = useState(() => readStoredValue(AI_TRANSLATE_KEY_KEY, ""));
       const [analysisState, setAnalysisState] = useState({
         status: "idle",
         step: "대기 중",
         progress: 0,
-        message: "사진을 고른 뒤 AI 분석 + 번역을 누르면 OCR과 번역 결과를 보여줍니다.",
+        message: "대기 중",
         ocrText: "",
         translatedText: "",
         detectedLanguage: "",
@@ -1979,11 +3065,298 @@
       });
       const [busy, setBusy] = useState(false);
       const [analysisBusy, setAnalysisBusy] = useState(false);
+      const [liveModalOpen, setLiveModalOpen] = useState(false);
+      const [liveEnabled, setLiveEnabled] = useState(false);
+      const [liveState, setLiveState] = useState({
+        status: "idle",
+        step: "대기 중",
+        progress: 0,
+        message: "대기 중",
+        sourceText: "",
+        translatedText: "",
+        detectedLanguage: "",
+        lastUpdatedAt: 0
+      });
       const cameraInputRef = useRef(null);
       const libraryInputRef = useRef(null);
+      const liveVideoRef = useRef(null);
+      const liveCanvasRef = useRef(null);
+      const liveWorkerRef = useRef(null);
+      const liveStreamRef = useRef(null);
+      const liveBusyRef = useRef(false);
+      const liveLoopRef = useRef(0);
+      const liveLastKeyRef = useRef("");
+      const liveStableRef = useRef({ text: "", count: 0 });
+      const liveConfigRef = useRef({
+        target: LIVE_TRANSLATE_TARGET
+      });
       const activePhoto = viewerIndex === null ? null : photos[viewerIndex];
       const analysisPhoto = photos[Math.min(analysisIndex, Math.max(photos.length - 1, 0))] || null;
       const totalBytes = photos.reduce((sum, photo) => sum + Number(photo.size || 0), 0);
+
+      useEffect(() => {
+        liveConfigRef.current = {
+          target: LIVE_TRANSLATE_TARGET
+        };
+      }, []);
+
+      useEffect(() => {
+        if (!liveModalOpen) {
+          liveStableRef.current = { text: "", count: 0 };
+          liveLastKeyRef.current = "";
+        }
+      }, [liveModalOpen]);
+
+      useEffect(() => {
+        return () => {
+          liveBusyRef.current = false;
+          if (liveLoopRef.current) {
+            window.clearTimeout(liveLoopRef.current);
+            liveLoopRef.current = 0;
+          }
+          if (liveStreamRef.current) {
+            liveStreamRef.current.getTracks().forEach((track) => track.stop());
+            liveStreamRef.current = null;
+          }
+          if (liveVideoRef.current) {
+            liveVideoRef.current.srcObject = null;
+          }
+          if (liveWorkerRef.current) {
+            liveWorkerRef.current.terminate();
+            liveWorkerRef.current = null;
+          }
+        };
+      }, []);
+
+      useEffect(() => {
+        if (!liveModalOpen || !liveEnabled || !navigator.mediaDevices?.getUserMedia) {
+          if (liveModalOpen && liveEnabled && !navigator.mediaDevices?.getUserMedia) {
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "지원 안 됨",
+              progress: 0,
+              message: "이 브라우저는 카메라 접근을 지원하지 않아요."
+            }));
+            setLiveEnabled(false);
+          }
+          return undefined;
+        }
+
+        let cancelled = false;
+
+        const stopStream = () => {
+          if (liveStreamRef.current) {
+            liveStreamRef.current.getTracks().forEach((track) => track.stop());
+            liveStreamRef.current = null;
+          }
+          if (liveVideoRef.current) {
+            liveVideoRef.current.srcObject = null;
+          }
+        };
+
+        const ensureWorker = async () => {
+          if (!liveWorkerRef.current) {
+            liveWorkerRef.current = await createOcrWorker((progress) => {
+              if (cancelled) return;
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: progress?.step ? `OCR ${progress.step}` : current.step,
+                progress: progress?.progress ? Math.min(64, Math.round(progress.progress * 0.64)) : current.progress,
+                message: "카메라 화면에서 영어 텍스트를 읽는 중입니다."
+              }));
+            });
+          }
+          return liveWorkerRef.current;
+        };
+
+        const captureFrame = async () => {
+          const video = liveVideoRef.current;
+          const canvas = liveCanvasRef.current;
+          if (!video || !canvas || video.readyState < 2 || !video.videoWidth || !video.videoHeight) {
+            return null;
+          }
+
+          const maxSide = 960;
+          const scale = Math.min(1, maxSide / Math.max(video.videoWidth, video.videoHeight));
+          canvas.width = Math.max(1, Math.round(video.videoWidth * scale));
+          canvas.height = Math.max(1, Math.round(video.videoHeight * scale));
+          const context = canvas.getContext("2d", { willReadFrequently: true });
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          return canvas;
+        };
+
+        const tick = async () => {
+          if (cancelled) return;
+          liveLoopRef.current = window.setTimeout(tick, 2800);
+          if (liveBusyRef.current) return;
+          liveBusyRef.current = true;
+
+          try {
+            const frame = await captureFrame();
+            if (!frame) {
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: "카메라 준비 중",
+                progress: current.progress || 8,
+                message: "카메라 화면이 준비되면 번역을 시작합니다."
+              }));
+              return;
+            }
+
+            setLiveState((current) => ({
+              ...current,
+              status: "loading",
+              step: "글자를 읽는 중",
+              progress: 20,
+              message: "카메라 프레임에서 읽을 수 있는 영어 문자를 찾는 중입니다."
+            }));
+
+            const worker = await ensureWorker();
+            const result = await worker.recognize(frame);
+            const rawText = normalizeAnalysisText(result?.data?.text || "");
+            const englishText = extractEnglishOcrText(rawText);
+            const stabilityText = normalizeOcrStabilityText(englishText);
+            const confidence = Number(result?.data?.confidence ?? 0);
+            const detectedLanguage = detectTextScript(englishText);
+
+            if (!englishText) {
+              liveStableRef.current = { text: "", count: 0 };
+              liveLastKeyRef.current = "";
+              setLiveState((current) => ({
+                ...current,
+                status: "ready",
+                step: "텍스트 없음",
+                progress: 100,
+                message: "영어 문자를 찾지 못했어요. 영어 표지판만 번역합니다.",
+                sourceText: "",
+                translatedText: "",
+                detectedLanguage: ""
+              }));
+              return;
+            }
+
+            const stable = liveStableRef.current;
+            if (isSimilarOcrText(stable.text, stabilityText)) {
+              stable.count += 1;
+            } else {
+              liveStableRef.current = { text: stabilityText, count: 1 };
+            }
+            const readyToTranslate = liveStableRef.current.count >= 2 || (confidence >= 55 && stabilityText.length >= 10);
+            if (!readyToTranslate) {
+              setLiveState((current) => ({
+                ...current,
+                status: "ready",
+                step: "안정화 중",
+                progress: 48,
+                message: "같은 문장을 한 번 더 확인하는 중입니다. 조금만 더 기다려주세요.",
+                sourceText: englishText,
+                translatedText: current.translatedText,
+                detectedLanguage,
+                lastUpdatedAt: Date.now()
+              }));
+              return;
+            }
+
+            const cacheKey = `${LIVE_TRANSLATE_SOURCE}::${liveConfigRef.current.target}::${stabilityText}`;
+            let translatedText = "";
+            if (liveLastKeyRef.current !== cacheKey) {
+              setLiveState((current) => ({
+                ...current,
+                status: "loading",
+                step: "영어→한국어 번역 중",
+                progress: 72,
+                message: "읽은 영어 문장을 한국어로 번역하는 중입니다."
+              }));
+              const translated = await translateText(englishText, liveConfigRef.current.target, {
+                source: LIVE_TRANSLATE_SOURCE
+              });
+              translatedText = normalizeAnalysisText(translated.translatedText || "");
+              liveLastKeyRef.current = cacheKey;
+            }
+
+            setLiveState((current) => ({
+              ...current,
+              status: "ready",
+              step: "완료",
+              progress: 100,
+              message: `영어→한국어 실시간 번역 완료${detectedLanguage ? ` · OCR ${languageLabel(detectedLanguage)}` : ""}`,
+              sourceText: englishText,
+              translatedText: translatedText || current.translatedText,
+              detectedLanguage,
+              lastUpdatedAt: Date.now()
+            }));
+          } catch (error) {
+            if (cancelled) return;
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "실패",
+              progress: 100,
+              message: error?.message || "실시간 번역 중 문제가 생겼어요. 카메라 권한을 확인해 주세요."
+            }));
+          } finally {
+            liveBusyRef.current = false;
+          }
+        };
+
+        (async () => {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: { ideal: "environment" },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+              },
+              audio: false
+            });
+            if (cancelled) {
+              stream.getTracks().forEach((track) => track.stop());
+              return;
+            }
+            liveStableRef.current = { text: "", count: 0 };
+            liveStreamRef.current = stream;
+            if (liveVideoRef.current) {
+              liveVideoRef.current.srcObject = stream;
+              await liveVideoRef.current.play().catch(() => {});
+            }
+            setLiveState((current) => ({
+              ...current,
+              status: "ready",
+              step: "카메라 연결됨",
+              progress: 12,
+              message: "카메라가 열렸어요. 영어를 읽어서 한국어로 번역합니다."
+            }));
+            tick();
+          } catch (error) {
+            if (cancelled) return;
+            setLiveState((current) => ({
+              ...current,
+              status: "error",
+              step: "권한 실패",
+              progress: 0,
+              message: error?.message || "카메라를 열 수 없어요."
+            }));
+            setLiveEnabled(false);
+          }
+        })();
+
+        return () => {
+          cancelled = true;
+          if (liveLoopRef.current) {
+            window.clearTimeout(liveLoopRef.current);
+            liveLoopRef.current = 0;
+          }
+          stopStream();
+          if (liveWorkerRef.current) {
+            liveWorkerRef.current.terminate();
+            liveWorkerRef.current = null;
+          }
+          liveBusyRef.current = false;
+        };
+      }, [liveEnabled, liveModalOpen]);
 
       useEffect(() => {
         if (viewerIndex === null) return;
@@ -2025,14 +3398,6 @@
       }, [analysisIndex, photos.length]);
 
       useEffect(() => {
-        writeStoredValue(AI_TRANSLATE_URL_KEY, analysisUrl.trim() || DEFAULT_TRANSLATE_URL);
-      }, [analysisUrl]);
-
-      useEffect(() => {
-        writeStoredValue(AI_TRANSLATE_KEY_KEY, analysisKey.trim());
-      }, [analysisKey]);
-
-      useEffect(() => {
         if (!analysisPhoto) return;
         setAnalysisState({
           status: "idle",
@@ -2047,6 +3412,36 @@
       }, [analysisPhoto?.path, analysisTarget]);
 
       const openPicker = (ref) => ref.current?.click();
+      const openLiveModal = () => {
+        liveStableRef.current = { text: "", count: 0 };
+        liveLastKeyRef.current = "";
+        setLiveEnabled(true);
+        setLiveState({
+          status: "loading",
+          step: "카메라 요청 중",
+          progress: 4,
+          message: "카메라 권한을 요청하고 있어요.",
+          sourceText: "",
+          translatedText: "",
+          detectedLanguage: "",
+          lastUpdatedAt: 0
+        });
+        setLiveModalOpen(true);
+      };
+      const closeLiveModal = () => {
+        setLiveEnabled(false);
+        setLiveModalOpen(false);
+        setLiveState({
+          status: "idle",
+          step: "중지됨",
+          progress: 0,
+          message: "실시간 카메라 번역을 닫았습니다.",
+          sourceText: "",
+          translatedText: "",
+          detectedLanguage: "",
+          lastUpdatedAt: 0
+        });
+      };
 
       const handlePick = async (event) => {
         const files = event.target.files;
@@ -2117,14 +3512,15 @@
             }));
           });
           const ocrText = normalizeAnalysisText(ocr.text || "");
-          const detectedLanguage = detectTextScript(ocrText);
+          const englishText = extractEnglishOcrText(ocrText);
+          const detectedLanguage = detectTextScript(englishText);
 
-          if (!ocrText) {
+          if (!englishText) {
             setAnalysisState({
               status: "ready",
               step: "텍스트 없음",
               progress: 100,
-              message: "사진에서 읽을 만한 텍스트를 찾지 못했어요. 풍경 사진이면 다음 단계에서 이미지 설명용 AI를 붙일 수 있습니다.",
+              message: "사진에서 읽을 만한 영어 텍스트를 찾지 못했어요.",
               ocrText: "",
               translatedText: "",
               detectedLanguage: "",
@@ -2138,15 +3534,13 @@
             status: "loading",
             step: "번역 중",
             progress: 70,
-            message: "읽은 텍스트를 번역 서버로 보내는 중입니다.",
-            ocrText,
+            message: "읽은 텍스트를 Google 번역으로 보내는 중입니다.",
+            ocrText: englishText,
             detectedLanguage
           }));
 
-          const translated = await translateWithLibreTranslate(ocrText, analysisTarget, {
-            source: "auto",
-            endpoint: analysisUrl.trim() || DEFAULT_TRANSLATE_URL,
-            apiKey: analysisKey.trim()
+          const translated = await translateText(englishText, analysisTarget, {
+            source: "auto"
           });
 
           const translatedText = normalizeAnalysisText(translated.translatedText || "");
@@ -2157,7 +3551,7 @@
             message: translated.detectedLanguage
               ? `번역 완료 · 감지 언어 ${languageLabel(translated.detectedLanguage)}`
               : "번역 완료",
-            ocrText,
+            ocrText: englishText,
             translatedText,
             detectedLanguage: translated.detectedLanguage || detectedLanguage,
             photoPath: analysisPhoto.path
@@ -2168,7 +3562,7 @@
             status: "error",
             step: "실패",
             progress: 100,
-            message: error?.message || "AI 분석 중 오류가 발생했어요. 번역 서버 주소나 API 키를 확인해 주세요.",
+            message: error?.message || "AI 분석 중 오류가 발생했어요. 번역 기능을 다시 시도해 주세요.",
             translatedText: current.translatedText || "",
             photoPath: analysisPhoto.path
           }));
@@ -2189,11 +3583,159 @@
         }
       }, [photos.length, viewerIndex]);
 
+      const pageTitle = showGallery ? "사진 갤러리" : "AI 번역";
+      const pageKicker = showGallery
+        ? "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. AI 번역은 따로 꺼내서 더 깔끔하게 볼 수 있습니다."
+        : "실시간 카메라 번역과 사진 OCR 번역을 이 탭에 따로 모아둡니다. 사진 목록은 사진 탭에서 관리하고, 여기서는 번역만 집중해서 봅니다.";
+
       return React.createElement("section", { className: "tab-page" },
-        React.createElement("h2", { className: "section-title" }, "사진 갤러리"),
-        React.createElement("p", { className: "section-kicker" }, "모바일에서 바로 찍어서 올리고, 작은 썸네일로 보다가 눌러서 크게 확인하는 방식입니다. AI 사진 번역은 OCR + 번역 서버를 연결해 같이 쓸 수 있습니다."),
-        galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
-        React.createElement("div", { className: "ai-shell" },
+        React.createElement("h2", { className: "section-title" }, pageTitle),
+        React.createElement("p", { className: "section-kicker" }, pageKicker),
+        showGallery && galleryError ? React.createElement("div", { className: "empty" }, galleryError) : null,
+        showLiveTranslator ? React.createElement(React.Fragment, null,
+            React.createElement("div", { className: "ai-shell live-shell" },
+            React.createElement("div", { className: "ai-head" },
+              React.createElement("div", null,
+                React.createElement("p", { className: "ai-kicker" }, "실시간 카메라 번역"),
+                React.createElement("h3", null, "영어를 한국어로 풀사이즈 번역해요")
+              ),
+              React.createElement("span", { className: "ai-pill" }, "Live OCR")
+            ),
+            React.createElement("p", { className: "ai-copy" }, "표지판, 메뉴판, 안내문처럼 카메라에 보이는 영어 텍스트를 읽고 한국어로 번역합니다. 영어 → 한국어만 고정해서 보여줍니다."),
+            React.createElement("div", { className: "ai-actions" },
+              React.createElement("button", {
+                className: "primary-action",
+                type: "button",
+                onClick: openLiveModal
+              }, "실시간 번역 열기"),
+              React.createElement("button", {
+                className: "ghost-action",
+                type: "button",
+                onClick: () => {
+                  liveLastKeyRef.current = "";
+                  liveStableRef.current = { text: "", count: 0 };
+                  setLiveEnabled(false);
+                  setLiveModalOpen(false);
+                  setLiveState((current) => ({
+                    ...current,
+                    status: "idle",
+                    step: "중지됨",
+                    progress: 0,
+                    message: "카메라 실시간 번역을 중지했습니다.",
+                    sourceText: "",
+                    translatedText: "",
+                    detectedLanguage: "",
+                    lastUpdatedAt: 0
+                  }));
+                }
+              }, "닫기")
+            )
+          ),
+          liveModalOpen ? React.createElement("div", {
+            className: "live-modal",
+            role: "presentation",
+            onClick: closeLiveModal
+          },
+            React.createElement("div", {
+              className: "live-modal-card",
+              role: "dialog",
+              "aria-modal": "true",
+              "aria-label": "실시간 카메라 번역",
+              onClick: (event) => event.stopPropagation()
+            },
+              React.createElement("div", { className: "live-modal-head" },
+                React.createElement("div", { className: "live-modal-title" },
+                  React.createElement("b", null, "실시간 카메라 번역"),
+                  React.createElement("span", null, "영어 → 한국어 번역을 풀사이즈 화면으로 보여줍니다. 닫으면 카메라도 함께 멈춥니다.")
+                ),
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: closeLiveModal }, "닫기")
+              ),
+              React.createElement("div", { className: "ai-actions" },
+                React.createElement("button", {
+                  className: "primary-action",
+                  type: "button",
+                  onClick: () => {
+                    liveLastKeyRef.current = "";
+                    liveStableRef.current = { text: "", count: 0 };
+                    setLiveState((current) => ({
+                      ...current,
+                      status: "loading",
+                      step: "다시 시작 중",
+                      progress: 4,
+                      message: "영어 → 한국어 번역을 다시 시작합니다."
+                    }));
+                    setLiveEnabled(true);
+                  },
+                  disabled: liveEnabled
+                }, liveEnabled ? "카메라 켜짐" : "다시 시작"),
+                React.createElement("button", {
+                  className: "ghost-action",
+                  type: "button",
+                  onClick: () => {
+                    liveLastKeyRef.current = "";
+                    liveStableRef.current = { text: "", count: 0 };
+                    setLiveEnabled(false);
+                    setLiveState((current) => ({
+                      ...current,
+                      status: "idle",
+                      step: "중지됨",
+                      progress: 0,
+                      message: "카메라 실시간 번역을 중지했습니다.",
+                      sourceText: "",
+                      translatedText: "",
+                      detectedLanguage: ""
+                    }));
+                  },
+                  disabled: !liveEnabled
+                }, "중지")
+              ),
+              React.createElement("div", { className: "live-preview" },
+                React.createElement("div", { className: "live-stage" },
+                  React.createElement("video", {
+                    ref: liveVideoRef,
+                    className: "live-video",
+                    autoPlay: true,
+                    muted: true,
+                    playsInline: true
+                  }),
+                  !liveEnabled ? React.createElement("div", { className: "live-placeholder" },
+                    React.createElement("div", null,
+                      React.createElement("strong", null, "카메라가 아직 꺼져 있어요"),
+                      React.createElement("span", null, "실시간 번역을 시작하면 카메라 화면 위에 번역 자막이 붙습니다.")
+                    )
+                  ) : null,
+                  React.createElement("div", { className: "live-subtitle" },
+                    React.createElement("span", { className: "live-subtitle-label" }, "English → Korean"),
+                    React.createElement("strong", null, liveState.translatedText || (liveEnabled ? "번역 결과를 기다리는 중..." : "카메라를 시작하세요")),
+                    React.createElement("p", null, liveState.sourceText || liveState.message)
+                  )
+                ),
+                React.createElement("div", { className: "live-meta" },
+                  React.createElement("span", { className: "chip-like" }, `상태 ${liveState.step}`),
+                  React.createElement("span", { className: "chip-like" }, "대상 한국어"),
+                  React.createElement("span", { className: "chip-like" }, liveState.detectedLanguage ? `OCR ${languageLabel(liveState.detectedLanguage)}` : "OCR 자동"),
+                  React.createElement("span", { className: "chip-like" }, `${liveState.progress}%`)
+                )
+              ),
+              React.createElement("div", { className: "ai-status" },
+                React.createElement("div", { className: "ai-status-head" },
+                  React.createElement("b", null, liveEnabled ? "실시간 번역 중" : "실시간 번역 대기"),
+                  React.createElement("span", null, liveState.lastUpdatedAt ? `${new Date(liveState.lastUpdatedAt).toLocaleTimeString("ko-KR")}` : liveState.step)
+                ),
+                React.createElement("div", { className: "ai-progress", "aria-hidden": "true" },
+                  React.createElement("span", { style: { width: `${liveState.progress}%` } })
+                ),
+                React.createElement("p", { className: "ai-muted" }, liveState.message)
+              ),
+              React.createElement("canvas", {
+                ref: liveCanvasRef,
+                hidden: true,
+                "aria-hidden": "true"
+              })
+            )
+          ) : null
+        ) : null,
+        showPhotoAnalysis ? React.createElement("div", { className: "ai-shell" },
           React.createElement("div", { className: "ai-head" },
             React.createElement("div", null,
               React.createElement("p", { className: "ai-kicker" }, "AI 사진 번역"),
@@ -2201,7 +3743,7 @@
             ),
             React.createElement("span", { className: "ai-pill" }, "OCR + 번역")
           ),
-          React.createElement("p", { className: "ai-copy" }, "메뉴판, 표지판, 안내문처럼 글자가 들어간 사진에 맞춘 기능입니다. 번역 서버 주소와 API 키는 필요하면 저장해 두고 다시 쓸 수 있어요."),
+          React.createElement("p", { className: "ai-copy" }, "메뉴판, 표지판, 안내문처럼 글자가 들어간 사진에 맞춘 기능입니다. 번역은 Google 번역 API를 바로 사용합니다."),
           React.createElement("div", { className: "ai-controls" },
             React.createElement("label", { className: "ai-field" },
               React.createElement("span", null, "분석할 사진"),
@@ -2226,20 +3768,10 @@
           ),
           React.createElement("div", { className: "ai-controls" },
             React.createElement("label", { className: "ai-field" },
-              React.createElement("span", null, "번역 API 주소"),
+              React.createElement("span", null, "번역 방식"),
               React.createElement("input", {
-                value: analysisUrl,
-                placeholder: DEFAULT_TRANSLATE_URL,
-                onChange: (event) => setAnalysisUrl(event.target.value)
-              })
-            ),
-            React.createElement("label", { className: "ai-field" },
-              React.createElement("span", null, "API Key"),
-              React.createElement("input", {
-                value: analysisKey,
-                type: "password",
-                placeholder: "없으면 self-hosted 서버용",
-                onChange: (event) => setAnalysisKey(event.target.value)
+                value: "Google 번역 API",
+                readOnly: true
               })
             )
           ),
@@ -2271,7 +3803,7 @@
             React.createElement("div", { className: "ai-inline" },
               React.createElement("span", { className: "chip-like" }, `대상 ${languageLabel(analysisTarget)}`),
               React.createElement("span", { className: "chip-like" }, `OCR ${analysisState.detectedLanguage ? languageLabel(analysisState.detectedLanguage) : "자동"}`),
-              React.createElement("span", { className: "chip-like" }, analysisUrl.trim() ? "번역 서버 저장됨" : "번역 서버 기본값")
+              React.createElement("span", { className: "chip-like" }, "번역 방식 Google API")
             ),
             React.createElement("p", { className: "ai-muted" }, analysisState.message)
           ),
@@ -2299,8 +3831,8 @@
               )
             )
           )
-        ),
-        React.createElement("div", { className: "gallery-shell" },
+        ) : null,
+        showGallery ? React.createElement("div", { className: "gallery-shell" },
           React.createElement("div", { className: "gallery-top" },
             React.createElement("div", { className: "gallery-actions" },
               React.createElement("button", {
@@ -2365,8 +3897,8 @@
                   React.createElement("span", null, `${new Date(photo.createdAt).toLocaleDateString("ko-KR")} · ${formatBytes(photo.size)}`)
                 )
               ))
-            )
-        ),
+          )
+        ) : null,
         activePhoto ? React.createElement("div", {
           className: "photo-overlay",
           role: "presentation",
@@ -2429,7 +3961,6 @@
       };
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "가족 게시판"),
-        React.createElement("p", { className: "section-kicker" }, "Supabase Realtime으로 가족 모두에게 공유됩니다."),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
         React.createElement("form", { className: "form", onSubmit: submit },
           React.createElement("div", { className: "form-row" },
@@ -2512,7 +4043,6 @@
       if (!session) {
         return React.createElement("section", null,
           React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-          React.createElement("p", { className: "section-kicker" }, "아이디, 비밀번호, 이름을 입력해 채팅방에 들어갑니다. 이름은 나가기 전까지 유지됩니다."),
           React.createElement("form", { className: "chat-login", onSubmit: enterChat },
             React.createElement("div", { className: "login-grid three" },
               React.createElement("input", { placeholder: "아이디", autoComplete: "username", value: login.userId, onChange: (e) => setLogin({ ...login, userId: e.target.value }) }),
@@ -2526,7 +4056,6 @@
 
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "가족 채팅"),
-        React.createElement("p", { className: "section-kicker" }, "여행 중 빠른 공유용입니다. 새 메시지는 Supabase Realtime으로 바로 동기화됩니다."),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
         React.createElement("div", { className: "chat-phone" },
           React.createElement("div", { className: "chat-room-head" },
@@ -2560,12 +4089,36 @@
       );
     }
 
-    function Maps() {
+    function TravelInfo() {
       return React.createElement("section", null,
-        React.createElement("h2", { className: "section-title" }, "지도 바로가기"),
-        React.createElement("p", { className: "section-kicker" }, "현장에서 많이 열 곳만 모았습니다. 버튼을 누르면 Google Maps 검색으로 연결됩니다."),
+        React.createElement("h2", { className: "section-title" }, "여행 정보"),
         React.createElement("div", { className: "map-hub" },
-          mapLinks.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
+          travelInfo.slice(0, 5).map((item) => React.createElement("a", {
+            className: "map-btn",
+            href: mapUrl(item.address || item.title),
+            target: "_blank",
+            rel: "noopener",
+            key: item.title
+          }, item.title))
+        ),
+        React.createElement("div", { className: "grid" },
+          travelInfo.map((item) => React.createElement("article", { className: "card", key: `${item.category}-${item.title}` },
+            React.createElement("div", { className: "post-meta" },
+              React.createElement("span", { className: "category" }, item.category),
+              item.day ? React.createElement("span", null, item.day) : null,
+              item.phase ? React.createElement("span", null, item.phase) : null,
+              React.createElement("span", null, item.location || "Hawaii"),
+              item.hours ? React.createElement("span", null, item.hours) : null
+            ),
+            React.createElement("h3", null, item.title),
+            item.address ? React.createElement("a", { className: "map-btn", href: mapUrl(item.address), target: "_blank", rel: "noopener" }, item.address) : null,
+            item.info.length ? React.createElement("ul", { className: "checklist" },
+              item.info.map((line) => React.createElement("li", { key: line }, line))
+            ) : null,
+            item.links.length ? React.createElement("div", { className: "ai-inline" },
+              item.links.map((link) => React.createElement("a", { className: "map-btn", href: link.href, target: "_blank", rel: "noopener", key: link.href }, link.label))
+            ) : null
+          ))
         )
       );
     }
@@ -2573,7 +4126,6 @@
     function Notes() {
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "메모"),
-        React.createElement("div", { className: "card" }, "일정은 컨디션에 따라 줄이는 방향을 기본으로 합니다. 긴 이동일에는 아침 출발 전 물, 간식, 화장실 위치, 대체 식당을 먼저 확인합니다."),
         React.createElement("section", { className: "panel" },
           React.createElement("h2", null, "체크포인트"),
           React.createElement("ul", null,
@@ -2592,8 +4144,15 @@
       const [isDragging, setIsDragging] = useState(false);
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
       const touchStartRef = useRef(null);
-      const activeIndex = tabIds.indexOf(active);
+      const safeActive = tabIds.includes(active) ? active : tabIds[0];
+      const activeIndex = tabIds.indexOf(safeActive);
       const splashTimerRef = useRef(null);
+
+      useEffect(() => {
+        if (active !== safeActive) {
+          setActive(safeActive);
+        }
+      }, [active, safeActive]);
 
       const selectTab = (nextId) => {
         const nextIndex = tabIds.indexOf(nextId);
@@ -2679,43 +4238,37 @@
 
       const view = {
         schedule: React.createElement(Schedule),
-        photos: React.createElement(Photos),
         supplies: React.createElement(Supplies),
-        board: React.createElement(Board),
-        chat: React.createElement(Chat),
-        maps: React.createElement(Maps),
-        notes: React.createElement(Notes),
-      }[active];
+        eunaeGmap: React.createElement(EunaeGmap),
+        maps: React.createElement(TravelInfo),
+      }[safeActive];
       return React.createElement(React.Fragment, null,
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
-            React.createElement("p", { className: "splash-kicker" }, "Aloha · Hawaii Trip"),
-            React.createElement("h2", null, "Family Trip App"),
-            React.createElement("p", null, "조금 천천히, 조금 더 예쁘게. 스와이프와 사진을 위한 시작 화면입니다."),
+            React.createElement("h2", null, "Hong's 햅삐한 하와이여행"),
             React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
           )
         ) : null,
         React.createElement("main", { className: "shell" },
           React.createElement(Header),
-          React.createElement(Tabbar, { active, setActive: selectTab }),
+          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
           React.createElement("div", {
             className: "view-shell",
-            onTouchStart: handleTouchStart,
-            onTouchMove: handleTouchMove,
-            onTouchEnd: handleTouchEnd,
-            onTouchCancel: handleTouchEnd
+            onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
+            onTouchMove: safeActive === "schedule" ? undefined : handleTouchMove,
+            onTouchEnd: safeActive === "schedule" ? undefined : handleTouchEnd,
+            onTouchCancel: safeActive === "schedule" ? undefined : handleTouchEnd
           },
             React.createElement("div", {
               className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-              key: active,
+              key: safeActive,
               style: {
                 "--swipe-offset": `${swipeOffset}px`,
                 "--swipe-scale": isDragging ? "0.994" : "1"
               }
             }, view)
           ),
-          React.createElement("footer", null, "React static app · board/chat synced with Supabase Realtime")
         )
       );
     }
