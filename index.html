@@ -1314,6 +1314,8 @@
     const AI_TRANSLATE_URL_KEY = "hawaii-ai-translate-url";
     const AI_TRANSLATE_KEY_KEY = "hawaii-ai-translate-key";
     const DEFAULT_TRANSLATE_URL = "https://libretranslate.com/translate";
+    const GOOGLE_TRANSLATE_URL = "https://translate.google.com/?sl=en&tl=ko&op=translate";
+    const GOOGLE_MAPS_URL = "https://www.google.com/maps";
 
     let tesseractModulePromise = null;
 
@@ -1887,6 +1889,10 @@
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "그룹"), React.createElement("span", null, "6명, 임산부 동행")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "기능"), React.createElement("span", null, "일정, 사진, 게시판, 채팅")),
               React.createElement("div", { className: "fact" }, React.createElement("b", null, "저장"), React.createElement("span", null, "Supabase Realtime"))
+            ),
+            React.createElement("div", { className: "actions", "aria-label": "메인 바로가기" },
+              React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역(영→한)"),
+              React.createElement("a", { className: "primary-action", href: GOOGLE_MAPS_URL, target: "_blank", rel: "noopener" }, "구글 지도")
             )
           )
         )
