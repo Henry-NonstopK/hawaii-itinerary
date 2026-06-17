@@ -377,17 +377,17 @@
 
     .tabbar {
       position: sticky;
-      top: 10px;
+      top: 0;
       z-index: 5;
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      margin: 0 -14px 16px;
-      padding: 12px 14px 12px;
-      background: rgba(255, 255, 253, 0.82);
-      border-block: 1px solid rgba(36, 56, 67, 0.08);
-      box-shadow: 0 12px 26px rgba(24, 38, 45, 0.08);
-      backdrop-filter: blur(18px);
+      margin: 0 -14px 14px;
+      padding: 10px 14px 11px;
+      background: rgba(250, 248, 243, 0.96);
+      border-block: 1px solid rgba(36, 56, 67, 0.06);
+      box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
+      backdrop-filter: saturate(140%) blur(10px);
       scrollbar-width: none;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
@@ -398,6 +398,9 @@
       flex: 0 0 8px;
     }
     .tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       flex: 0 0 auto;
       min-height: 44px;
       padding: 10px 18px;
@@ -412,6 +415,10 @@
       white-space: nowrap;
       box-shadow: 0 9px 20px rgba(24, 38, 45, 0.08);
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+    }
+    .tab:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.99);
     }
     .tab.active {
       border-color: var(--aqua);
@@ -495,6 +502,36 @@
       overflow: hidden;
       background:
         linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.96));
+    }
+    .schedule-swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(255, 255, 253, 0.96));
+      color: var(--aqua-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+    .schedule-swipe-hint small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .schedule-swipe-frame {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.96), rgba(242, 244, 241, 0.92));
+      box-shadow: 0 12px 28px rgba(24, 38, 45, 0.06);
+      overflow: hidden;
+      touch-action: pan-y;
     }
     .day-card::before {
       content: "";
@@ -633,19 +670,69 @@
 
     .supply-page {
       position: relative;
-      padding-bottom: 96px;
+      padding-bottom: 112px;
+      gap: 16px;
+    }
+    .supply-summary {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(255, 255, 253, 0.98));
+    }
+    .supply-summary::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(135deg, var(--aqua), var(--coral));
+    }
+    .supply-summary h3 {
+      margin: 0 0 10px;
+      font-family: var(--headline);
+      font-size: 1rem;
+      color: var(--aqua-dark);
     }
     .supply-stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 2px;
+    }
+    .supply-stat {
+      display: grid;
+      gap: 3px;
+      padding: 14px 12px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.92));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+    }
+    .supply-stat b {
+      color: var(--aqua-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .supply-stat span {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      color: var(--ink);
+      font-size: 1.16rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .supply-stat span small {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
     }
     .supply-filters {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      margin: 0 0 14px;
+      margin: 2px 0 12px;
       padding: 2px 0 4px;
       scrollbar-width: none;
     }
@@ -670,7 +757,7 @@
     }
     .supply-grid {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
     .supply-grid .card {
       padding: 13px;
@@ -721,7 +808,7 @@
       right: 0;
       bottom: 0;
       z-index: 30;
-      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
       pointer-events: none;
     }
     .supply-dock button {
@@ -732,14 +819,14 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-height: 52px;
+      min-height: 54px;
       border: 0;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--aqua-dark), var(--palm));
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--aqua-dark), #2f6c71);
       color: #fff;
-      font-size: 0.86rem;
-      font-weight: 800;
-      box-shadow: 0 18px 36px rgba(24, 38, 45, 0.2);
+      font-size: 0.88rem;
+      font-weight: 900;
+      box-shadow: 0 18px 38px rgba(24, 38, 45, 0.18);
     }
     .supply-dock button::before {
       content: "+";
@@ -1756,6 +1843,17 @@
       .hero-title .title-sub {
         font-size: clamp(1.8rem, 10vw, 2.4rem);
       }
+      .tabbar {
+        margin: 0 -16px 14px;
+        padding: 9px 16px 10px;
+        background: rgba(250, 248, 243, 0.96);
+        box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
+      }
+      .tab {
+        min-height: 42px;
+        padding: 9px 14px;
+        font-size: 0.74rem;
+      }
       .tab-page {
         padding: 14px;
       }
@@ -1773,8 +1871,17 @@
         width: 100%;
         justify-content: space-between;
       }
+      .supply-summary {
+        padding: 13px;
+      }
+      .supply-summary h3 {
+        margin-bottom: 8px;
+      }
       .supply-stats {
         grid-template-columns: 1fr 1fr;
+      }
+      .supply-stat:last-child {
+        grid-column: 1 / -1;
       }
       .supply-grid {
         gap: 10px;
@@ -2811,49 +2918,60 @@
       };
       return React.createElement("section", {
         className: "tab-page",
-        onTouchStart: handleDayTouchStart,
-        onTouchMove: handleDayTouchMove,
-        onTouchEnd: handleDayTouchEnd,
-        onTouchCancel: handleDayTouchEnd
       },
         React.createElement("h2", { className: "section-title" }, "여행 일정"),
-        React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
-          days.map((day) => React.createElement("button", {
-            key: day.id,
-            className: `chip ${activeDay === day.id ? "active" : ""}`,
-            onClick: () => selectDay(day.id)
-          }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
+        React.createElement("div", { className: "schedule-swipe-hint", "aria-hidden": "true" },
+          React.createElement("div", null,
+            "스와이프 영역",
+            React.createElement("small", null, "아래 박스 안에서 좌우로 밀어 다른 날짜를 볼 수 있어요.")
+          ),
+          React.createElement("span", null, "↔")
         ),
-        shownDays.map((day) => React.createElement("article", {
-          className: "day-card",
-          key: day.id,
-          style: {
-            animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
-            transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
-            transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
-          }
+        React.createElement("div", {
+          className: "schedule-swipe-frame",
+          onTouchStart: handleDayTouchStart,
+          onTouchMove: handleDayTouchMove,
+          onTouchEnd: handleDayTouchEnd,
+          onTouchCancel: handleDayTouchEnd
         },
-          React.createElement("div", { className: "day-head" },
-            React.createElement("div", null,
-              React.createElement("p", { className: "date" }, day.date),
-              React.createElement("h3", null, day.title)
+          React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
+            days.map((day) => React.createElement("button", {
+              key: day.id,
+              className: `chip ${activeDay === day.id ? "active" : ""}`,
+              onClick: () => selectDay(day.id)
+            }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
+          ),
+          shownDays.map((day) => React.createElement("article", {
+            className: "day-card",
+            key: day.id,
+            style: {
+              animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
+              transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
+              transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+            }
+          },
+            React.createElement("div", { className: "day-head" },
+              React.createElement("div", null,
+                React.createElement("p", { className: "date" }, day.date),
+                React.createElement("h3", null, day.title)
+              ),
+              React.createElement("span", { className: "badge" }, day.badge)
             ),
-            React.createElement("span", { className: "badge" }, day.badge)
-          ),
-          React.createElement("ol", { className: "timeline" },
-            day.stops.map(([time, title, note]) => React.createElement("li", { className: "stop", key: `${day.id}-${time}-${title}` },
-              React.createElement("span", { className: "time" }, time),
-              React.createElement("div", { className: "stop-body" },
-                React.createElement("span", { className: "stop-title" }, title),
-                React.createElement("p", { className: "stop-note" }, note)
-              )
-            ))
-          ),
-          React.createElement("div", { className: "actions" },
-            day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
-          ),
-          React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
-        ))
+            React.createElement("ol", { className: "timeline" },
+              day.stops.map(([time, title, note]) => React.createElement("li", { className: "stop", key: `${day.id}-${time}-${title}` },
+                React.createElement("span", { className: "time" }, time),
+                React.createElement("div", { className: "stop-body" },
+                  React.createElement("span", { className: "stop-title" }, title),
+                  React.createElement("p", { className: "stop-note" }, note)
+                )
+              ))
+            ),
+            React.createElement("div", { className: "actions" },
+              day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
+            ),
+            React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
+          ))
+        )
       );
     }
 
@@ -2926,13 +3044,22 @@
             React.createElement("ul", { className: "checklist" },
               React.createElement("li", null, "오른쪽 드롭다운에서 담당자와 상태를 바로 바꿀 수 있어요."),
               React.createElement("li", null, "필터 버튼으로 미완료, 완료만 빠르게 골라 볼 수 있어요."),
-              React.createElement("li", null, "준비물 등록은 화면 맨 아래 고정 버튼으로 분리했어요.")
+              React.createElement("li", null, "전체, 완료, 표시 수치는 아래 카드에서 바로 볼 수 있어요.")
             )
           ),
           React.createElement("div", { className: "supply-stats" },
-            React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
-            React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
-            React.createElement("span", { className: "chip-like" }, `표시 ${visibleCount}`)
+            React.createElement("div", { className: "supply-stat" },
+              React.createElement("b", null, "전체"),
+              React.createElement("span", null, totalCount, React.createElement("small", null, "개"))
+            ),
+            React.createElement("div", { className: "supply-stat" },
+              React.createElement("b", null, "완료"),
+              React.createElement("span", null, doneCount, React.createElement("small", null, "개"))
+            ),
+            React.createElement("div", { className: "supply-stat" },
+              React.createElement("b", null, "표시"),
+              React.createElement("span", null, visibleCount, React.createElement("small", null, "개"))
+            )
           ),
           React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
             SUPPLY_FILTERS.map((filter) => React.createElement("button", {
