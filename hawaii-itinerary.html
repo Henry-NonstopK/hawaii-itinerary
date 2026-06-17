@@ -3125,34 +3125,35 @@
               ),
               React.createElement("ul", { className: "checklist" },
                 section.items.map((item) => React.createElement("li", { key: item.id, className: "check-item" },
-              React.createElement("div", { className: "check-item-main" },
-                React.createElement("div", { className: "check-item-top" },
-                  React.createElement("strong", null, item.label),
-                  React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`),
-                  React.createElement("span", { className: "check-item-status" }, `상태 ${item.status}`)
-                ),
-                item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
-              ),
-              React.createElement("div", { className: "check-item-controls" },
-                React.createElement("div", { className: "check-item-controls-label" },
-                  React.createElement("span", null, "담당"),
-                  React.createElement("span", null, "상태")
-                ),
-                React.createElement("div", { className: "check-item-controls-row" },
-                  React.createElement("select", {
-                    value: item.owner || SUPPLY_PEOPLE[0],
-                    onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                  },
-                    SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                  React.createElement("div", { className: "check-item-main" },
+                    React.createElement("div", { className: "check-item-top" },
+                      React.createElement("strong", null, item.label),
+                      React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`),
+                      React.createElement("span", { className: "check-item-status" }, `상태 ${item.status}`)
+                    ),
+                    item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
                   ),
-                  React.createElement("select", {
-                    value: item.status,
-                    onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
-                  },
-                    React.createElement("option", { value: "미완료" }, "미완료"),
-                    React.createElement("option", { value: "완료" }, "완료")
+                  React.createElement("div", { className: "check-item-controls" },
+                    React.createElement("div", { className: "check-item-controls-label" },
+                      React.createElement("span", null, "담당"),
+                      React.createElement("span", null, "상태")
+                    ),
+                    React.createElement("div", { className: "check-item-controls-row" },
+                      React.createElement("select", {
+                        value: item.owner || SUPPLY_PEOPLE[0],
+                        onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                      },
+                        SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                      ),
+                      React.createElement("select", {
+                        value: item.status,
+                        onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
+                      },
+                        React.createElement("option", { value: "미완료" }, "미완료"),
+                        React.createElement("option", { value: "완료" }, "완료")
+                      )
+                    )
                   )
-                )
                 ))
               )
             ))
