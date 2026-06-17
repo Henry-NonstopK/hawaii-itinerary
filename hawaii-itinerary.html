@@ -1822,9 +1822,9 @@
     }
     .check-item {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(170px, 220px);
-      gap: 10px;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
       padding: 12px 13px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 18px;
@@ -1841,8 +1841,9 @@
     }
     .check-item-controls {
       display: grid;
-      gap: 6px;
+      gap: 8px;
       min-width: 0;
+      margin-top: 2px;
     }
     .check-item-controls-label {
       display: grid;
@@ -1864,12 +1865,45 @@
     }
     .check-item-controls select {
       min-width: 0;
-      width: auto;
-      min-height: 48px;
-      padding: 11px 12px;
-      font-size: 0.94rem;
+      width: 100%;
+      min-height: 54px;
+      padding: 13px 14px;
+      font-size: 1rem;
       text-align: center;
       text-align-last: center;
+    }
+    .travel-info-shell {
+      display: grid;
+      gap: 12px;
+    }
+    .travel-info-map-hub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .travel-info-map-hub .map-btn {
+      flex: 1 1 140px;
+    }
+    .travel-info-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .travel-info-grid > .card {
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.04);
+    }
+    .travel-info-grid > .card:nth-child(4n + 1) {
+      background: rgba(255, 250, 245, 0.95);
+    }
+    .travel-info-grid > .card:nth-child(4n + 2) {
+      background: rgba(242, 248, 250, 0.95);
+    }
+    .travel-info-grid > .card:nth-child(4n + 3) {
+      background: rgba(247, 250, 241, 0.95);
+    }
+    .travel-info-grid > .card:nth-child(4n + 4) {
+      background: rgba(248, 244, 252, 0.95);
     }
     footer {
       padding: 24px 4px 6px;
@@ -1951,19 +1985,20 @@
         align-items: flex-start;
       }
       .check-item-controls {
-        gap: 6px;
+        gap: 8px;
+        margin-top: 2px;
       }
       .check-item-controls-label {
         gap: 8px;
         font-size: 0.78rem;
       }
       .check-item-controls-row {
-        gap: 8px;
+        gap: 10px;
       }
       .check-item-controls select {
-        min-height: 52px;
-        padding: 13px 12px;
-        font-size: 1rem;
+        min-height: 56px;
+        padding: 14px 12px;
+        font-size: 1.02rem;
       }
       .supply-sheet {
         width: 100%;
@@ -4283,9 +4318,9 @@
     }
 
     function TravelInfo() {
-      return React.createElement("section", null,
+      return React.createElement("section", { className: "travel-info-shell" },
         React.createElement("h2", { className: "section-title" }, "여행 정보"),
-        React.createElement("div", { className: "map-hub" },
+        React.createElement("div", { className: "map-hub travel-info-map-hub" },
           travelInfo.slice(0, 5).map((item) => React.createElement("a", {
             className: "map-btn",
             href: mapUrl(item.address || item.title),
@@ -4294,7 +4329,7 @@
             key: item.title
           }, item.title))
         ),
-        React.createElement("div", { className: "grid" },
+        React.createElement("div", { className: "grid travel-info-grid" },
           travelInfo.map((item) => React.createElement("article", { className: "card", key: `${item.category}-${item.title}` },
             React.createElement("div", { className: "post-meta" },
               React.createElement("span", { className: "category" }, item.category),
