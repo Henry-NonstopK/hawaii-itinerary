@@ -1887,7 +1887,7 @@
     const tabs = [
       ["schedule", "일정"],
       ["supplies", "준비물"],
-      ["eunae-gmap", "은애's gmap"],
+      ["eunae-gmap", "은애's gmap", EUNAE_GMAP_URL],
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
@@ -2733,7 +2733,13 @@
 
     function Tabbar({ active, setActive }) {
       return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
-        tabs.map(([id, label]) => React.createElement("button", {
+        tabs.map(([id, label, href]) => href ? React.createElement("a", {
+          key: id,
+          className: `tab ${active === id ? "active" : ""}`,
+          href,
+          target: "_blank",
+          rel: "noopener"
+        }, label) : React.createElement("button", {
           key: id,
           className: `tab ${active === id ? "active" : ""}`,
           onClick: () => setActive(id)
