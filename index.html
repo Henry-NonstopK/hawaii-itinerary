@@ -823,7 +823,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 800;
     }
     .check-item-controls-label span {
@@ -833,15 +833,15 @@
     .check-item-controls-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: 10px;
       align-items: center;
     }
     .check-item-controls select {
       width: auto;
       min-width: 0;
-      min-height: 38px;
-      padding-block: 7px;
-      font-size: 0.82rem;
+      min-height: 48px;
+      padding: 11px 12px;
+      font-size: 0.94rem;
       text-align: center;
       text-align-last: center;
     }
@@ -1956,12 +1956,17 @@
         gap: 6px;
       }
       .check-item-controls-label {
-        gap: 6px;
+        gap: 8px;
+        font-size: 0.78rem;
       }
       .check-item-controls-row {
-        gap: 6px;
+        gap: 8px;
       }
-      .check-item-controls select { min-height: 42px; }
+      .check-item-controls select {
+        min-height: 52px;
+        padding: 13px 12px;
+        font-size: 1rem;
+      }
       .supply-sheet {
         width: 100%;
         padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
