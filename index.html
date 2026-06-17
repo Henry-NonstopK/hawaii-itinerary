@@ -2718,9 +2718,13 @@
                 React.createElement("span", { className: "title-kicker" }, "Hawaii Family Plan"),
                 React.createElement("span", { className: "title-main" }, "Hong's"),
                 React.createElement("span", { className: "title-sub" }, "햅삐한 하와이여행")
-              ),
-            React.createElement("div", { className: "hero-meta-note" }, "모바일에서 일정과 준비물을 바로 보기 쉽게 정리한 가족 여행 허브입니다.")
+              )
             ),
+            React.createElement("div", { className: "hero-meta-note" }, "모바일에서 일정과 준비물을 바로 보기 쉽게 정리한 가족 여행 허브입니다."),
+            React.createElement("div", { className: "actions", "aria-label": "메인 바로가기" },
+              React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역 (영→한)"),
+              React.createElement("a", { className: "primary-action", href: GOOGLE_MAPS_URL, target: "_blank", rel: "noopener" }, "구글 지도")
+            )
           )
         )
       );
@@ -2910,20 +2914,6 @@
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
           React.createElement("h2", { className: "section-title" }, "준비사항"),
-          React.createElement("div", { className: "map-hub" },
-            React.createElement("a", {
-              className: "map-btn",
-              href: GOOGLE_TRANSLATE_URL,
-              target: "_blank",
-              rel: "noopener"
-            }, "구글 번역 (영→한)"),
-            React.createElement("a", {
-              className: "map-btn",
-              href: GOOGLE_MAPS_URL,
-              target: "_blank",
-              rel: "noopener"
-            }, "구글 지도")
-          ),
           React.createElement("div", { className: "supply-stats" },
             React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
             React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
