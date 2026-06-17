@@ -1871,36 +1871,63 @@
     }
     .travel-info-shell {
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
     .travel-info-map-hub {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 4px;
+      gap: 12px;
+      margin: 2px 0 6px;
     }
     .travel-info-map-hub .map-btn {
-      flex: 1 1 140px;
+      flex: 1 1 150px;
     }
     .travel-info-grid {
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
     .travel-info-grid > .card {
       border: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.04);
+      border-radius: 20px;
+      padding: 16px 16px 15px;
+      box-shadow: 0 12px 28px rgba(24, 38, 45, 0.05);
     }
     .travel-info-grid > .card:nth-child(4n + 1) {
-      background: rgba(255, 250, 245, 0.95);
+      background: linear-gradient(135deg, rgba(255, 247, 238, 0.98), rgba(255, 252, 247, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 2) {
-      background: rgba(242, 248, 250, 0.95);
+      background: linear-gradient(135deg, rgba(238, 247, 250, 0.98), rgba(247, 252, 253, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 3) {
-      background: rgba(247, 250, 241, 0.95);
+      background: linear-gradient(135deg, rgba(242, 249, 238, 0.98), rgba(249, 253, 246, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 4) {
-      background: rgba(248, 244, 252, 0.95);
+      background: linear-gradient(135deg, rgba(245, 241, 250, 0.98), rgba(251, 247, 253, 0.96));
+    }
+    .travel-info-grid > .card .post-meta {
+      margin-bottom: 8px;
+      gap: 5px;
+    }
+    .travel-info-grid > .card .category {
+      background: rgba(78, 143, 152, 0.14);
+      color: var(--aqua-dark);
+    }
+    .travel-info-grid > .card h3 {
+      margin: 0 0 8px;
+    }
+    .travel-info-grid > .card .checklist {
+      gap: 7px;
+      margin-top: 10px;
+    }
+    .travel-info-grid > .card .checklist li {
+      padding-left: 16px;
+    }
+    .travel-info-grid > .card .map-btn {
+      margin-top: 9px;
+    }
+    .travel-info-grid > .card .ai-inline {
+      margin-top: 10px;
+      gap: 9px;
     }
     footer {
       padding: 24px 4px 6px;
