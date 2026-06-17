@@ -842,6 +842,8 @@
       min-height: 38px;
       padding-block: 7px;
       font-size: 0.82rem;
+      text-align: center;
+      text-align-last: center;
     }
     .supply-dock {
       position: fixed;
@@ -1820,9 +1822,9 @@
     }
     .check-item {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) minmax(170px, 220px);
       gap: 10px;
-      align-items: start;
+      align-items: center;
       padding: 12px 13px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 18px;
@@ -1837,8 +1839,37 @@
       font-size: 0.82rem;
       white-space: pre-line;
     }
-    .check-item select {
-      min-width: 92px;
+    .check-item-controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      min-width: 0;
+    }
+    .check-item-controls-label {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .check-item-controls-label span {
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+    }
+    .check-item-controls select {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto;
+      min-height: 38px;
+      padding-block: 7px;
+      font-size: 0.82rem;
+      text-align: center;
+      text-align-last: center;
     }
     footer {
       padding: 24px 4px 6px;
