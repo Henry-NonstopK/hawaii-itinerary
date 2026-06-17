@@ -1880,12 +1880,14 @@
     const LIVE_TRANSLATE_TARGET = "ko";
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
     const GOOGLE_MAPS_URL = "https://www.google.com/maps?hl=ko";
+    const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
 
     let tesseractModulePromise = null;
 
     const tabs = [
       ["schedule", "일정"],
       ["supplies", "준비물"],
+      ["eunae-gmap", "은애's gmap"],
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
@@ -2720,7 +2722,6 @@
                 React.createElement("span", { className: "title-sub" }, "햅삐한 하와이여행")
               )
             ),
-            React.createElement("div", { className: "hero-meta-note" }, "모바일에서 일정과 준비물을 바로 보기 쉽게 정리한 가족 여행 허브입니다."),
             React.createElement("div", { className: "actions", "aria-label": "메인 바로가기" },
               React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역 (영→한)"),
               React.createElement("a", { className: "primary-action", href: GOOGLE_MAPS_URL, target: "_blank", rel: "noopener" }, "구글 지도")
@@ -2914,6 +2915,14 @@
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
           React.createElement("h2", { className: "section-title" }, "준비사항"),
+          React.createElement("div", { className: "card featured supply-summary" },
+            React.createElement("h3", null, "한눈에 보기"),
+            React.createElement("ul", { className: "checklist" },
+              React.createElement("li", null, "오른쪽 드롭다운에서 담당자와 상태를 바로 바꿀 수 있어요."),
+              React.createElement("li", null, "필터 버튼으로 미완료, 완료만 빠르게 골라 볼 수 있어요."),
+              React.createElement("li", null, "준비물 등록은 화면 맨 아래 고정 버튼으로 분리했어요.")
+            )
+          ),
           React.createElement("div", { className: "supply-stats" },
             React.createElement("span", { className: "chip-like" }, `완료 ${doneCount}`),
             React.createElement("span", { className: "chip-like" }, `전체 ${totalCount}`),
@@ -3018,6 +3027,24 @@
             )
           )
         ) : null
+      );
+    }
+
+    function EunaeGmap() {
+      return React.createElement("section", { className: "tab-page" },
+        React.createElement("h2", { className: "section-title" }, "은애's gmap"),
+        React.createElement("p", { className: "section-kicker" }, "하와이 · 은애"),
+        React.createElement("div", { className: "card featured" },
+          React.createElement("p", { className: "note" }, "하와이에서 바로 여는 개인 지도 링크입니다."),
+          React.createElement("div", { className: "map-hub" },
+            React.createElement("a", {
+              className: "map-btn",
+              href: EUNAE_GMAP_URL,
+              target: "_blank",
+              rel: "noopener"
+            }, "지도 열기")
+          )
+        )
       );
     }
 
@@ -4212,6 +4239,7 @@
       const view = {
         schedule: React.createElement(Schedule),
         supplies: React.createElement(Supplies),
+        eunaeGmap: React.createElement(EunaeGmap),
         maps: React.createElement(TravelInfo),
       }[safeActive];
       return React.createElement(React.Fragment, null,
