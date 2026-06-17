@@ -801,12 +801,39 @@
       font-size: 0.77rem;
       font-weight: 800;
     }
+    .check-item-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(78, 143, 152, 0.1);
+      color: var(--aqua-dark);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
     .check-item-controls {
       display: flex;
       gap: 8px;
       justify-content: flex-end;
       align-items: center;
       min-width: 0;
+    }
+    .check-item-controls-label {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .check-item-controls-label span {
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
     }
     .check-item-controls select {
       flex: 1 1 0;
@@ -1897,9 +1924,6 @@
         width: 100%;
         justify-content: space-between;
       }
-      .supply-stat:last-child {
-        grid-column: 1 / -1;
-      }
       .supply-grid {
         gap: 10px;
       }
@@ -1907,6 +1931,9 @@
         align-items: flex-start;
       }
       .check-item-controls {
+        gap: 6px;
+      }
+      .check-item-controls-label {
         gap: 6px;
       }
       .check-item-controls select { min-height: 42px; }
@@ -2932,13 +2959,6 @@
       },
         React.createElement("h2", { className: "section-title" }, "여행 일정"),
         React.createElement("div", { className: "schedule-rail" },
-          React.createElement("div", { className: "schedule-swipe-hint", "aria-hidden": "true" },
-            React.createElement("div", null,
-              "날짜 선택",
-              React.createElement("small", null, "위 줄은 날짜만 바꾸는 영역이에요.")
-            ),
-            React.createElement("span", null, "↔")
-          ),
           React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
             days.map((day) => React.createElement("button", {
               key: day.id,
@@ -2954,13 +2974,6 @@
           onTouchEnd: handleDayTouchEnd,
           onTouchCancel: handleDayTouchEnd
         },
-          React.createElement("div", { className: "schedule-swipe-hint", "aria-hidden": "true" },
-            React.createElement("div", null,
-              "일정 스와이프",
-              React.createElement("small", null, "아래 카드 안에서 좌우로 밀어 일정을 넘겨요.")
-            ),
-            React.createElement("span", null, "↔")
-          ),
           shownDays.map((day) => React.createElement("article", {
             className: "day-card",
             key: day.id,
@@ -3089,18 +3102,23 @@
               ),
               React.createElement("ul", { className: "checklist" },
                 section.items.map((item) => React.createElement("li", { key: item.id, className: "check-item" },
-                  React.createElement("div", { className: "check-item-main" },
-                    React.createElement("div", { className: "check-item-top" },
-                      React.createElement("strong", null, item.label),
-                      React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`)
-                    ),
-                    item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
-                  ),
-                  React.createElement("div", { className: "check-item-controls" },
-                    React.createElement("select", {
-                      value: item.owner || SUPPLY_PEOPLE[0],
-                      onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                    },
+              React.createElement("div", { className: "check-item-main" },
+                React.createElement("div", { className: "check-item-top" },
+                  React.createElement("strong", null, item.label),
+                  React.createElement("span", { className: "check-item-owner" }, `담당 ${item.owner || "미지정"}`),
+                  React.createElement("span", { className: "check-item-status" }, `상태 ${item.status}`)
+                ),
+                item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
+              ),
+              React.createElement("div", { className: "check-item-controls" },
+                React.createElement("div", { className: "check-item-controls-label" },
+                  React.createElement("span", null, "담당"),
+                  React.createElement("span", null, "상태")
+                ),
+                React.createElement("select", {
+                  value: item.owner || SUPPLY_PEOPLE[0],
+                  onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                },
                       SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
                     ),
                     React.createElement("select", {
