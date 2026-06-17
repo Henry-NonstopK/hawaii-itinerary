@@ -791,12 +791,15 @@
       font-weight: 800;
     }
     .check-item-controls {
-      display: grid;
-      gap: 7px;
-      min-width: 134px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+      min-width: 0;
     }
     .check-item-controls select {
-      width: 100%;
+      flex: 1 1 0;
+      width: auto;
       min-width: 0;
       min-height: 38px;
       padding-block: 7px;
@@ -1876,16 +1879,10 @@
       .supply-section-head {
         align-items: flex-start;
       }
-      .check-item {
-        grid-template-columns: 1fr;
-      }
       .check-item-controls {
-        min-width: 0;
-        grid-template-columns: 1fr 1fr;
+        gap: 6px;
       }
-      .check-item-controls select {
-        min-height: 42px;
-      }
+      .check-item-controls select { min-height: 42px; }
       .supply-sheet {
         width: 100%;
         padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
@@ -3026,14 +3023,6 @@
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
           React.createElement("h2", { className: "section-title" }, "준비사항"),
-          React.createElement("div", { className: "card featured supply-summary" },
-            React.createElement("h3", null, "한눈에 보기"),
-            React.createElement("ul", { className: "checklist" },
-              React.createElement("li", null, "오른쪽 드롭다운에서 담당자와 상태를 바로 바꿀 수 있어요."),
-              React.createElement("li", null, "필터 버튼으로 미완료, 완료만 빠르게 골라 볼 수 있어요."),
-              React.createElement("li", null, "전체, 완료, 표시 수치는 아래 카드에서 바로 볼 수 있어요.")
-            )
-          ),
           React.createElement("div", { className: "supply-stats" },
             React.createElement("div", { className: "supply-stat" },
               React.createElement("b", null, "전체"),
