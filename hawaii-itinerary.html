@@ -367,7 +367,7 @@
     .hero-meta-note {
       padding: 11px 13px;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(201, 117, 98, 0.06));
+      background: linear-gradient(135deg, rgba(242, 118, 91, 0.1), rgba(241, 184, 93, 0.12), rgba(156, 207, 201, 0.12));
       border: 1px solid rgba(24, 38, 45, 0.08);
       color: var(--aqua-dark);
       font-size: 0.84rem;
@@ -417,8 +417,8 @@
       filter: brightness(0.99);
     }
     .tab.active {
-      border-color: var(--aqua);
-      background: linear-gradient(135deg, var(--aqua), var(--aqua-dark));
+      border-color: rgba(242, 118, 91, 0.32);
+      background: linear-gradient(135deg, #f76c5e, #f1b85d 58%, #9ccfc9);
       color: #fff;
       box-shadow: 0 9px 20px rgba(24, 38, 45, 0.16);
     }
@@ -495,9 +495,9 @@
       transition: transform 140ms ease, box-shadow 140ms ease;
     }
     .chip.active {
-      background: linear-gradient(135deg, var(--aqua-dark), var(--palm));
+      background: linear-gradient(135deg, #f76c5e, #f1b85d 58%, #9ccfc9);
       color: #fff;
-      border-color: var(--aqua-dark);
+      border-color: rgba(242, 118, 91, 0.32);
     }
 
     .card, .day-card, .panel, .post, .chat-login, .chat-phone, .gallery-shell {
@@ -512,7 +512,7 @@
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.96));
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(247, 239, 228, 0.96));
     }
     .schedule-swipe-hint {
       display: flex;
@@ -522,7 +522,7 @@
       padding: 10px 12px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(255, 255, 253, 0.96));
+      background: linear-gradient(135deg, rgba(242, 118, 91, 0.08), rgba(241, 184, 93, 0.14), rgba(255, 255, 253, 0.96));
       color: var(--aqua-dark);
       font-size: 0.8rem;
       font-weight: 800;
@@ -539,7 +539,7 @@
       padding: 14px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255, 255, 253, 0.96), rgba(242, 244, 241, 0.92));
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.96), rgba(247, 239, 228, 0.92));
       box-shadow: 0 12px 28px rgba(24, 38, 45, 0.06);
       overflow: hidden;
       touch-action: pan-y;
@@ -549,7 +549,7 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 6px;
-      background: linear-gradient(135deg, var(--aqua), var(--coral));
+      background: linear-gradient(135deg, #f76c5e, #f1b85d 55%, #9ccfc9);
     }
     .day-head {
       display: flex;
@@ -576,8 +576,8 @@
       flex: 0 0 auto;
       padding: 6px 9px;
       border-radius: 999px;
-      background: linear-gradient(135deg, #ece6cf, #ddd0ad);
-      color: #76510e;
+      background: linear-gradient(135deg, #ffe867, #f1b85d);
+      color: #6b4a00;
       font-size: 0.75rem;
       font-weight: 900;
       white-space: nowrap;
@@ -603,7 +603,7 @@
       top: 21px;
       bottom: -1px;
       width: 2px;
-      background: linear-gradient(180deg, rgba(18, 141, 150, 0.25), rgba(242, 118, 91, 0.2));
+      background: linear-gradient(180deg, rgba(242, 118, 91, 0.28), rgba(241, 184, 93, 0.22));
     }
     .stop:last-child { padding-bottom: 0; }
     .stop:last-child::before { display: none; }
@@ -623,7 +623,7 @@
       width: 9px;
       height: 9px;
       margin: 0 7px 1px -13px;
-      border: 2px solid var(--lagoon);
+      border: 2px solid #f1b85d;
       border-radius: 50%;
       background: #fff;
       vertical-align: middle;
@@ -658,10 +658,10 @@
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
     .primary-action {
-      background: linear-gradient(180deg, #fee500 0%, #ffd900 100%);
+      background: linear-gradient(180deg, #f76c5e 0%, #f1b85d 100%);
       color: #1e1e1e;
       border-color: rgba(0, 0, 0, 0.08);
-      box-shadow: 0 10px 22px rgba(255, 214, 0, 0.24);
+      box-shadow: 0 10px 22px rgba(242, 118, 91, 0.22);
     }
     .ghost-action {
       background: #fff;
@@ -780,9 +780,9 @@
       white-space: nowrap;
     }
     .supply-filter.active {
-      background: linear-gradient(135deg, var(--aqua), #6ba3a8, var(--palm));
+      background: linear-gradient(135deg, #f76c5e, #f1b85d 58%, #9ccfc9);
       color: #fff;
-      border-color: var(--aqua-dark);
+      border-color: rgba(242, 118, 91, 0.32);
     }
     .supply-grid {
       display: grid;
@@ -808,7 +808,7 @@
       flex: 0 0 auto;
       padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(78, 143, 152, 0.08);
+      background: rgba(241, 184, 93, 0.16);
       color: var(--aqua-dark);
       font-size: 0.74rem;
       font-weight: 800;
@@ -874,8 +874,8 @@
       color: var(--palm);
     }
     .supply-item-status.pending {
-      background: rgba(208, 174, 104, 0.16);
-      color: #7a6730;
+      background: rgba(241, 184, 93, 0.18);
+      color: #7a5b12;
     }
     .supply-item-meta {
       display: grid;
@@ -915,12 +915,12 @@
       gap: 8px;
       min-height: 56px;
       border-radius: 26px;
-      background: linear-gradient(180deg, #fee500 0%, #ffd900 100%);
+      background: linear-gradient(180deg, #f76c5e 0%, #f1b85d 58%, #9ccfc9 100%);
       color: #1e1e1e;
       border: 1px solid rgba(0, 0, 0, 0.08);
       font-size: 0.88rem;
       font-weight: 900;
-      box-shadow: 0 14px 28px rgba(255, 214, 0, 0.25);
+      box-shadow: 0 14px 28px rgba(242, 118, 91, 0.24);
       backdrop-filter: blur(12px);
     }
     .supply-dock button::before {
@@ -962,7 +962,7 @@
       height: 5px;
       margin: 0 auto 4px;
       border-radius: 999px;
-      background: rgba(36, 56, 67, 0.18);
+      background: linear-gradient(90deg, rgba(242, 118, 91, 0.25), rgba(241, 184, 93, 0.35), rgba(156, 207, 201, 0.28));
     }
     .supply-sheet-title {
       margin: 0;
@@ -1097,7 +1097,7 @@
     .category {
       padding: 4px 7px;
       border-radius: 999px;
-      background: #e7f4f3;
+      background: linear-gradient(135deg, rgba(242, 118, 91, 0.14), rgba(241, 184, 93, 0.18), rgba(156, 207, 201, 0.16));
       color: var(--aqua-dark);
     }
     .post h3 {
@@ -1107,7 +1107,7 @@
     .chat-phone {
       overflow: hidden;
       border: 1px solid rgba(24, 38, 45, 0.08);
-      background: linear-gradient(180deg, #dce2df, #c8d0cc);
+      background: linear-gradient(180deg, #f3ede3, #f7f0e4);
       box-shadow: 0 18px 42px rgba(24, 38, 45, 0.12);
     }
     .chat-login {
@@ -1185,7 +1185,7 @@
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)),
         radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.24), transparent 10rem),
-        linear-gradient(180deg, #acdce0, #8fcfd3);
+        linear-gradient(180deg, #f7b7b0, #f4d58f 48%, #a6d7d1);
       scroll-behavior: smooth;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
@@ -1222,8 +1222,8 @@
     }
     .message-row.mine .bubble {
       border-radius: 18px 12px 18px 18px;
-      background: linear-gradient(135deg, #ffe867, #ffd34f);
-      color: #2d2300;
+      background: linear-gradient(135deg, #f76c5e, #f1b85d);
+      color: #2d1f00;
     }
     .message-time {
       flex: 0 0 auto;
@@ -1256,7 +1256,7 @@
     .chat-send {
       min-width: 58px;
       align-self: stretch;
-      background: linear-gradient(135deg, #ffe867, #ffd34f);
+      background: linear-gradient(135deg, #f76c5e, #f1b85d);
       color: #261d00;
     }
     .gallery-shell {
@@ -1325,7 +1325,7 @@
       overflow: hidden;
       aspect-ratio: 1 / 1.18;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(78, 143, 152, 0.1), rgba(255, 255, 255, 0.92));
+      background: linear-gradient(135deg, rgba(242, 118, 91, 0.12), rgba(241, 184, 93, 0.16), rgba(156, 207, 201, 0.14));
       box-shadow: 0 10px 24px rgba(24, 38, 45, 0.12);
     }
     .photo-frame img {
