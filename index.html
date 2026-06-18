@@ -65,23 +65,32 @@
       display: grid;
       gap: 16px;
     }
+    .top-rail {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+    .top-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 2px 0;
+    }
     .menu-toggle {
-      position: fixed;
-      top: calc(12px + env(safe-area-inset-top));
-      left: calc(12px + env(safe-area-inset-left));
-      z-index: 150;
+      position: relative;
+      z-index: 2;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 44px;
-      min-height: 44px;
-      padding: 0 14px;
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.96);
+      min-width: 42px;
+      min-height: 42px;
+      padding: 0 13px;
+      border: 1px solid rgba(24, 38, 45, 0.06);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
       color: var(--aqua-dark);
-      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.12);
-      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.08);
+      backdrop-filter: blur(12px);
       font-size: 0.82rem;
       font-weight: 900;
       letter-spacing: 0.02em;
@@ -146,78 +155,62 @@
       }
     }
     .menu-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 140;
+      position: relative;
+      z-index: 5;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       pointer-events: none;
       opacity: 0;
-      transition: opacity 180ms ease;
+      transition: opacity 180ms ease, max-height 260ms cubic-bezier(0.22, 1, 0.36, 1), margin 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 0;
     }
     .menu-overlay.is-open {
       pointer-events: auto;
       opacity: 1;
+      max-height: 320px;
+      margin-top: 10px;
     }
     .menu-backdrop {
-      grid-column: 1;
-      grid-row: 1;
-      background: rgba(12, 22, 31, 0.28);
-      backdrop-filter: blur(4px);
+      display: none;
     }
     .menu-panel {
-      grid-column: 1;
-      grid-row: 1;
-      justify-self: start;
-      width: min(82vw, 320px);
-      height: 100%;
-      padding: calc(18px + env(safe-area-inset-top)) 16px 18px calc(14px + env(safe-area-inset-left));
-      background: rgba(255, 255, 255, 0.98);
-      border-right: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 20px 0 50px rgba(24, 38, 45, 0.16);
-      transform: translate3d(-102%, 0, 0);
+      width: 100%;
+      padding: 10px 0 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      transform: translate3d(0, -8px, 0);
       transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
       display: grid;
       align-content: start;
-      gap: 14px;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+      gap: 12px;
     }
     .menu-overlay.is-open .menu-panel {
       transform: translate3d(0, 0, 0);
     }
     .menu-head {
-      display: grid;
-      gap: 4px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(24, 38, 45, 0.08);
-    }
-    .menu-head b {
-      font-size: 1rem;
-      font-weight: 900;
-      color: var(--aqua-dark);
-    }
-    .menu-head span {
-      color: var(--muted);
-      font-size: 0.82rem;
+      display: none;
     }
     .menu-list {
-      display: grid;
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .menu-item {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       gap: 10px;
-      min-height: 48px;
-      padding: 12px 14px;
-      border-radius: 18px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 16px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       background: #f8fcff;
       color: var(--aqua-dark);
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
-      font-size: 0.92rem;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+      font-size: 0.86rem;
       font-weight: 900;
       text-align: left;
     }
@@ -3261,7 +3254,7 @@
                   React.createElement("span", null, "일정과 준비물을 한 번에 보는 모바일 화면")
                 )
               ),
-              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인하고, 메뉴와 버튼으로 바로 수정할 수 있어.")
+              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인할 수 있어.")
             ),
             React.createElement("div", { className: "hero-summary" },
               heroStats.map(([label, value]) => React.createElement("div", { className: "hero-summary-card", key: label },
@@ -3467,8 +3460,7 @@
         },
           React.createElement("div", { className: "schedule-head" },
             React.createElement("div", { className: "schedule-head-copy" },
-              React.createElement("h2", { className: "section-title" }, "여행 일정"),
-              React.createElement("p", { className: "section-kicker" }, "상단의 수정 버튼으로 일정 내용을 바로 바꿀 수 있어요.")
+              React.createElement("h2", { className: "section-title" }, "여행 일정")
             ),
             React.createElement("button", {
               type: "button",
@@ -3536,8 +3528,7 @@
           },
             React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
             React.createElement("div", { className: "supply-sheet-head" },
-              React.createElement("h3", { className: "supply-sheet-title" }, "여행 일정 수정"),
-              React.createElement("div", { className: "supply-sheet-subtitle" }, "상단 버튼이나 메뉴에서 바로 수정하고 저장하면 전체 일정에 즉시 반영돼요.")
+              React.createElement("h3", { className: "supply-sheet-title" }, "여행 일정 수정")
             ),
             React.createElement("div", { className: "supply-sheet-body" },
               React.createElement("label", { className: "supply-field" },
@@ -3765,8 +3756,7 @@
           },
             React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
             React.createElement("div", { className: "supply-sheet-head" },
-              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록"),
-              React.createElement("div", { className: "supply-sheet-subtitle" }, "아래에서 위로 올라오는 모달에서 바로 추가합니다. 새 항목은 미완료로 저장돼요.")
+              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록")
             ),
             React.createElement("div", { className: "supply-sheet-body" },
               React.createElement("label", { className: "supply-field" },
@@ -3816,9 +3806,7 @@
     function EunaeGmap() {
       return React.createElement("section", { className: "tab-page" },
         React.createElement("h2", { className: "section-title" }, "은애's gmap"),
-        React.createElement("p", { className: "section-kicker" }, "하와이 · 은애"),
         React.createElement("div", { className: "card featured" },
-          React.createElement("p", { className: "note" }, "하와이에서 바로 여는 개인 지도 링크입니다."),
           React.createElement("div", { className: "map-hub" },
             React.createElement("a", {
               className: "map-btn",
@@ -4910,7 +4898,6 @@
       return React.createElement("section", null,
         React.createElement("h2", { className: "section-title" }, "메모"),
         React.createElement("section", { className: "panel" },
-          React.createElement("h2", null, "체크포인트"),
           React.createElement("ul", null,
             React.createElement("li", null, "야외 활동은 오전 중심, 한낮에는 실내나 호텔 휴식으로 둡니다."),
             React.createElement("li", null, "긴 하이킹, 거친 보트, zipline, horseback riding, UTV, 무리한 snorkeling은 일정에서 빼고 여유 시간을 둡니다."),
@@ -4936,10 +4923,6 @@
           role: "dialog",
           "aria-label": "빠른 메뉴"
         },
-          React.createElement("div", { className: "menu-head" },
-            React.createElement("b", null, "빠른 메뉴"),
-            React.createElement("span", null, "왼쪽에서 펼쳐지는 유틸 메뉴")
-          ),
           React.createElement("div", { className: "menu-list" },
             React.createElement("button", {
               type: "button",
@@ -5093,20 +5076,6 @@
         setSwipeOffset(0);
       };
       return React.createElement(React.Fragment, null,
-        React.createElement("button", {
-          type: "button",
-          className: "menu-toggle",
-          "aria-label": "빠른 메뉴 열기",
-          "aria-expanded": menuOpen,
-          onClick: () => setMenuOpen((current) => !current)
-        }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴"),
-        React.createElement(SiteMenu, {
-          open: menuOpen,
-          onClose: () => setMenuOpen(false),
-          onTranslate: openTranslate,
-          onMap: openMap,
-          onEdit: openScheduleEdit
-        }),
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
@@ -5115,6 +5084,24 @@
           )
         ) : null,
         React.createElement("main", { className: "shell" },
+          React.createElement("div", { className: "top-rail" },
+            React.createElement("div", { className: "top-menu" },
+              React.createElement("button", {
+                type: "button",
+                className: "menu-toggle",
+                "aria-label": "빠른 메뉴 열기",
+                "aria-expanded": menuOpen,
+                onClick: () => setMenuOpen((current) => !current)
+              }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
+            ),
+            React.createElement(SiteMenu, {
+              open: menuOpen,
+              onClose: () => setMenuOpen(false),
+              onTranslate: openTranslate,
+              onMap: openMap,
+              onEdit: openScheduleEdit
+            })
+          ),
           React.createElement(Header),
           React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
           React.createElement("div", {
