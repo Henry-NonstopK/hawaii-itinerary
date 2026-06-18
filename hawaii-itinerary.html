@@ -702,6 +702,13 @@
       color: #0f5e99;
       font-size: 0.76rem;
     }
+    .day-edit-hint {
+      margin-top: -2px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-align: right;
+    }
 
     .supply-page {
       position: relative;
@@ -2193,6 +2200,7 @@
     const PHOTO_FOLDER = "gallery";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
+    const SCHEDULE_STATE_KEY = "hawaii-schedule-state";
     const SUPPLY_STATE_KEY = "hawaii-supply-state";
     const SUPPLY_PEOPLE = ["은애", "상봉", "문식", "은경", "아빠", "엄마"];
     const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
@@ -2211,6 +2219,53 @@
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
+
+    function normalizeScheduleStop(stop) {
+      if (Array.isArray(stop)) {
+        return [
+          String(stop[0] || "").trim(),
+          String(stop[1] || "").trim(),
+          String(stop[2] || "").trim(),
+        ];
+      }
+      if (stop && typeof stop === "object") {
+        return [
+          String(stop.time || "").trim(),
+          String(stop.title || "").trim(),
+          String(stop.note || "").trim(),
+        ];
+      }
+      return ["", "", ""];
+    }
+
+    function normalizeScheduleMap(entry) {
+      if (Array.isArray(entry)) {
+        return [
+          String(entry[0] || "").trim(),
+          String(entry[1] || "").trim(),
+        ];
+      }
+      if (entry && typeof entry === "object") {
+        return [
+          String(entry.label || "").trim(),
+          String(entry.query || "").trim(),
+        ];
+      }
+      return ["", ""];
+    }
+
+    function normalizeScheduleDay(day, fallbackId) {
+      return {
+        id: String(day.id || fallbackId || crypto.randomUUID()),
+        date: String(day.date || "").trim(),
+        title: String(day.title || "").trim(),
+        badge: String(day.badge || "").trim(),
+        stops: Array.isArray(day.stops) && day.stops.length ? day.stops.map(normalizeScheduleStop) : [["", "", ""]],
+        maps: Array.isArray(day.maps) ? day.maps.map(normalizeScheduleMap).filter(([label, query]) => label || query) : [],
+        memoTitle: String(day.memoTitle || "").trim(),
+        memo: String(day.memo || "").trim()
+      };
+    }
 
     const days = [
       {
@@ -3068,15 +3123,75 @@
     }
 
     function Schedule() {
-      const [activeDay, setActiveDay] = useState(days[0].id);
+      const [scheduleDays, setScheduleDays] = useState(() => {
+        try {
+          const stored = JSON.parse(readStoredValue(SCHEDULE_STATE_KEY, "null"));
+          if (!stored || !Array.isArray(stored.days)) throw new Error("no saved state");
+          return stored.days.map((day, index) => normalizeScheduleDay(day, days[index]?.id || day.id));
+        } catch {
+          return days.map((day) => normalizeScheduleDay(day));
+        }
+      });
+      const [activeDay, setActiveDay] = useState(() => scheduleDays[0]?.id || days[0].id);
       const [daySwipeDirection, setDaySwipeDirection] = useState("forward");
       const [daySwipeOffset, setDaySwipeOffset] = useState(0);
       const [isDayDragging, setIsDayDragging] = useState(false);
+      const [editorOpen, setEditorOpen] = useState(false);
+      const [editorClosing, setEditorClosing] = useState(false);
+      const [editorDraft, setEditorDraft] = useState(null);
       const dayTouchStartRef = useRef(null);
-      const activeDayIndex = days.findIndex((day) => day.id === activeDay);
-      const shownDays = useMemo(() => days.filter((day) => day.id === activeDay), [activeDay]);
+      const editorCloseTimerRef = useRef(null);
+      const activeDayIndex = scheduleDays.findIndex((day) => day.id === activeDay);
+      const activeDayData = scheduleDays.find((day) => day.id === activeDay) || scheduleDays[0];
+      const shownDays = useMemo(() => scheduleDays.filter((day) => day.id === activeDay), [scheduleDays, activeDay]);
+
+      useEffect(() => {
+        writeStoredValue(SCHEDULE_STATE_KEY, JSON.stringify({ days: scheduleDays }));
+      }, [scheduleDays]);
+
+      useEffect(() => () => {
+        if (editorCloseTimerRef.current) window.clearTimeout(editorCloseTimerRef.current);
+      }, []);
+
+      useEffect(() => {
+        if (!activeDayData && scheduleDays[0]) {
+          setActiveDay(scheduleDays[0].id);
+        }
+      }, [activeDayData, scheduleDays]);
+
+      const buildEditorDraft = (day) => ({
+        id: day.id,
+        date: day.date,
+        title: day.title,
+        badge: day.badge,
+        memoTitle: day.memoTitle,
+        memo: day.memo,
+        stopsText: day.stops.map(([time, title, note]) => [time, title, note].join(" | ")).join("\n"),
+        mapsText: day.maps.map(([label, query]) => [label, query].join(" | ")).join("\n")
+      });
+
+      const openEditor = (dayId = activeDay) => {
+        const target = scheduleDays.find((day) => day.id === dayId);
+        if (!target) return;
+        if (editorCloseTimerRef.current) window.clearTimeout(editorCloseTimerRef.current);
+        setEditorDraft(buildEditorDraft(target));
+        setEditorClosing(false);
+        setEditorOpen(true);
+      };
+
+      const closeEditor = () => {
+        if (!editorOpen || editorClosing) return;
+        setEditorClosing(true);
+        if (editorCloseTimerRef.current) window.clearTimeout(editorCloseTimerRef.current);
+        editorCloseTimerRef.current = window.setTimeout(() => {
+          setEditorOpen(false);
+          setEditorClosing(false);
+          setEditorDraft(null);
+        }, 220);
+      };
+
       const selectDay = (nextId) => {
-        const nextIndex = days.findIndex((day) => day.id === nextId);
+        const nextIndex = scheduleDays.findIndex((day) => day.id === nextId);
         if (nextIndex === -1 || nextIndex === activeDayIndex) return;
         setDaySwipeDirection(nextIndex > activeDayIndex ? "forward" : "backward");
         setActiveDay(nextId);
@@ -3087,7 +3202,12 @@
       const handleDayTouchStart = (event) => {
         const touch = event.touches?.[0];
         if (!touch) return;
-        dayTouchStartRef.current = { x: touch.clientX, y: touch.clientY, startedAt: Date.now(), locked: false };
+        dayTouchStartRef.current = {
+          x: touch.clientX,
+          y: touch.clientY,
+          startedAt: Date.now(),
+          mode: null
+        };
         setIsDayDragging(false);
         setDaySwipeOffset(0);
       };
@@ -3097,14 +3217,23 @@
         if (!start || !touch) return;
         const dx = touch.clientX - start.x;
         const dy = touch.clientY - start.y;
-        if (!start.locked) {
-          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
-          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
+        const absX = Math.abs(dx);
+        const absY = Math.abs(dy);
+        if (!start.mode) {
+          if (absX < 12 && absY < 12) return;
+          if (absX > absY * 1.15) {
+            start.mode = "horizontal";
+          } else if (absY > absX * 1.15) {
+            start.mode = "vertical";
+          } else {
+            return;
+          }
         }
-        if (!start.locked) return;
         if (event.cancelable) event.preventDefault();
-        setIsDayDragging(true);
-        setDaySwipeOffset(Math.max(-72, Math.min(72, dx * 0.28)));
+        if (start.mode === "horizontal") {
+          setIsDayDragging(true);
+          setDaySwipeOffset(Math.max(-72, Math.min(72, dx * 0.28)));
+        }
       };
       const handleDayTouchEnd = (event) => {
         const start = dayTouchStartRef.current;
@@ -3118,68 +3247,177 @@
         const dx = touch.clientX - start.x;
         const dy = touch.clientY - start.y;
         const dt = Date.now() - start.startedAt;
-        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
-        if (committed) {
+        const committedHorizontal = start.mode === "horizontal" && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
+        const committedVertical = start.mode === "vertical" && dt <= 1000 && dy < -54 && Math.abs(dy) > Math.abs(dx) * 1.15;
+        if (committedHorizontal) {
           const nextIndex = dx < 0 ? activeDayIndex + 1 : activeDayIndex - 1;
-          if (nextIndex >= 0 && nextIndex < days.length) {
+          if (nextIndex >= 0 && nextIndex < scheduleDays.length) {
             setDaySwipeDirection(dx < 0 ? "forward" : "backward");
-            setActiveDay(days[nextIndex].id);
+            setActiveDay(scheduleDays[nextIndex].id);
           }
+        } else if (committedVertical) {
+          openEditor(activeDayData?.id);
         }
         setIsDayDragging(false);
         setDaySwipeOffset(0);
       };
-      return React.createElement("section", {
-        className: "tab-page",
-      },
-        React.createElement("h2", { className: "section-title" }, "여행 일정"),
-        React.createElement("div", { className: "schedule-rail" },
-          React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
-            days.map((day) => React.createElement("button", {
+
+      const parseEditorLines = (text) => String(text || "")
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      const saveEditor = (event) => {
+        event.preventDefault();
+        if (!editorDraft) return;
+        const updatedDay = normalizeScheduleDay({
+          id: editorDraft.id,
+          date: editorDraft.date.trim(),
+          title: editorDraft.title.trim(),
+          badge: editorDraft.badge.trim(),
+          memoTitle: editorDraft.memoTitle.trim(),
+          memo: editorDraft.memo.trim(),
+          stops: parseEditorLines(editorDraft.stopsText).map((line) => {
+            const [time = "", title = "", note = ""] = line.split("|").map((part) => part.trim());
+            return [time, title, note];
+          }),
+          maps: parseEditorLines(editorDraft.mapsText).map((line) => {
+            const [label = "", query = ""] = line.split("|").map((part) => part.trim());
+            return [label, query];
+          }),
+        }, editorDraft.id);
+        setScheduleDays((current) => current.map((day) => day.id === updatedDay.id ? updatedDay : day));
+        closeEditor();
+      };
+
+      return React.createElement(React.Fragment, null,
+        React.createElement("section", {
+          className: "tab-page",
+        },
+          React.createElement("h2", { className: "section-title" }, "여행 일정"),
+          React.createElement("div", { className: "schedule-rail" },
+            React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
+              scheduleDays.map((day) => React.createElement("button", {
+                key: day.id,
+                className: `chip ${activeDay === day.id ? "active" : ""}`,
+                onClick: () => selectDay(day.id)
+              }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
+            )
+          ),
+          React.createElement("div", {
+            className: "schedule-swipe-frame",
+            onTouchStart: handleDayTouchStart,
+            onTouchMove: handleDayTouchMove,
+            onTouchEnd: handleDayTouchEnd,
+            onTouchCancel: handleDayTouchEnd
+          },
+            shownDays.map((day) => React.createElement("article", {
+              className: "day-card",
               key: day.id,
-              className: `chip ${activeDay === day.id ? "active" : ""}`,
-              onClick: () => selectDay(day.id)
-            }, `${day.date.split(" ")[0]} ${day.title.split(" ")[0]}`))
+              style: {
+                animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
+                transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
+                transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+              }
+            },
+              React.createElement("div", { className: "day-head" },
+                React.createElement("div", null,
+                  React.createElement("p", { className: "date" }, day.date),
+                  React.createElement("h3", null, day.title)
+                ),
+                React.createElement("span", { className: "badge" }, day.badge)
+              ),
+              React.createElement("ol", { className: "timeline" },
+                day.stops.map(([time, title, note]) => React.createElement("li", { className: "stop", key: `${day.id}-${time}-${title}` },
+                  React.createElement("span", { className: "time" }, time),
+                  React.createElement("div", { className: "stop-body" },
+                    React.createElement("span", { className: "stop-title" }, title),
+                    React.createElement("p", { className: "stop-note" }, note)
+                  )
+                ))
+              ),
+              React.createElement("div", { className: "actions" },
+                day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
+              ),
+              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo),
+              React.createElement("div", { className: "day-edit-hint" }, "위로 스와이프하면 수정할 수 있어요.")
+            ))
           )
         ),
-        React.createElement("div", {
-          className: "schedule-swipe-frame",
-          onTouchStart: handleDayTouchStart,
-          onTouchMove: handleDayTouchMove,
-          onTouchEnd: handleDayTouchEnd,
-          onTouchCancel: handleDayTouchEnd
+        editorOpen && editorDraft ? React.createElement("div", {
+          className: `supply-sheet-overlay ${editorClosing ? "is-closing" : "is-open"}`,
+          role: "presentation",
+          onClick: closeEditor
         },
-          shownDays.map((day) => React.createElement("article", {
-            className: "day-card",
-            key: day.id,
-            style: {
-              animation: `${daySwipeDirection === "forward" ? "slideForward" : "slideBackward"} 420ms cubic-bezier(0.22, 1, 0.36, 1)`,
-              transform: `translate3d(${daySwipeOffset}px, 0, 0) scale(${isDayDragging ? 0.996 : 1})`,
-              transition: isDayDragging ? "none" : "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
-            }
+          React.createElement("form", {
+            className: `supply-sheet ${editorClosing ? "is-closing" : "is-open"}`,
+            onSubmit: saveEditor,
+            onClick: (e) => e.stopPropagation()
           },
-            React.createElement("div", { className: "day-head" },
-              React.createElement("div", null,
-                React.createElement("p", { className: "date" }, day.date),
-                React.createElement("h3", null, day.title)
+            React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
+            React.createElement("div", { className: "supply-sheet-head" },
+              React.createElement("h3", { className: "supply-sheet-title" }, "여행 일정 수정"),
+              React.createElement("div", { className: "supply-sheet-subtitle" }, "스와이프에서 바로 수정하고 저장하면 전체 일정에 즉시 반영돼요.")
+            ),
+            React.createElement("div", { className: "supply-sheet-body" },
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "날짜"),
+                React.createElement("input", {
+                  value: editorDraft.date,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, date: e.target.value }))
+                })
               ),
-              React.createElement("span", { className: "badge" }, day.badge)
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "제목"),
+                React.createElement("input", {
+                  value: editorDraft.title,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, title: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "뱃지"),
+                React.createElement("input", {
+                  value: editorDraft.badge,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, badge: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "메모 제목"),
+                React.createElement("input", {
+                  value: editorDraft.memoTitle,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, memoTitle: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "메모"),
+                React.createElement("textarea", {
+                  value: editorDraft.memo,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, memo: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "일정 항목"),
+                React.createElement("textarea", {
+                  value: editorDraft.stopsText,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, stopsText: e.target.value })),
+                  placeholder: "형식: 시간 | 제목 | 메모"
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "지도 링크"),
+                React.createElement("textarea", {
+                  value: editorDraft.mapsText,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, mapsText: e.target.value })),
+                  placeholder: "형식: 버튼명 | 검색어"
+                })
+              )
             ),
-            React.createElement("ol", { className: "timeline" },
-              day.stops.map(([time, title, note]) => React.createElement("li", { className: "stop", key: `${day.id}-${time}-${title}` },
-                React.createElement("span", { className: "time" }, time),
-                React.createElement("div", { className: "stop-body" },
-                  React.createElement("span", { className: "stop-title" }, title),
-                  React.createElement("p", { className: "stop-note" }, note)
-                )
-              ))
-            ),
-            React.createElement("div", { className: "actions" },
-              day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
-            ),
-            React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
-          ))
-        )
+            React.createElement("div", { className: "supply-sheet-actions" },
+              React.createElement("button", { className: "ghost-action", type: "button", onClick: closeEditor }, "닫기"),
+              React.createElement("button", { className: "primary-action", type: "submit" }, "저장")
+            )
+          )
+        ) : null
       );
     }
 
