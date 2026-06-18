@@ -57,90 +57,135 @@
     .shell {
       width: min(100%, 1080px);
       margin: 0 auto;
-      padding: 26px 18px 72px;
+      padding: 18px 18px 72px;
       position: relative;
       z-index: 1;
     }
-    .app-version {
+    .stack-shell {
+      display: grid;
+      gap: 16px;
+    }
+    .menu-toggle {
       position: fixed;
       top: calc(12px + env(safe-area-inset-top));
-      right: calc(12px + env(safe-area-inset-right));
-      z-index: 120;
+      left: calc(12px + env(safe-area-inset-left));
+      z-index: 150;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      min-height: 32px;
-      padding: 6px 10px;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 999px;
-      background: rgba(15, 94, 153, 0.96);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 10px 24px rgba(15, 94, 153, 0.2);
-      font-size: 0.74rem;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--aqua-dark);
+      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.12);
+      backdrop-filter: blur(14px);
+      font-size: 0.82rem;
       font-weight: 900;
-      letter-spacing: 0.04em;
-      backdrop-filter: blur(12px);
+      letter-spacing: 0.02em;
     }
-    .app-version span {
-      color: rgba(255, 255, 255, 0.76);
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .menu-toggle span {
+      font-size: 1.05rem;
+      line-height: 1;
+      margin-right: 6px;
     }
-    .view-shell {
-      position: relative;
-      overflow: hidden;
-      touch-action: pan-y pinch-zoom;
-      overscroll-behavior: contain;
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 180ms ease;
     }
-    .view-panel {
-      position: relative;
-      padding-top: 2px;
-      touch-action: pan-y pinch-zoom;
-      will-change: transform, opacity;
-      transform: translate3d(var(--swipe-offset, 0px), 0, 0) scale(var(--swipe-scale, 1));
-      transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
-      animation: panelFadeIn 640ms cubic-bezier(0.22, 1, 0.36, 1);
+    .menu-overlay.is-open {
+      pointer-events: auto;
+      opacity: 1;
     }
-    .view-panel.is-dragging {
-      transition: none;
+    .menu-backdrop {
+      grid-column: 1;
+      grid-row: 1;
+      background: rgba(12, 22, 31, 0.28);
+      backdrop-filter: blur(4px);
     }
-    .view-panel.swipe-forward {
-      animation-name: slideForward;
+    .menu-panel {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: start;
+      width: min(82vw, 320px);
+      height: 100%;
+      padding: calc(18px + env(safe-area-inset-top)) 16px 18px calc(14px + env(safe-area-inset-left));
+      background: rgba(255, 255, 255, 0.98);
+      border-right: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 20px 0 50px rgba(24, 38, 45, 0.16);
+      transform: translate3d(-102%, 0, 0);
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .view-panel.swipe-backward {
-      animation-name: slideBackward;
+    .menu-overlay.is-open .menu-panel {
+      transform: translate3d(0, 0, 0);
     }
-    @keyframes panelFadeIn {
-      from {
-        opacity: 0;
-        transform: translate3d(0, 12px, 0) scale(0.995);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .menu-head {
+      display: grid;
+      gap: 4px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(24, 38, 45, 0.08);
     }
-    @keyframes slideForward {
-      from {
-        opacity: 0;
-        transform: translate3d(14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
+    .menu-head b {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--aqua-dark);
     }
-    @keyframes slideBackward {
-      from {
-        opacity: 0;
-        transform: translate3d(-14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
+    .menu-head span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .menu-list {
+      display: grid;
+      gap: 10px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: #f8fcff;
+      color: var(--aqua-dark);
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
+      font-size: 0.92rem;
+      font-weight: 900;
+      text-align: left;
+    }
+    .menu-item.primary {
+      background: #0f5e99;
+      color: #fff;
+      border-color: rgba(15, 94, 153, 0.24);
+      box-shadow: 0 10px 22px rgba(15, 94, 153, 0.22);
+    }
+    .menu-item span {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(15, 94, 153, 0.08);
+      color: inherit;
+      font-size: 0.9rem;
+      flex: 0 0 auto;
+    }
+    .menu-item.primary span {
+      background: rgba(255, 255, 255, 0.16);
     }
     .hero {
       min-height: 0;
@@ -235,31 +280,6 @@
       color: var(--muted);
       font-size: 0.84rem;
       line-height: 1.45;
-    }
-    .hero-strip {
-      display: grid;
-      gap: 8px;
-      grid-template-columns: 1.2fr 0.8fr;
-    }
-    .hero-strip-card {
-      padding: 12px 12px 11px;
-      border-radius: 20px;
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      background: rgba(245, 250, 253, 0.96);
-    }
-    .hero-strip-card b {
-      display: block;
-      color: var(--ocean);
-      font-size: 0.72rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-    .hero-strip-card span {
-      color: var(--aqua-dark);
-      font-size: 0.88rem;
-      font-weight: 800;
     }
     .splash {
       position: fixed;
@@ -453,53 +473,6 @@
       overflow-wrap: anywhere;
     }
 
-    .tabbar {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      overflow: visible;
-      margin: 0 -14px 14px;
-      padding: 10px 14px 11px;
-      background: rgba(247, 251, 255, 0.96);
-      border-block: 1px solid rgba(36, 56, 67, 0.06);
-      box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
-      backdrop-filter: saturate(140%) blur(10px);
-    }
-    .tabbar::after {
-      content: none;
-    }
-    .tab {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 44px;
-      padding: 10px 8px;
-      border: 1px solid rgba(36, 56, 67, 0.1);
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--aqua-dark);
-      font-size: 0.72rem;
-      font-weight: 800;
-      line-height: 1.1;
-      text-align: center;
-      white-space: nowrap;
-      box-shadow: 0 9px 20px rgba(24, 38, 45, 0.08);
-      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
-    }
-    .tab:hover {
-      transform: translateY(-1px);
-      filter: brightness(0.99);
-    }
-    .tab.active {
-      border-color: rgba(15, 94, 153, 0.28);
-      background: #0f5e99;
-      color: #fff;
-      box-shadow: 0 9px 20px rgba(24, 38, 45, 0.16);
-    }
     .section-title {
       margin: 6px 4px 10px;
       font-size: 1rem;
@@ -527,6 +500,35 @@
     }
     .tab-page .section-kicker {
       margin: -6px 2px 0;
+    }
+    .schedule-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+    .schedule-head-copy {
+      display: grid;
+      gap: 4px;
+    }
+    .schedule-head-copy .section-title {
+      margin: 0;
+    }
+    .schedule-head-copy .section-kicker {
+      margin: 0;
+    }
+    .schedule-edit-button {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 94, 153, 0.22);
+      background: #0f5e99;
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 900;
+      box-shadow: 0 10px 20px rgba(15, 94, 153, 0.18);
     }
 
     .toolbar {
@@ -777,14 +779,6 @@
       color: #0f5e99;
       font-size: 0.76rem;
     }
-    .day-edit-hint {
-      margin-top: -2px;
-      color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 700;
-      text-align: right;
-    }
-
     .supply-page {
       position: relative;
       display: grid;
@@ -2115,19 +2109,13 @@
       .hero-copy { padding: 8px 0 6px; }
       .hero-panel { padding: 20px 20px 18px; }
       .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
+      .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .chat-list { min-height: 500px; }
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(162px, 1fr)); }
       .gallery-shell { padding: 18px; }
     }
     @media (max-width: 520px) {
-      .app-version {
-        top: calc(10px + env(safe-area-inset-top));
-        right: calc(10px + env(safe-area-inset-right));
-        padding: 5px 9px;
-        font-size: 0.7rem;
-      }
       .hero {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -2147,19 +2135,16 @@
       .hero-title .title-sub {
         font-size: clamp(1.8rem, 10vw, 2.4rem);
       }
-      .tabbar {
-        margin: 0 -16px 14px;
-        padding: 9px 16px 10px;
-        background: rgba(247, 251, 255, 0.96);
-        box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
-      }
-      .tab {
-        min-height: 42px;
-        padding: 9px 4px;
-        font-size: 0.66rem;
-      }
       .tab-page {
         padding: 14px;
+      }
+      .menu-toggle {
+        min-width: 42px;
+        min-height: 42px;
+        padding-inline: 12px;
+      }
+      .menu-toggle span {
+        margin-right: 5px;
       }
       .chat-compose {
         grid-template-columns: 1fr auto;
@@ -2282,18 +2267,9 @@
     const LIVE_TRANSLATE_SOURCE = "en";
     const LIVE_TRANSLATE_TARGET = "ko";
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
-    const GOOGLE_MAPS_URL = "https://www.google.com/maps?hl=ko";
     const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
-    const APP_VERSION = "v1.0.0";
 
     let tesseractModulePromise = null;
-
-    const tabs = [
-      ["schedule", "일정"],
-      ["supplies", "준비물"],
-      ["maps", "여행정보"],
-    ];
-    const tabIds = tabs.map(([id]) => id);
 
     function normalizeScheduleStop(stop) {
       if (Array.isArray(stop)) {
@@ -3176,46 +3152,20 @@
                   React.createElement("span", null, "일정과 준비물을 한 번에 보는 모바일 화면")
                 )
               ),
-              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인하고, 스와이프와 버튼으로 바로 수정할 수 있어.")
+              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인하고, 메뉴와 버튼으로 바로 수정할 수 있어.")
             ),
             React.createElement("div", { className: "hero-summary" },
               heroStats.map(([label, value]) => React.createElement("div", { className: "hero-summary-card", key: label },
                 React.createElement("b", null, label),
                 React.createElement("span", null, value)
               ))
-            ),
-            React.createElement("div", { className: "hero-strip" },
-              React.createElement("div", { className: "hero-strip-card" },
-                React.createElement("b", null, "팁"),
-                React.createElement("span", null, "위로 스와이프하면 일정 수정")
-              ),
-              React.createElement("div", { className: "hero-strip-card" },
-                React.createElement("b", null, "버전"),
-                React.createElement("span", null, APP_VERSION)
-              )
             )
           )
         )
       );
     }
 
-    function Tabbar({ active, setActive }) {
-      return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
-        tabs.map(([id, label, href]) => href ? React.createElement("a", {
-          key: id,
-          className: `tab ${active === id ? "active" : ""}`,
-          href,
-          target: "_blank",
-          rel: "noopener"
-        }, label) : React.createElement("button", {
-          key: id,
-          className: `tab ${active === id ? "active" : ""}`,
-          onClick: () => setActive(id)
-        }, label))
-      );
-    }
-
-    function Schedule() {
+    function Schedule({ editSignal = 0 }) {
       const [scheduleDays, setScheduleDays] = useState(() => {
         try {
           const stored = JSON.parse(readStoredValue(SCHEDULE_STATE_KEY, "null"));
@@ -3234,6 +3184,7 @@
       const [editorDraft, setEditorDraft] = useState(null);
       const dayTouchStartRef = useRef(null);
       const editorCloseTimerRef = useRef(null);
+      const lastEditSignalRef = useRef(editSignal);
       const activeDayIndex = scheduleDays.findIndex((day) => day.id === activeDay);
       const activeDayData = scheduleDays.find((day) => day.id === activeDay) || scheduleDays[0];
       const shownDays = useMemo(() => scheduleDays.filter((day) => day.id === activeDay), [scheduleDays, activeDay]);
@@ -3251,6 +3202,12 @@
           setActiveDay(scheduleDays[0].id);
         }
       }, [activeDayData, scheduleDays]);
+
+      useEffect(() => {
+        if (editSignal === lastEditSignalRef.current) return;
+        lastEditSignalRef.current = editSignal;
+        openEditor(activeDayData?.id);
+      }, [editSignal, activeDayData?.id]);
 
       const buildEditorDraft = (day) => ({
         id: day.id,
@@ -3316,8 +3273,6 @@
           if (absX < 12 && absY < 12) return;
           if (absX > absY * 1.15) {
             start.mode = "horizontal";
-          } else if (absY > absX * 1.15) {
-            start.mode = "vertical";
           } else {
             return;
           }
@@ -3341,15 +3296,12 @@
         const dy = touch.clientY - start.y;
         const dt = Date.now() - start.startedAt;
         const committedHorizontal = start.mode === "horizontal" && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
-        const committedVertical = start.mode === "vertical" && dt <= 1000 && dy < -54 && Math.abs(dy) > Math.abs(dx) * 1.15;
         if (committedHorizontal) {
           const nextIndex = dx < 0 ? activeDayIndex + 1 : activeDayIndex - 1;
           if (nextIndex >= 0 && nextIndex < scheduleDays.length) {
             setDaySwipeDirection(dx < 0 ? "forward" : "backward");
             setActiveDay(scheduleDays[nextIndex].id);
           }
-        } else if (committedVertical) {
-          openEditor(activeDayData?.id);
         }
         setIsDayDragging(false);
         setDaySwipeOffset(0);
@@ -3386,8 +3338,19 @@
       return React.createElement(React.Fragment, null,
         React.createElement("section", {
           className: "tab-page",
+          id: "schedule-section"
         },
-          React.createElement("h2", { className: "section-title" }, "여행 일정"),
+          React.createElement("div", { className: "schedule-head" },
+            React.createElement("div", { className: "schedule-head-copy" },
+              React.createElement("h2", { className: "section-title" }, "여행 일정"),
+              React.createElement("p", { className: "section-kicker" }, "상단의 수정 버튼으로 일정 내용을 바로 바꿀 수 있어요.")
+            ),
+            React.createElement("button", {
+              type: "button",
+              className: "schedule-edit-button",
+              onClick: () => openEditor(activeDayData?.id)
+            }, "수정")
+          ),
           React.createElement("div", { className: "schedule-rail" },
             React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
               scheduleDays.map((day) => React.createElement("button", {
@@ -3432,8 +3395,7 @@
               React.createElement("div", { className: "actions" },
                 day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
               ),
-              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo),
-              React.createElement("div", { className: "day-edit-hint" }, "위로 스와이프하면 수정할 수 있어요.")
+              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
             ))
           )
         ),
@@ -3450,7 +3412,7 @@
             React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
             React.createElement("div", { className: "supply-sheet-head" },
               React.createElement("h3", { className: "supply-sheet-title" }, "여행 일정 수정"),
-              React.createElement("div", { className: "supply-sheet-subtitle" }, "스와이프에서 바로 수정하고 저장하면 전체 일정에 즉시 반영돼요.")
+              React.createElement("div", { className: "supply-sheet-subtitle" }, "상단 버튼이나 메뉴에서 바로 수정하고 저장하면 전체 일정에 즉시 반영돼요.")
             ),
             React.createElement("div", { className: "supply-sheet-body" },
               React.createElement("label", { className: "supply-field" },
@@ -4833,91 +4795,57 @@
       );
     }
 
+    function SiteMenu({ open, onClose, onTranslate, onMap, onEdit }) {
+      return React.createElement("div", {
+        className: `menu-overlay ${open ? "is-open" : ""}`,
+        role: "presentation"
+      },
+        React.createElement("button", {
+          className: "menu-backdrop",
+          type: "button",
+          "aria-label": "메뉴 닫기",
+          onClick: onClose
+        }),
+        React.createElement("aside", {
+          className: "menu-panel",
+          role: "dialog",
+          "aria-label": "빠른 메뉴"
+        },
+          React.createElement("div", { className: "menu-head" },
+            React.createElement("b", null, "빠른 메뉴"),
+            React.createElement("span", null, "왼쪽에서 펼쳐지는 유틸 메뉴")
+          ),
+          React.createElement("div", { className: "menu-list" },
+            React.createElement("button", {
+              type: "button",
+              className: "menu-item",
+              onClick: onTranslate
+            }, React.createElement("span", { "aria-hidden": "true" }, "A"), "구글번역"),
+            React.createElement("button", {
+              type: "button",
+              className: "menu-item",
+              onClick: onMap
+            }, React.createElement("span", { "aria-hidden": "true" }, "M"), "은애's gmap"),
+            React.createElement("button", {
+              type: "button",
+              className: "menu-item primary",
+              onClick: onEdit
+            }, React.createElement("span", { "aria-hidden": "true" }, "✎"), "수정")
+          )
+        )
+      );
+    }
+
     function App() {
-      const [active, setActive] = useState("schedule");
-      const [swipeDirection, setSwipeDirection] = useState("forward");
-      const [swipeOffset, setSwipeOffset] = useState(0);
-      const [isDragging, setIsDragging] = useState(false);
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
-      const touchStartRef = useRef(null);
-      const safeActive = tabIds.includes(active) ? active : tabIds[0];
-      const activeIndex = tabIds.indexOf(safeActive);
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [scheduleEditSignal, setScheduleEditSignal] = useState(0);
       const splashTimerRef = useRef(null);
-
-      useEffect(() => {
-        if (active !== safeActive) {
-          setActive(safeActive);
-        }
-      }, [active, safeActive]);
-
-      const selectTab = (nextId) => {
-        const nextIndex = tabIds.indexOf(nextId);
-        if (nextIndex === -1 || nextIndex === activeIndex) return;
-        setSwipeDirection(nextIndex > activeIndex ? "forward" : "backward");
-        setActive(nextId);
-        setSwipeOffset(0);
-        setIsDragging(false);
-        touchStartRef.current = null;
-      };
 
       const finishSplash = () => {
         if (!showSplash) return;
         writeSessionFlag(SPLASH_SEEN_KEY);
         setShowSplash(false);
-      };
-
-      const handleTouchStart = (event) => {
-        const touch = event.touches?.[0];
-        if (!touch) return;
-        touchStartRef.current = {
-          x: touch.clientX,
-          y: touch.clientY,
-          startedAt: Date.now(),
-          locked: false
-        };
-        setIsDragging(false);
-        setSwipeOffset(0);
-      };
-
-      const handleTouchMove = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.touches?.[0];
-        if (!start || !touch) return;
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        if (!start.locked) {
-          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
-          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
-        }
-        if (!start.locked) return;
-        if (event.cancelable) event.preventDefault();
-        setIsDragging(true);
-        const nextOffset = Math.max(-72, Math.min(72, dx * 0.28));
-        setSwipeOffset(nextOffset);
-      };
-
-      const handleTouchEnd = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.changedTouches?.[0];
-        touchStartRef.current = null;
-        if (!start || !touch) {
-          setIsDragging(false);
-          setSwipeOffset(0);
-          return;
-        }
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        const dt = Date.now() - start.startedAt;
-        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
-        if (committed) {
-          const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
-          if (nextIndex >= 0 && nextIndex < tabIds.length) {
-            setSwipeDirection(dx < 0 ? "forward" : "backward");
-            setActive(tabIds[nextIndex]);
-          }
-        }
-        setIsDragging(false);
-        setSwipeOffset(0);
       };
 
       useEffect(() => {
@@ -4932,16 +4860,53 @@
         };
       }, [showSplash]);
 
-      const view = {
-        schedule: React.createElement(Schedule),
-        supplies: React.createElement(Supplies),
-        maps: React.createElement(TravelInfo),
-      }[safeActive];
+      useEffect(() => {
+        const handleKeyDown = (event) => {
+          if (event.key === "Escape") {
+            setMenuOpen(false);
+          }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+      }, []);
+
+      useEffect(() => {
+        document.body.style.overflow = menuOpen ? "hidden" : "";
+        return () => {
+          document.body.style.overflow = "";
+        };
+      }, [menuOpen]);
+
+      const openTranslate = () => {
+        window.open(GOOGLE_TRANSLATE_URL, "_blank", "noopener");
+        setMenuOpen(false);
+      };
+      const openMap = () => {
+        window.open(EUNAE_GMAP_URL, "_blank", "noopener");
+        setMenuOpen(false);
+      };
+      const openScheduleEdit = () => {
+        setScheduleEditSignal((current) => current + 1);
+        setMenuOpen(false);
+        window.requestAnimationFrame(() => {
+          document.getElementById("schedule-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      };
       return React.createElement(React.Fragment, null,
-        React.createElement("div", { className: "app-version", "aria-label": "현재 버전" },
-          React.createElement("span", null, "ver"),
-          React.createElement("strong", null, APP_VERSION)
-        ),
+        React.createElement("button", {
+          type: "button",
+          className: "menu-toggle",
+          "aria-label": "빠른 메뉴 열기",
+          "aria-expanded": menuOpen,
+          onClick: () => setMenuOpen((current) => !current)
+        }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴"),
+        React.createElement(SiteMenu, {
+          open: menuOpen,
+          onClose: () => setMenuOpen(false),
+          onTranslate: openTranslate,
+          onMap: openMap,
+          onEdit: openScheduleEdit
+        }),
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
@@ -4949,25 +4914,16 @@
             React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
           )
         ) : null,
-        React.createElement("main", { className: "shell" },
+        React.createElement("main", { className: "shell stack-shell" },
           React.createElement(Header),
-          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
-          React.createElement("div", {
-            className: "view-shell",
-            onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
-            onTouchMove: safeActive === "schedule" ? undefined : handleTouchMove,
-            onTouchEnd: safeActive === "schedule" ? undefined : handleTouchEnd,
-            onTouchCancel: safeActive === "schedule" ? undefined : handleTouchEnd
-          },
-            React.createElement("div", {
-              className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-              key: safeActive,
-              style: {
-                "--swipe-offset": `${swipeOffset}px`,
-                "--swipe-scale": isDragging ? "0.994" : "1"
-              }
-            }, view)
-          ),
+          React.createElement(Schedule, { editSignal: scheduleEditSignal }),
+          React.createElement(Supplies),
+          React.createElement(EunaeGmap),
+          React.createElement(TravelInfo),
+          React.createElement(Notes),
+          React.createElement(Board),
+          React.createElement(Chat),
+          React.createElement(Photos),
         )
       );
     }
