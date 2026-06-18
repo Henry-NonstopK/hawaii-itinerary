@@ -61,6 +61,33 @@
       position: relative;
       z-index: 1;
     }
+    .app-version {
+      position: fixed;
+      top: calc(12px + env(safe-area-inset-top));
+      right: calc(12px + env(safe-area-inset-right));
+      z-index: 120;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 32px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 94, 153, 0.96);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 10px 24px rgba(15, 94, 153, 0.2);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(12px);
+    }
+    .app-version span {
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
     .view-shell {
       position: relative;
       overflow: hidden;
@@ -2013,6 +2040,12 @@
       .gallery-shell { padding: 18px; }
     }
     @media (max-width: 520px) {
+      .app-version {
+        top: calc(10px + env(safe-area-inset-top));
+        right: calc(10px + env(safe-area-inset-right));
+        padding: 5px 9px;
+        font-size: 0.7rem;
+      }
       .hero {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -2168,6 +2201,7 @@
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
     const GOOGLE_MAPS_URL = "https://www.google.com/maps?hl=ko";
     const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
+    const APP_VERSION = "v1.0.0";
 
     let tesseractModulePromise = null;
 
@@ -4575,6 +4609,10 @@
         maps: React.createElement(TravelInfo),
       }[safeActive];
       return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "app-version", "aria-label": "현재 버전" },
+          React.createElement("span", null, "ver"),
+          React.createElement("strong", null, APP_VERSION)
+        ),
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
