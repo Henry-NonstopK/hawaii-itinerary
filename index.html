@@ -681,8 +681,19 @@
 
     .supply-page {
       position: relative;
-      padding-bottom: 154px;
-      gap: 18px;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 14px;
+      height: calc(100svh - 32px);
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+    .supply-page-scroll {
+      min-height: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding-right: 2px;
     }
     .supply-summary {
       position: relative;
@@ -883,12 +894,9 @@
       font-size: 0.84rem;
     }
     .supply-dock {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: calc(env(safe-area-inset-bottom) + 4px);
-      z-index: 30;
-      padding: 12px 16px 12px;
+      position: relative;
+      z-index: 2;
+      padding: 0;
       pointer-events: none;
     }
     .supply-dock button {
@@ -2051,8 +2059,7 @@
         flex-direction: column;
       }
       .supply-dock {
-        padding-inline: 12px;
-        bottom: calc(env(safe-area-inset-bottom) + 8px);
+        padding-inline: 0;
       }
       .gallery-actions .primary-action,
       .gallery-actions .ghost-action,
@@ -3177,84 +3184,86 @@
 
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
-          React.createElement("h2", { className: "section-title" }, "준비물"),
-          React.createElement("div", { className: "map-hub" },
-            React.createElement("a", {
-              className: "map-btn",
-              href: GOOGLE_TRANSLATE_URL,
-              target: "_blank",
-              rel: "noopener"
-            }, "구글 번역 (영→한)"),
-            React.createElement("a", {
-              className: "map-btn",
-              href: GOOGLE_MAPS_URL,
-              target: "_blank",
-              rel: "noopener"
-            }, "구글 지도")
-          ),
-          React.createElement("div", { className: "supply-stats" },
-            React.createElement("div", { className: "supply-stat" },
-              React.createElement("b", null, "전체"),
-              React.createElement("span", null, totalCount, React.createElement("small", null, "개"))
+          React.createElement("div", { className: "supply-page-scroll" },
+            React.createElement("h2", { className: "section-title" }, "준비물"),
+            React.createElement("div", { className: "map-hub" },
+              React.createElement("a", {
+                className: "map-btn",
+                href: GOOGLE_TRANSLATE_URL,
+                target: "_blank",
+                rel: "noopener"
+              }, "구글 번역 (영→한)"),
+              React.createElement("a", {
+                className: "map-btn",
+                href: GOOGLE_MAPS_URL,
+                target: "_blank",
+                rel: "noopener"
+              }, "구글 지도")
             ),
-            React.createElement("div", { className: "supply-stat" },
-              React.createElement("b", null, "완료"),
-              React.createElement("span", null, doneCount, React.createElement("small", null, "개"))
-            ),
-            React.createElement("div", { className: "supply-stat" },
-              React.createElement("b", null, "표시"),
-              React.createElement("span", null, visibleCount, React.createElement("small", null, "개"))
-            )
-          ),
-          React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
-            SUPPLY_FILTERS.map((filter) => React.createElement("button", {
-              key: filter,
-              type: "button",
-              className: `supply-filter ${statusFilter === filter ? "active" : ""}`,
-              onClick: () => setStatusFilter(filter)
-            }, filter))
-          ),
-          visibleSections.length ? React.createElement("div", { className: "supply-grid" },
-            visibleSections.map((section) => React.createElement("article", { className: `card ${section.featured ? "featured" : ""}`, key: section.id },
-              React.createElement("div", { className: "supply-section-head" },
-                React.createElement("h3", null, section.title),
-                React.createElement("span", { className: "supply-section-count" }, `${section.items.length}개`)
+            React.createElement("div", { className: "supply-stats" },
+              React.createElement("div", { className: "supply-stat" },
+                React.createElement("b", null, "전체"),
+                React.createElement("span", null, totalCount, React.createElement("small", null, "개"))
               ),
-              React.createElement("ul", { className: "checklist" },
-                section.items.map((item) => React.createElement("li", { key: item.id, className: "supply-item" },
-                  React.createElement("div", { className: "supply-item-main" },
-                    React.createElement("div", { className: "supply-item-top" },
-                      React.createElement("strong", null, item.label)
-                    ),
-                    React.createElement("div", { className: "supply-item-meta" },
-                      React.createElement("span", {
-                        className: `supply-item-status ${item.status === "완료" ? "done" : "pending"}`
-                      }, item.status),
-                      React.createElement("span", { className: "supply-item-owner" }, `담당 ${item.owner || "미지정"}`),
-                      item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
-                    )
-                  ),
-                  React.createElement("div", { className: "supply-item-controls" },
-                    React.createElement("select", {
-                      "aria-label": "준비자",
-                      value: item.owner || SUPPLY_PEOPLE[0],
-                      onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                    },
-                      SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                    ),
-                    React.createElement("select", {
-                      "aria-label": "상태",
-                      value: item.status,
-                      onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
-                    },
-                      React.createElement("option", { value: "미완료" }, "미완료"),
-                      React.createElement("option", { value: "완료" }, "완료")
-                    )
-                  )
-                ))
+              React.createElement("div", { className: "supply-stat" },
+                React.createElement("b", null, "완료"),
+                React.createElement("span", null, doneCount, React.createElement("small", null, "개"))
+              ),
+              React.createElement("div", { className: "supply-stat" },
+                React.createElement("b", null, "표시"),
+                React.createElement("span", null, visibleCount, React.createElement("small", null, "개"))
               )
-            ))
-          ) : React.createElement("div", { className: "empty" }, "현재 필터에 맞는 준비물이 없어요.")
+            ),
+            React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
+              SUPPLY_FILTERS.map((filter) => React.createElement("button", {
+                key: filter,
+                type: "button",
+                className: `supply-filter ${statusFilter === filter ? "active" : ""}`,
+                onClick: () => setStatusFilter(filter)
+              }, filter))
+            ),
+            visibleSections.length ? React.createElement("div", { className: "supply-grid" },
+              visibleSections.map((section) => React.createElement("article", { className: `card ${section.featured ? "featured" : ""}`, key: section.id },
+                React.createElement("div", { className: "supply-section-head" },
+                  React.createElement("h3", null, section.title),
+                  React.createElement("span", { className: "supply-section-count" }, `${section.items.length}개`)
+                ),
+                React.createElement("ul", { className: "checklist" },
+                  section.items.map((item) => React.createElement("li", { key: item.id, className: "supply-item" },
+                    React.createElement("div", { className: "supply-item-main" },
+                      React.createElement("div", { className: "supply-item-top" },
+                        React.createElement("strong", null, item.label)
+                      ),
+                      React.createElement("div", { className: "supply-item-meta" },
+                        React.createElement("span", {
+                          className: `supply-item-status ${item.status === "완료" ? "done" : "pending"}`
+                        }, item.status),
+                        React.createElement("span", { className: "supply-item-owner" }, `담당 ${item.owner || "미지정"}`),
+                        item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
+                      )
+                    ),
+                    React.createElement("div", { className: "supply-item-controls" },
+                      React.createElement("select", {
+                        "aria-label": "준비자",
+                        value: item.owner || SUPPLY_PEOPLE[0],
+                        onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                      },
+                        SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                      ),
+                      React.createElement("select", {
+                        "aria-label": "상태",
+                        value: item.status,
+                        onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
+                      },
+                        React.createElement("option", { value: "미완료" }, "미완료"),
+                        React.createElement("option", { value: "완료" }, "완료")
+                      )
+                    )
+                  ))
+                )
+              ))
+            ) : React.createElement("div", { className: "empty" }, "현재 필터에 맞는 준비물이 없어요.")
+          )
         ),
         React.createElement("div", { className: "supply-dock" },
           React.createElement("button", { type: "button", onClick: () => setSheetOpen(true) }, "준비물 등록")
