@@ -9,21 +9,21 @@
 
     :root {
       color-scheme: light;
-      --ink: #18262d;
-      --muted: #65747c;
-      --line: rgba(24, 38, 45, 0.1);
-      --paper: #fbfbfa;
-      --wash: #eef1ef;
-      --aqua: #4e8f98;
-      --aqua-dark: #223843;
-      --lagoon: #9ccfc9;
-      --coral: #c97562;
-      --hibiscus: #8e5b73;
-      --sun: #cda85b;
-      --sand: #f3eee6;
-      --palm: #3b5650;
+      --ink: #17252c;
+      --muted: #66767d;
+      --line: rgba(23, 37, 44, 0.09);
+      --paper: #fcfcfb;
+      --wash: #f3f5f4;
+      --aqua: #5f99a1;
+      --aqua-dark: #21343c;
+      --lagoon: #b9ddd9;
+      --coral: #d27a67;
+      --hibiscus: #956175;
+      --sun: #d0ae68;
+      --sand: #f6f0e6;
+      --palm: #415b54;
       --headline: "Manrope", "Noto Sans KR", sans-serif;
-      --shadow: 0 22px 52px rgba(24, 38, 45, 0.12);
+      --shadow: 0 20px 48px rgba(24, 38, 45, 0.1);
     }
 
     * { box-sizing: border-box; }
@@ -39,10 +39,10 @@
       overflow-x: hidden;
       overscroll-behavior: none;
       background:
-        radial-gradient(circle at 12% 10%, rgba(205, 168, 91, 0.22), transparent 16rem),
-        radial-gradient(circle at 82% 0%, rgba(156, 207, 201, 0.38), transparent 20rem),
-        radial-gradient(circle at 100% 78%, rgba(201, 117, 98, 0.1), transparent 18rem),
-        linear-gradient(180deg, #f5f6f4 0%, #f0ede7 42%, #f7f7f5 100%);
+        radial-gradient(circle at 12% 10%, rgba(208, 174, 104, 0.16), transparent 16rem),
+        radial-gradient(circle at 82% 0%, rgba(185, 221, 217, 0.38), transparent 20rem),
+        radial-gradient(circle at 100% 78%, rgba(210, 122, 103, 0.08), transparent 18rem),
+        linear-gradient(180deg, #f7f8f7 0%, #f1efea 42%, #fafaf8 100%);
       color: var(--ink);
       line-height: 1.45;
     }
@@ -61,14 +61,14 @@
       top: 18vh;
       width: 20rem;
       height: 20rem;
-      background: radial-gradient(circle, rgba(156, 207, 201, 0.14), transparent 68%);
+      background: radial-gradient(circle, rgba(185, 221, 217, 0.14), transparent 68%);
     }
     body::after {
       right: -6rem;
       top: 7vh;
       width: 18rem;
       height: 18rem;
-      background: radial-gradient(circle, rgba(201, 117, 98, 0.12), transparent 70%);
+      background: radial-gradient(circle, rgba(210, 122, 103, 0.11), transparent 70%);
     }
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
@@ -148,20 +148,20 @@
       overflow: hidden;
       border-radius: 34px;
       background:
-        linear-gradient(180deg, rgba(12, 42, 50, 0.02), rgba(12, 42, 50, 0.16)),
+        linear-gradient(180deg, rgba(12, 42, 50, 0.01), rgba(12, 42, 50, 0.14)),
         url("./assets/hawaii-hero.png") center center / cover no-repeat;
       border: 1px solid rgba(255, 255, 255, 0.26);
       box-shadow: var(--shadow);
       position: relative;
       isolation: isolate;
-      filter: saturate(1.01) contrast(1.01);
+      filter: saturate(0.98) contrast(1.01);
     }
     .hero-visual::after {
       content: "";
       position: absolute;
       inset: auto 0 0;
       height: 42%;
-      background: linear-gradient(180deg, transparent, rgba(8, 24, 28, 0.16));
+      background: linear-gradient(180deg, transparent, rgba(8, 24, 28, 0.14));
       pointer-events: none;
     }
     .hero-copy {
@@ -177,7 +177,7 @@
       border-radius: 28px;
       background: rgba(255, 255, 253, 0.92);
       border: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 0 16px 36px rgba(24, 38, 45, 0.08);
+      box-shadow: 0 14px 30px rgba(24, 38, 45, 0.07);
       backdrop-filter: blur(16px);
     }
     .splash {
@@ -188,9 +188,9 @@
       place-items: center;
       padding: 20px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(156, 207, 201, 0.28), transparent 18rem),
-        radial-gradient(circle at 80% 24%, rgba(201, 117, 98, 0.2), transparent 16rem),
-        linear-gradient(180deg, rgba(205, 168, 91, 0.18), rgba(255, 255, 253, 0.94));
+        radial-gradient(circle at 20% 20%, rgba(185, 221, 217, 0.26), transparent 18rem),
+        radial-gradient(circle at 80% 24%, rgba(210, 122, 103, 0.16), transparent 16rem),
+        linear-gradient(180deg, rgba(208, 174, 104, 0.14), rgba(255, 255, 253, 0.95));
       backdrop-filter: blur(18px);
       animation: splashFadeOut 260ms ease forwards;
       animation-delay: 1.12s;
@@ -687,7 +687,7 @@
     .supply-summary {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(255, 255, 253, 0.98));
+      background: linear-gradient(135deg, rgba(95, 153, 161, 0.07), rgba(255, 255, 253, 0.98));
     }
     .supply-summary::before {
       content: "";
@@ -695,7 +695,7 @@
       inset: 0 auto auto 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(135deg, var(--aqua), var(--coral));
+      background: linear-gradient(135deg, var(--aqua), var(--sun), var(--coral));
     }
     .supply-summary h3 {
       margin: 0 0 10px;
@@ -715,8 +715,8 @@
       padding: 16px 14px 13px;
       border-radius: 20px;
       border: 1px solid rgba(24, 38, 45, 0.08);
-      background: linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.92));
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(245, 247, 245, 0.94));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.045);
     }
     .supply-stat b {
       color: var(--aqua-dark);
@@ -758,11 +758,11 @@
       color: var(--aqua-dark);
       font-size: 0.8rem;
       font-weight: 800;
-      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.06);
+      box-shadow: 0 10px 18px rgba(24, 38, 45, 0.055);
       white-space: nowrap;
     }
     .supply-filter.active {
-      background: linear-gradient(135deg, var(--aqua), var(--palm));
+      background: linear-gradient(135deg, var(--aqua), #6ba3a8, var(--palm));
       color: #fff;
       border-color: var(--aqua-dark);
     }
@@ -817,7 +817,7 @@
       padding: 15px 15px 14px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 20px;
-      background: rgba(255, 255, 253, 0.9);
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.94), rgba(250, 250, 248, 0.9));
     }
     .supply-item-main {
       display: grid;
@@ -856,8 +856,8 @@
       color: var(--palm);
     }
     .supply-item-status.pending {
-      background: rgba(205, 168, 91, 0.16);
-      color: #7b662d;
+      background: rgba(208, 174, 104, 0.16);
+      color: #7a6730;
     }
     .supply-item-meta {
       display: grid;
@@ -902,11 +902,11 @@
       min-height: 56px;
       border: 0;
       border-radius: 22px;
-      background: linear-gradient(135deg, var(--aqua-dark), #2f6c71);
+      background: linear-gradient(135deg, var(--aqua-dark), #355f65);
       color: #fff;
       font-size: 0.88rem;
       font-weight: 900;
-      box-shadow: 0 18px 38px rgba(24, 38, 45, 0.18);
+      box-shadow: 0 16px 34px rgba(24, 38, 45, 0.16);
     }
     .supply-dock button::before {
       content: "+";
@@ -932,7 +932,7 @@
       border-radius: 26px 26px 0 0;
       background: rgba(255, 255, 253, 0.98);
       border: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 0 -18px 50px rgba(24, 38, 45, 0.18);
+      box-shadow: 0 -16px 44px rgba(24, 38, 45, 0.16);
       animation: sheetRise 240ms cubic-bezier(0.22, 1, 0.36, 1);
       overflow: auto;
       overscroll-behavior: contain;
@@ -1913,19 +1913,19 @@
       border: 1px solid rgba(24, 38, 45, 0.08);
       border-radius: 20px;
       padding: 16px 16px 15px;
-      box-shadow: 0 12px 28px rgba(24, 38, 45, 0.05);
+      box-shadow: 0 12px 26px rgba(24, 38, 45, 0.045);
     }
     .travel-info-grid > .card:nth-child(4n + 1) {
-      background: linear-gradient(135deg, rgba(255, 247, 238, 0.98), rgba(255, 252, 247, 0.96));
+      background: linear-gradient(135deg, rgba(255, 249, 242, 0.98), rgba(255, 253, 249, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 2) {
-      background: linear-gradient(135deg, rgba(238, 247, 250, 0.98), rgba(247, 252, 253, 0.96));
+      background: linear-gradient(135deg, rgba(239, 247, 249, 0.98), rgba(248, 252, 253, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 3) {
-      background: linear-gradient(135deg, rgba(242, 249, 238, 0.98), rgba(249, 253, 246, 0.96));
+      background: linear-gradient(135deg, rgba(244, 249, 240, 0.98), rgba(250, 253, 248, 0.96));
     }
     .travel-info-grid > .card:nth-child(4n + 4) {
-      background: linear-gradient(135deg, rgba(245, 241, 250, 0.98), rgba(251, 247, 253, 0.96));
+      background: linear-gradient(135deg, rgba(246, 242, 250, 0.98), rgba(252, 249, 253, 0.96));
     }
     .travel-info-grid > .card .post-meta {
       margin-bottom: 8px;
