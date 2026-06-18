@@ -32,7 +32,7 @@
 
     * { box-sizing: border-box; }
     html {
-      font-size: 15px;
+      font-size: 16px;
       scroll-behavior: smooth;
       overscroll-behavior: none;
     }
@@ -301,7 +301,7 @@
     .eyebrow {
       margin: 0;
       color: var(--ocean);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 800;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -383,7 +383,7 @@
       top: 0;
       z-index: 5;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
       overflow: visible;
       margin: 0 -14px 14px;
@@ -434,7 +434,7 @@
     .section-kicker {
       margin: -2px 4px 12px;
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       overflow-wrap: anywhere;
     }
     .tab-page {
@@ -491,7 +491,7 @@
       border-radius: 999px;
       background: #ffffff;
       color: var(--aqua-dark);
-      font-size: 0.86rem;
+      font-size: 0.92rem;
       font-weight: 850;
       white-space: nowrap;
       box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
@@ -736,7 +736,7 @@
     .supply-summary h3 {
       margin: 0 0 10px;
       font-family: var(--headline);
-      font-size: 1rem;
+      font-size: 1.06rem;
       color: var(--aqua-dark);
     }
     .supply-stats {
@@ -792,7 +792,7 @@
       border-radius: 999px;
       background: rgba(255, 255, 253, 0.94);
       color: var(--aqua-dark);
-      font-size: 0.8rem;
+      font-size: 0.86rem;
       font-weight: 800;
       box-shadow: 0 10px 18px rgba(24, 38, 45, 0.055);
       white-space: nowrap;
@@ -996,12 +996,12 @@
     .supply-sheet-title {
       margin: 0;
       font-family: var(--headline);
-      font-size: 1rem;
+      font-size: 1.06rem;
       letter-spacing: -0.02em;
     }
     .supply-sheet-subtitle {
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       overflow-wrap: anywhere;
     }
     .supply-sheet-body {
@@ -1508,7 +1508,7 @@
     .ai-head h3 {
       margin: 0;
       font-family: var(--headline);
-      font-size: 1.02rem;
+      font-size: 1.08rem;
       line-height: 1.25;
       letter-spacing: -0.02em;
       color: var(--aqua-dark);
@@ -1519,7 +1519,7 @@
       border-radius: 999px;
       background: #dceffc;
       color: #0f5e99;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       font-weight: 900;
       white-space: nowrap;
     }
@@ -2208,7 +2208,6 @@
     const tabs = [
       ["schedule", "일정"],
       ["supplies", "준비물"],
-      ["eunae-gmap", "은애's gmap", EUNAE_GMAP_URL],
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
@@ -4605,7 +4604,6 @@
       const view = {
         schedule: React.createElement(Schedule),
         supplies: React.createElement(Supplies),
-        eunaeGmap: React.createElement(EunaeGmap),
         maps: React.createElement(TravelInfo),
       }[safeActive];
       return React.createElement(React.Fragment, null,
