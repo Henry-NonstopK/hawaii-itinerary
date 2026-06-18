@@ -646,16 +646,22 @@
       justify-content: center;
       min-height: 44px;
       padding: 10px 16px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--aqua), var(--palm));
-      color: #fff;
-      border: 0;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #f3f6f7);
+      color: var(--aqua-dark);
+      border: 1px solid rgba(33, 52, 60, 0.1);
       font-size: 0.84rem;
       font-weight: 800;
       text-decoration: none;
       overflow-wrap: anywhere;
-      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.1);
+      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.08);
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+    }
+    .primary-action {
+      background: linear-gradient(180deg, #fee500 0%, #ffd900 100%);
+      color: #1e1e1e;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 22px rgba(255, 214, 0, 0.24);
     }
     .ghost-action {
       background: #fff;
@@ -683,7 +689,7 @@
       position: relative;
       display: grid;
       grid-template-rows: minmax(0, 1fr) auto;
-      gap: 14px;
+      gap: 12px;
       height: calc(100svh - 32px);
       padding-bottom: 0;
       overflow: hidden;
@@ -694,6 +700,7 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
       padding-right: 2px;
+      padding-bottom: 4px;
     }
     .supply-summary {
       position: relative;
@@ -901,20 +908,19 @@
     }
     .supply-dock button {
       pointer-events: auto;
-      width: min(100%, 1080px);
-      margin: 0 auto;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       min-height: 56px;
-      border: 0;
-      border-radius: 22px;
-      background: linear-gradient(135deg, var(--aqua-dark), #355f65);
-      color: #fff;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #fee500 0%, #ffd900 100%);
+      color: #1e1e1e;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       font-size: 0.88rem;
       font-weight: 900;
-      box-shadow: 0 16px 34px rgba(24, 38, 45, 0.16);
+      box-shadow: 0 14px 28px rgba(255, 214, 0, 0.25);
       backdrop-filter: blur(12px);
     }
     .supply-dock button::before {
