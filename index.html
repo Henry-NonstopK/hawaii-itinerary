@@ -445,6 +445,13 @@
       border-block: 1px solid rgba(36, 56, 67, 0.06);
       box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
       backdrop-filter: saturate(140%) blur(10px);
+      transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+    }
+    .tabbar.is-hidden {
+      opacity: 0;
+      transform: translateY(-120%);
+      pointer-events: none;
+      filter: blur(2px);
     }
     .tabbar::after {
       content: none;
@@ -3315,8 +3322,8 @@
       );
     }
 
-    function Tabbar({ active, setActive }) {
-      return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
+    function Tabbar({ active, setActive, className = "" }) {
+      return React.createElement("nav", { className: `tabbar ${className}`.trim(), "aria-label": "주요 탭" },
         tabs.map(([id, label, href]) => href ? React.createElement("a", {
           key: id,
           className: `tab ${active === id ? "active" : ""}`,
@@ -4976,10 +4983,15 @@
       const [swipeOffset, setSwipeOffset] = useState(0);
       const [isDragging, setIsDragging] = useState(false);
       const [scheduleEditSignal, setScheduleEditSignal] = useState(0);
+      const [isAtTop, setIsAtTop] = useState(() => window.scrollY <= 8);
       const touchStartRef = useRef(null);
       const safeActive = tabIds.includes(active) ? active : tabIds[0];
       const activeIndex = tabIds.indexOf(safeActive);
       const splashTimerRef = useRef(null);
+
+      const scrollTabsToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
 
       const finishSplash = () => {
         if (!showSplash) return;
@@ -4993,9 +5005,29 @@
         }
       }, [active, safeActive]);
 
+      useEffect(() => {
+        let rafId = 0;
+        const updateTopState = () => {
+          rafId = 0;
+          setIsAtTop(window.scrollY <= 8);
+        };
+        const handleScroll = () => {
+          if (rafId) return;
+          rafId = window.requestAnimationFrame(updateTopState);
+        };
+        updateTopState();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+          if (rafId) window.cancelAnimationFrame(rafId);
+        };
+      }, []);
+
       const selectTab = (nextId) => {
         const nextIndex = tabIds.indexOf(nextId);
-        if (nextIndex === -1 || nextIndex === activeIndex) return;
+        if (nextIndex === -1) return;
+        scrollTabsToTop();
+        if (nextIndex === activeIndex) return;
         setSwipeDirection(nextIndex > activeIndex ? "forward" : "backward");
         setActive(nextId);
         setSwipeOffset(0);
@@ -5041,6 +5073,7 @@
         setMenuOpen(false);
       };
       const openScheduleEdit = () => {
+        scrollTabsToTop();
         setActive("schedule");
         setScheduleEditSignal((current) => current + 1);
         setMenuOpen(false);
@@ -5093,6 +5126,7 @@
           const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
           if (nextIndex >= 0 && nextIndex < tabIds.length) {
             setSwipeDirection(dx < 0 ? "forward" : "backward");
+            scrollTabsToTop();
             setActive(tabIds[nextIndex]);
           }
         }
@@ -5127,7 +5161,11 @@
             })
           ),
           React.createElement(Header),
-          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
+          React.createElement(Tabbar, {
+            active: safeActive,
+            setActive: selectTab,
+            className: isAtTop ? "" : "is-hidden"
+          }),
           React.createElement("div", {
             className: "view-shell",
             onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
