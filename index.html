@@ -1099,6 +1099,114 @@
       font-size: 0.76rem;
       font-weight: 800;
     }
+    .owner-picker {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+    }
+    .owner-picker-trigger {
+      width: 100%;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(36, 56, 67, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 252, 0.96)),
+        linear-gradient(135deg, rgba(97, 194, 206, 0.12), rgba(143, 90, 217, 0.08));
+      color: var(--aqua-dark);
+      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.06);
+      font-size: 0.92rem;
+      font-weight: 850;
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+    .owner-picker-trigger:hover,
+    .owner-picker-trigger.is-open {
+      border-color: rgba(97, 194, 206, 0.45);
+      box-shadow: 0 14px 24px rgba(24, 38, 45, 0.09);
+      transform: translateY(-1px);
+    }
+    .owner-picker-trigger:focus-visible {
+      border-color: rgba(97, 194, 206, 0.7);
+      box-shadow: 0 0 0 4px rgba(97, 194, 206, 0.16), 0 14px 24px rgba(24, 38, 45, 0.09);
+      outline: none;
+    }
+    .owner-picker-value {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .owner-picker-caret {
+      flex: none;
+      color: rgba(36, 56, 67, 0.76);
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .owner-picker-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 20;
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      max-height: 280px;
+      overflow: auto;
+      overscroll-behavior: contain;
+      border-radius: 18px;
+      border: 1px solid rgba(36, 56, 67, 0.12);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 24px 42px rgba(24, 38, 45, 0.14);
+      backdrop-filter: blur(16px);
+    }
+    .owner-picker-option {
+      width: 100%;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--aqua-dark);
+      font-size: 0.9rem;
+      font-weight: 850;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+    }
+    .owner-picker-option:hover,
+    .owner-picker-option.is-active {
+      background: rgba(97, 194, 206, 0.12);
+      border-color: rgba(97, 194, 206, 0.18);
+      transform: translateX(1px);
+    }
+    .owner-picker-option em {
+      flex: none;
+      font-style: normal;
+      color: var(--ocean);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+    .supply-field .owner-picker {
+      margin-top: 2px;
+    }
+    .supply-field .owner-picker-trigger {
+      min-height: 50px;
+      padding: 11px 14px;
+    }
     .supply-sheet-actions {
       display: flex;
       gap: 8px;
@@ -2031,9 +2139,6 @@
       border-color: rgba(97, 194, 206, 0.7);
       box-shadow: 0 0 0 4px rgba(97, 194, 206, 0.16), 0 14px 24px rgba(24, 38, 45, 0.09);
     }
-    .supply-item-controls select[aria-label="준비자"] {
-      padding-left: 16px;
-    }
     .travel-info-shell {
       display: grid;
       gap: 14px;
@@ -2169,8 +2274,12 @@
         gap: 8px;
         margin-top: 4px;
       }
+      .owner-picker-trigger,
       .supply-item-controls select {
         min-height: 44px;
+      }
+      .owner-picker-menu {
+        max-height: 240px;
       }
       .supply-sheet {
         width: 100%;
@@ -2272,6 +2381,59 @@
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
+
+    function OwnerPicker({ value, onChange, ariaLabel, className = "" }) {
+      const [open, setOpen] = useState(false);
+      const rootRef = useRef(null);
+      const currentValue = value || SUPPLY_PEOPLE[0];
+
+      useEffect(() => {
+        if (!open) return;
+        const handlePointerDown = (event) => {
+          if (!(event.target instanceof Node) || !rootRef.current || rootRef.current.contains(event.target)) return;
+          setOpen(false);
+        };
+        const handleKeyDown = (event) => {
+          if (event.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("pointerdown", handlePointerDown);
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+          window.removeEventListener("pointerdown", handlePointerDown);
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+      }, [open]);
+
+      return React.createElement("div", { ref: rootRef, className: `owner-picker ${className}`.trim() },
+        React.createElement("button", {
+          type: "button",
+          className: `owner-picker-trigger ${open ? "is-open" : ""}`,
+          "aria-label": ariaLabel,
+          "aria-haspopup": "listbox",
+          "aria-expanded": open,
+          onClick: () => setOpen((current) => !current)
+        },
+          React.createElement("span", { className: "owner-picker-value" }, currentValue),
+          React.createElement("span", { className: "owner-picker-caret", "aria-hidden": "true" }, "⌄")
+        ),
+        open ? React.createElement("div", { className: "owner-picker-menu", role: "listbox", "aria-label": `${ariaLabel} 목록` },
+          SUPPLY_PEOPLE.map((person) => React.createElement("button", {
+            key: person,
+            type: "button",
+            className: `owner-picker-option ${person === currentValue ? "is-active" : ""}`,
+            role: "option",
+            "aria-selected": person === currentValue,
+            onClick: () => {
+              onChange(person);
+              setOpen(false);
+            }
+          },
+            React.createElement("span", null, person),
+            person === currentValue ? React.createElement("em", null, "선택됨") : null
+          ))
+        ) : null
+      );
+    }
 
     function normalizeScheduleStop(stop) {
       if (Array.isArray(stop)) {
@@ -3593,13 +3755,11 @@
                       )
                     ),
                     React.createElement("div", { className: "supply-item-controls" },
-                      React.createElement("select", {
-                        "aria-label": "준비자",
-                        value: item.owner || SUPPLY_PEOPLE[0],
-                        onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                      },
-                        SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                      ),
+                      React.createElement(OwnerPicker, {
+                        value: item.owner,
+                        onChange: (nextOwner) => updateItem(section.id, item.id, { owner: nextOwner }),
+                        ariaLabel: "준비자"
+                      }),
                       React.createElement("select", {
                         "aria-label": "상태",
                         value: item.status,
@@ -3642,14 +3802,13 @@
                   sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
                 )
               ),
-              React.createElement("label", { className: "supply-field" },
+              React.createElement("div", { className: "supply-field" },
                 React.createElement("span", null, "준비자"),
-                React.createElement("select", {
+                React.createElement(OwnerPicker, {
                   value: draft.owner,
-                  onChange: (e) => setDraft((current) => ({ ...current, owner: e.target.value }))
-                },
-                  SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                )
+                  onChange: (nextOwner) => setDraft((current) => ({ ...current, owner: nextOwner })),
+                  ariaLabel: "준비자"
+                })
               ),
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "항목"),
