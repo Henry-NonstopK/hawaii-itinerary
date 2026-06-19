@@ -164,21 +164,16 @@
       background: linear-gradient(180deg, transparent, rgba(8, 24, 28, 0.16));
       pointer-events: none;
     }
-    .hero-copy {
-      display: grid;
-      align-content: end;
-      gap: 14px;
-      padding: 6px 0 4px;
-    }
-    .hero-panel {
-      display: grid;
-      gap: 14px;
-      padding: 18px 18px 16px;
-      border-radius: 28px;
-      background: rgba(255, 255, 253, 0.92);
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 0 16px 36px rgba(24, 38, 45, 0.08);
-      backdrop-filter: blur(16px);
+    h1 {
+      margin: 0;
+      align-self: end;
+      color: var(--aqua-dark);
+      font-family: var(--headline);
+      font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
     }
     .splash {
       position: fixed;
@@ -295,86 +290,6 @@
       0%, 100% { transform: translateX(0); }
       50% { transform: translateX(122%); }
     }
-    .eyebrow {
-      margin: 0;
-      color: var(--hibiscus);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .hero-title {
-      margin: 0;
-      display: grid;
-      gap: 8px;
-      text-wrap: balance;
-    }
-    .hero-title .title-kicker {
-      color: var(--aqua-dark);
-      font-size: 0.88rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .hero-title .title-main {
-      max-width: 9ch;
-      color: var(--aqua-dark);
-      font-family: var(--headline);
-      font-size: clamp(2.3rem, 9vw, 4.6rem);
-      font-weight: 800;
-      line-height: 0.94;
-      letter-spacing: -0.04em;
-    }
-    .hero-title .title-sub {
-      display: block;
-      color: var(--ink);
-      font-size: clamp(1.7rem, 6vw, 2.4rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      overflow-wrap: anywhere;
-    }
-    .quick-facts {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 0;
-    }
-    .fact {
-      min-height: 62px;
-      padding: 10px 11px 10px;
-      border: 1px solid rgba(36, 56, 67, 0.08);
-      border-radius: 18px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
-      backdrop-filter: blur(10px);
-      overflow-wrap: anywhere;
-    }
-    .fact b {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--aqua-dark);
-      font-size: 0.7rem;
-      font-weight: 800;
-    }
-    .fact span { font-size: 0.84rem; font-weight: 800; }
-    .hero-meta-note {
-      padding: 11px 13px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(78, 143, 152, 0.08), rgba(201, 117, 98, 0.06));
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      color: var(--aqua-dark);
-      font-size: 0.84rem;
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
-
     .tabbar {
       position: sticky;
       top: 0;
@@ -1770,49 +1685,6 @@
     .hero-visual {
       filter: saturate(1.01) contrast(1.01);
     }
-    .eyebrow {
-      margin: 0;
-      color: var(--hibiscus);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-      max-width: 36rem;
-    }
-    .quick-facts {
-      display: grid;
-      gap: 10px;
-      margin-top: 0;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .fact {
-      min-height: 68px;
-      padding: 12px 12px 11px;
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      border-radius: 18px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
-      backdrop-filter: blur(10px);
-      overflow-wrap: anywhere;
-    }
-    .fact b {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--aqua-dark);
-      font-size: 0.74rem;
-      font-weight: 900;
-    }
-    .fact span {
-      color: var(--ink);
-      font-size: 0.9rem;
-      font-weight: 850;
-    }
     .checklist {
       list-style: none;
       margin: 14px 0 0;
@@ -1947,9 +1819,6 @@
         gap: 20px;
       }
       .hero-visual { min-height: 100%; }
-      .hero-copy { padding: 8px 0 6px; }
-      .hero-panel { padding: 20px 20px 18px; }
-      .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .tabbar, .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .chat-list { min-height: 500px; }
@@ -1965,17 +1834,7 @@
         min-height: 240px;
         border-radius: 28px;
       }
-      .hero-panel {
-        padding: 16px;
-        border-radius: 24px;
-      }
-      .hero-title .title-main {
-        max-width: 100%;
-        font-size: clamp(2.5rem, 18vw, 4rem);
-      }
-      .hero-title .title-sub {
-        font-size: clamp(1.8rem, 10vw, 2.4rem);
-      }
+      h1 { font-size: clamp(2.5rem, 18vw, 4rem); }
       .tabbar {
         margin: 0 -16px 14px;
         padding: 9px 16px 10px;
@@ -2947,20 +2806,7 @@
       return (
         React.createElement("section", { className: "hero" },
           React.createElement("div", { className: "hero-visual", "aria-hidden": "true" }),
-          React.createElement("div", { className: "hero-copy" },
-            React.createElement("div", { className: "hero-panel" },
-              React.createElement("p", { className: "eyebrow" }, "Hong's Trip · Honolulu"),
-              React.createElement("h1", { className: "hero-title" },
-                React.createElement("span", { className: "title-kicker" }, "Hawaii Family Plan"),
-                React.createElement("span", { className: "title-main" }, "Hong's"),
-                React.createElement("span", { className: "title-sub" }, "햅삐한 하와이여행")
-              )
-            ),
-            React.createElement("div", { className: "actions", "aria-label": "메인 바로가기" },
-              React.createElement("a", { className: "ghost-action", href: GOOGLE_TRANSLATE_URL, target: "_blank", rel: "noopener" }, "구글 번역 (영→한)"),
-              React.createElement("a", { className: "primary-action", href: GOOGLE_MAPS_URL, target: "_blank", rel: "noopener" }, "구글 지도")
-            )
-          )
+          React.createElement("h1", null, "Hawaii Family Trip")
         )
       );
     }
