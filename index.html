@@ -296,32 +296,6 @@
       font-size: 0.74rem;
       font-weight: 700;
     }
-    .hero-summary {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-    .hero-summary-card {
-      display: grid;
-      gap: 4px;
-      padding: 12px 12px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      background: #ffffff;
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
-    }
-    .hero-summary-card b {
-      color: var(--ocean);
-      font-size: 0.72rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .hero-summary-card span {
-      color: var(--aqua-dark);
-      font-size: 0.9rem;
-      font-weight: 900;
-    }
     .hero-note {
       margin: 0;
       color: var(--muted);
@@ -3238,11 +3212,6 @@
     }
 
     function Header() {
-      const heroStats = [
-        ["일정", `${days.length}일`],
-        ["준비물", `${supplySections.length}섹션`],
-        ["여행정보", `${travelInfo.length}개`],
-      ];
       return (
         React.createElement("section", { className: "hero" },
           React.createElement("div", { className: "hero-copy" },
@@ -3255,12 +3224,6 @@
                 )
               ),
               React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인할 수 있어.")
-            ),
-            React.createElement("div", { className: "hero-summary" },
-              heroStats.map(([label, value]) => React.createElement("div", { className: "hero-summary-card", key: label },
-                React.createElement("b", null, label),
-                React.createElement("span", null, value)
-              ))
             )
           )
         )
