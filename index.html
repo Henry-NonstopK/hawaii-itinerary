@@ -796,13 +796,13 @@
       position: relative;
       display: grid;
       gap: 12px;
-      min-height: auto;
-      padding-bottom: 104px;
-      overflow: visible;
-    }
-    .supply-page-body {
-      display: grid;
-      gap: 12px;
+      min-height: calc(100svh - 32px);
+      max-height: calc(100svh - 32px);
+      padding-bottom: 140px;
+      padding-right: 2px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .supply-summary {
       position: relative;
