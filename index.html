@@ -795,19 +795,14 @@
     .supply-page {
       position: relative;
       display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
       gap: 12px;
-      height: calc(100svh - 32px);
-      padding-bottom: 0;
-      overflow: hidden;
+      min-height: auto;
+      padding-bottom: 104px;
+      overflow: visible;
     }
-    .supply-page-scroll {
-      min-height: 0;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-      padding-right: 2px;
-      padding-bottom: 4px;
+    .supply-page-body {
+      display: grid;
+      gap: 12px;
     }
     .supply-summary {
       position: relative;
@@ -1008,14 +1003,18 @@
       font-size: 0.84rem;
     }
     .supply-dock {
-      position: relative;
+      position: fixed;
+      left: max(18px, env(safe-area-inset-left));
+      right: max(18px, env(safe-area-inset-right));
+      bottom: calc(14px + env(safe-area-inset-bottom));
       z-index: 2;
       padding: 0;
       pointer-events: none;
     }
     .supply-dock button {
       pointer-events: auto;
-      width: 100%;
+      width: min(100%, 1080px);
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2297,7 +2296,8 @@
         flex-direction: column;
       }
       .supply-dock {
-        padding-inline: 0;
+        left: 14px;
+        right: 14px;
       }
       .gallery-actions .primary-action,
       .gallery-actions .ghost-action,
@@ -3715,7 +3715,7 @@
 
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
-          React.createElement("div", { className: "supply-page-scroll" },
+          React.createElement("div", { className: "supply-page-body" },
             React.createElement("div", { className: "supply-stats" },
               React.createElement("div", { className: "supply-stat" },
                 React.createElement("b", null, "전체"),
