@@ -3217,14 +3217,11 @@
           React.createElement("div", { className: "hero-copy" },
             React.createElement("div", { className: "hero-panel" },
               React.createElement("div", { className: "hero-search" },
-                React.createElement("div", { className: "hero-search-mark", "aria-hidden": "true" }, "N"),
                 React.createElement("div", { className: "hero-search-pill" },
                   React.createElement("strong", null, "Hong's 햅삐한 하와이여행"),
-                  React.createElement("span", null, "일정과 준비물을 한 번에 보는 모바일 화면")
                 )
               ),
-              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인할 수 있어.")
-            )
+            ),
           )
         )
       );
@@ -3423,7 +3420,7 @@
         },
           React.createElement("div", { className: "schedule-head" },
             React.createElement("div", { className: "schedule-head-copy" },
-              React.createElement("h2", { className: "section-title" }, "여행 일정")
+              React.createElement("h2", { className: "section-title" }, "")
             ),
             React.createElement("button", {
               type: "button",
@@ -3475,7 +3472,6 @@
               React.createElement("div", { className: "actions" },
                 day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
               ),
-              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
             ))
           )
         ),
@@ -3516,25 +3512,11 @@
                 })
               ),
               React.createElement("label", { className: "supply-field" },
-                React.createElement("span", null, "메모 제목"),
-                React.createElement("input", {
-                  value: editorDraft.memoTitle,
-                  onChange: (e) => setEditorDraft((current) => ({ ...current, memoTitle: e.target.value }))
-                })
-              ),
-              React.createElement("label", { className: "supply-field" },
-                React.createElement("span", null, "메모"),
-                React.createElement("textarea", {
-                  value: editorDraft.memo,
-                  onChange: (e) => setEditorDraft((current) => ({ ...current, memo: e.target.value }))
-                })
-              ),
-              React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "일정 항목"),
                 React.createElement("textarea", {
                   value: editorDraft.stopsText,
                   onChange: (e) => setEditorDraft((current) => ({ ...current, stopsText: e.target.value })),
-                  placeholder: "형식: 시간 | 제목 | 메모"
+                  placeholder: "형식: 시간 | 제목"
                 })
               ),
               React.createElement("label", { className: "supply-field" },
@@ -4825,7 +4807,6 @@
 
     function TravelInfo() {
       return React.createElement("section", { className: "travel-info-shell" },
-        React.createElement("h2", { className: "section-title" }, "여행 정보"),
         React.createElement("div", { className: "map-hub travel-info-map-hub" },
           travelInfo.slice(0, 5).map((item) => React.createElement("a", {
             className: "map-btn",
@@ -4897,11 +4878,6 @@
               className: "menu-item",
               onClick: onMap
             }, React.createElement("span", { "aria-hidden": "true" }, "M"), "은애's gmap"),
-            React.createElement("button", {
-              type: "button",
-              className: "menu-item primary",
-              onClick: onEdit
-            }, React.createElement("span", { "aria-hidden": "true" }, "✎"), "수정")
           )
         )
       );

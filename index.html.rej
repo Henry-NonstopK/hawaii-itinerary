@@ -1,0 +1,9 @@
+diff a/index.html b/index.html	(rejected hunks)
+@@ -3223,7 +3223,16 @@
+                    React.createElement("span", null, "일정과 준비물을 한 번에 보는 모바일 화면")
+                  )
+                ),
+                              React.createElement("p", { className: "hero-note" }, "하와이 여행 정보를 카드처럼 빠르게 확인할 수 있어.")
+              )
+            )
+          )
