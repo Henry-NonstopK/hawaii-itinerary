@@ -3305,13 +3305,10 @@
           React.createElement("div", { className: "hero-copy" },
             React.createElement("div", { className: "hero-panel" },
               React.createElement("div", { className: "hero-search" },
-                React.createElement("div", { className: "hero-search-mark", "aria-hidden": "true" }, "N"),
                 React.createElement("div", { className: "hero-search-pill" },
                   React.createElement("strong", null, "Hong's 햅삐한 하와이여행"),
-                  React.createElement("span", null, "일정 · 준비물 · 지도 · 메모를 한 화면에")
                 )
               ),
-              React.createElement("p", { className: "hero-note" }, "메뉴는 오른쪽에서 슬라이드로 열리고, 검색 카드도 더 크게 보이도록 다듬었어.")
             )
           )
         )
@@ -4960,12 +4957,12 @@
               type: "button",
               className: "menu-item",
               onClick: onTranslate
-            }, React.createElement("span", { "aria-hidden": "true" }, "A"), "구글번역"),
+            }, React.createElement("span", { "aria-hidden": "true" }, ""), "구글번역"),
             React.createElement("button", {
               type: "button",
               className: "menu-item",
               onClick: onMap
-            }, React.createElement("span", { "aria-hidden": "true" }, "M"), "은애's gmap"),
+            }, React.createElement("span", { "aria-hidden": "true" }, ""), "은애's gmap"),
           )
         )
       );
@@ -5119,7 +5116,7 @@
                 "aria-label": "빠른 메뉴 열기",
                 "aria-expanded": menuOpen,
                 onClick: () => setMenuOpen((current) => !current)
-              }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
+              }, React.createElement("span", { "aria-hidden": "true" }, "☰"))
             ),
             React.createElement(SiteMenu, {
               open: menuOpen,
