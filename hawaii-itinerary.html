@@ -1692,6 +1692,65 @@
     .instagram-field textarea {
       min-height: 88px;
     }
+    .instagram-author-select {
+      position: relative;
+      display: grid;
+      gap: 8px;
+    }
+    .instagram-author-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 12px;
+      border: 1px solid rgba(36, 56, 67, 0.12);
+      border-radius: 18px;
+      background: rgba(248, 252, 255, 0.96);
+      color: var(--ink);
+      text-align: left;
+    }
+    .instagram-author-trigger strong {
+      font-size: 0.96rem;
+      font-weight: 900;
+    }
+    .instagram-author-trigger span {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .instagram-author-menu {
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 14px 28px rgba(24, 38, 45, 0.12);
+      position: relative;
+      z-index: 1;
+    }
+    .instagram-author-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-align: left;
+    }
+    .instagram-author-option.active {
+      border-color: rgba(15, 94, 153, 0.22);
+      background: rgba(15, 94, 153, 0.08);
+      color: var(--ocean);
+    }
     .instagram-compose-actions {
       display: flex;
       flex-wrap: wrap;
@@ -2493,6 +2552,9 @@
       .instagram-compose-actions .primary-action {
         width: 100%;
       }
+      .instagram-author-menu {
+        padding: 7px;
+      }
       .instagram-preview-strip {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -2548,6 +2610,7 @@
     const PHOTO_FOLDER = "gallery";
     const INSTAGRAM_FOLDER = "kongs-instagram";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+    const KONGS_AUTHORS = ["은애", "문식", "상범", "은경", "엄마", "아빠"];
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
     const SCHEDULE_STATE_KEY = "hawaii-schedule-state";
     const SUPPLY_STATE_KEY = "hawaii-supply-state";
@@ -3167,6 +3230,7 @@
         id: post?.id || path,
         path,
         publicUrl,
+        author: String(post?.author || KONGS_AUTHORS[0]).trim() || KONGS_AUTHORS[0],
         title: String(post?.title || "").trim() || "제목 없음",
         caption: String(post?.caption || "").trim(),
         name: String(post?.name || post?.title || "사진").trim() || "사진",
@@ -3322,7 +3386,7 @@
         writeStoredValue(KONGS_INSTAGRAM_STATE_KEY, JSON.stringify({ posts }));
       }, [posts]);
 
-      async function addFiles(fileList, { title, caption } = {}) {
+      async function addFiles(fileList, { title, caption, author } = {}) {
         const files = Array.from(fileList || []).filter((file) => file.type.startsWith("image/"));
         if (files.length === 0) return [];
         setStatus("loading");
@@ -3361,6 +3425,7 @@
             id: path,
             path,
             publicUrl: supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl,
+            author: author || KONGS_AUTHORS[0],
             title: title || file.name.replace(/\.[^.]+$/, "") || "제목 없음",
             caption: caption || "",
             name: file.name.replace(/\.[^.]+$/, "") || "사진",
@@ -5028,12 +5093,13 @@
 
     function KongsInstagram() {
       const { posts, status, error, addFiles, removePost, clearPosts } = useKongsInstagramFeed();
-      const [draft, setDraft] = useState({ title: "", caption: "" });
+      const [draft, setDraft] = useState({ title: "", caption: "", author: KONGS_AUTHORS[0] });
       const [selectedFiles, setSelectedFiles] = useState([]);
       const [selectedPreviewUrls, setSelectedPreviewUrls] = useState([]);
       const [busy, setBusy] = useState(false);
       const [composerOpen, setComposerOpen] = useState(false);
       const [composerClosing, setComposerClosing] = useState(false);
+      const [authorMenuOpen, setAuthorMenuOpen] = useState(false);
       const [viewerIndex, setViewerIndex] = useState(null);
       const [previewIndex, setPreviewIndex] = useState(null);
       const fileInputRef = useRef(null);
@@ -5063,6 +5129,7 @@
 
       const closeComposer = () => {
         if (!composerOpen || composerClosing) return;
+        setAuthorMenuOpen(false);
         setComposerClosing(true);
         if (composerCloseTimerRef.current) window.clearTimeout(composerCloseTimerRef.current);
         composerCloseTimerRef.current = window.setTimeout(() => {
@@ -5083,10 +5150,11 @@
 
       const clearComposer = () => {
         selectedPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
-        setDraft({ title: "", caption: "" });
+        setDraft({ title: "", caption: "", author: KONGS_AUTHORS[0] });
         setSelectedFiles([]);
         setSelectedPreviewUrls([]);
         setPreviewIndex(null);
+        setAuthorMenuOpen(false);
       };
 
       const submit = async (event) => {
@@ -5096,7 +5164,7 @@
         if (!title || !selectedFiles.length) return;
         setBusy(true);
         try {
-          const added = await addFiles(selectedFiles, { title, caption });
+          const added = await addFiles(selectedFiles, { title, caption, author: draft.author });
           if (added.length > 0) {
             clearComposer();
             setViewerIndex(0);
@@ -5168,6 +5236,32 @@
               React.createElement("h3", { className: "supply-sheet-title" }, "Kong's 인스타 등록")
             ),
             React.createElement("div", { className: "supply-sheet-body" },
+              React.createElement("div", { className: "instagram-field" },
+                React.createElement("span", null, "작성자"),
+                React.createElement("div", { className: "instagram-author-select" },
+                  React.createElement("button", {
+                    className: "instagram-author-trigger",
+                    type: "button",
+                    onClick: () => setAuthorMenuOpen((current) => !current),
+                    "aria-expanded": authorMenuOpen,
+                    "aria-haspopup": "listbox"
+                  },
+                    React.createElement("strong", null, draft.author),
+                    React.createElement("span", null, "바꾸기")
+                  ),
+                  authorMenuOpen ? React.createElement("div", { className: "instagram-author-menu", role: "listbox", "aria-label": "작성자 선택" },
+                    KONGS_AUTHORS.map((author) => React.createElement("button", {
+                      key: author,
+                      type: "button",
+                      className: `instagram-author-option ${draft.author === author ? "active" : ""}`,
+                      onClick: () => {
+                        setDraft((current) => ({ ...current, author }));
+                        setAuthorMenuOpen(false);
+                      }
+                    }, author))
+                  ) : null
+                )
+              ),
               React.createElement("label", { className: "instagram-field" },
                 React.createElement("span", null, "제목"),
                 React.createElement("input", {
@@ -5262,10 +5356,10 @@
                 React.createElement("img", { src: post.publicUrl, alt: post.title, loading: "lazy" }),
                 React.createElement("span", { className: "photo-badge" }, index === 0 ? "최신" : "눌러서 확대")
               ),
-              React.createElement("div", { className: "instagram-post-body" },
-                React.createElement("div", { className: "instagram-post-head" },
-                  React.createElement("strong", null, post.title),
-                  React.createElement("span", null, index === 0 ? "맨 위" : `#${index + 1}`)
+            React.createElement("div", { className: "instagram-post-body" },
+              React.createElement("div", { className: "instagram-post-head" },
+                React.createElement("strong", null, post.title),
+                  React.createElement("span", null, post.author)
                 ),
                 React.createElement("p", { className: "instagram-caption" }, post.caption || "짧은 문구 없음"),
                 React.createElement("div", { className: "instagram-post-meta" },
