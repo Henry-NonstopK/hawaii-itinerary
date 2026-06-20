@@ -102,57 +102,6 @@
     }
     .view-shell {
       position: relative;
-      overflow: hidden;
-      touch-action: pan-y pinch-zoom;
-      overscroll-behavior: contain;
-    }
-    .view-panel {
-      position: relative;
-      padding-top: 2px;
-      touch-action: pan-y pinch-zoom;
-      will-change: transform, opacity;
-      transform: translate3d(var(--swipe-offset, 0px), 0, 0) scale(var(--swipe-scale, 1));
-      transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
-      animation: panelFadeIn 640ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .view-panel.is-dragging {
-      transition: none;
-    }
-    .view-panel.swipe-forward {
-      animation-name: slideForward;
-    }
-    .view-panel.swipe-backward {
-      animation-name: slideBackward;
-    }
-    @keyframes panelFadeIn {
-      from {
-        opacity: 0;
-        transform: translate3d(0, 12px, 0) scale(0.995);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    @keyframes slideForward {
-      from {
-        opacity: 0;
-        transform: translate3d(14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-    @keyframes slideBackward {
-      from {
-        opacity: 0;
-        transform: translate3d(-14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
     }
     .menu-overlay {
       position: relative;
@@ -877,17 +826,15 @@
     .supply-page {
       position: relative;
       display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
       gap: 12px;
-      height: calc(100svh - 32px);
+      height: auto;
       padding-bottom: 0;
-      overflow: hidden;
+      overflow: visible;
     }
     .supply-page-scroll {
       min-height: 0;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
+      overflow: visible;
       padding-right: 2px;
       padding-bottom: 4px;
     }
@@ -1397,8 +1344,8 @@
       align-content: end;
       gap: 10px;
       min-height: 420px;
-      max-height: 62svh;
-      overflow-y: auto;
+      max-height: none;
+      overflow: visible;
       padding: 14px 12px 16px;
       background:
         radial-gradient(circle at 10% 12%, rgba(255, 232, 189, 0.5), transparent 10rem),
@@ -1406,8 +1353,6 @@
         radial-gradient(circle at 82% 82%, rgba(143, 90, 217, 0.22), transparent 14rem),
         linear-gradient(180deg, #f8c06a 0%, #f39b76 26%, #e78cb5 48%, #8e6dd8 72%, #355fd0 100%);
       scroll-behavior: smooth;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
     }
     .message-row {
       display: grid;
@@ -2195,14 +2140,13 @@
     @media (min-width: 720px) {
       .shell { padding-inline: 24px; }
       .hero {
-        min-height: 72vh;
-        grid-template-columns: 1.05fr 0.95fr;
-        align-items: stretch;
-        gap: 20px;
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 16px;
       }
-      .hero-visual { min-height: 100%; }
-      .hero-copy { padding: 8px 0 6px; }
-      .hero-panel { padding: 20px 20px 18px; }
+      .hero-copy { padding: 4px 0 2px; }
+      .hero-panel { padding: 20px; }
       .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2214,10 +2158,6 @@
       .hero {
         grid-template-columns: 1fr;
         gap: 14px;
-      }
-      .hero-visual {
-        min-height: 240px;
-        border-radius: 28px;
       }
       .hero-panel {
         padding: 16px;
@@ -4945,13 +4885,8 @@
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
       const [menuOpen, setMenuOpen] = useState(false);
       const [active, setActive] = useState("schedule");
-      const [swipeDirection, setSwipeDirection] = useState("forward");
-      const [swipeOffset, setSwipeOffset] = useState(0);
-      const [isDragging, setIsDragging] = useState(false);
       const [scheduleEditSignal, setScheduleEditSignal] = useState(0);
-      const touchStartRef = useRef(null);
       const safeActive = tabIds.includes(active) ? active : tabIds[0];
-      const activeIndex = tabIds.indexOf(safeActive);
       const splashTimerRef = useRef(null);
 
       const finishSplash = () => {
@@ -4967,13 +4902,8 @@
       }, [active, safeActive]);
 
       const selectTab = (nextId) => {
-        const nextIndex = tabIds.indexOf(nextId);
-        if (nextIndex === -1 || nextIndex === activeIndex) return;
-        setSwipeDirection(nextIndex > activeIndex ? "forward" : "backward");
+        if (!tabIds.includes(nextId) || nextId === safeActive) return;
         setActive(nextId);
-        setSwipeOffset(0);
-        setIsDragging(false);
-        touchStartRef.current = null;
       };
 
       useEffect(() => {
@@ -5018,60 +4948,6 @@
         setScheduleEditSignal((current) => current + 1);
         setMenuOpen(false);
       };
-
-      const handleTouchStart = (event) => {
-        const touch = event.touches?.[0];
-        if (!touch) return;
-        touchStartRef.current = {
-          x: touch.clientX,
-          y: touch.clientY,
-          startedAt: Date.now(),
-          locked: false
-        };
-        setIsDragging(false);
-        setSwipeOffset(0);
-      };
-
-      const handleTouchMove = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.touches?.[0];
-        if (!start || !touch) return;
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        if (!start.locked) {
-          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
-          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
-        }
-        if (!start.locked) return;
-        if (event.cancelable) event.preventDefault();
-        setIsDragging(true);
-        const nextOffset = Math.max(-72, Math.min(72, dx * 0.28));
-        setSwipeOffset(nextOffset);
-      };
-
-      const handleTouchEnd = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.changedTouches?.[0];
-        touchStartRef.current = null;
-        if (!start || !touch) {
-          setIsDragging(false);
-          setSwipeOffset(0);
-          return;
-        }
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        const dt = Date.now() - start.startedAt;
-        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
-        if (committed) {
-          const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
-          if (nextIndex >= 0 && nextIndex < tabIds.length) {
-            setSwipeDirection(dx < 0 ? "forward" : "backward");
-            setActive(tabIds[nextIndex]);
-          }
-        }
-        setIsDragging(false);
-        setSwipeOffset(0);
-      };
       return React.createElement(React.Fragment, null,
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
@@ -5101,26 +4977,11 @@
           ),
           React.createElement(Header),
           React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
-          React.createElement("div", {
-            className: "view-shell",
-            onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
-            onTouchMove: safeActive === "schedule" ? undefined : handleTouchMove,
-            onTouchEnd: safeActive === "schedule" ? undefined : handleTouchEnd,
-            onTouchCancel: safeActive === "schedule" ? undefined : handleTouchEnd
-          },
-            React.createElement("div", {
-              className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-              key: safeActive,
-              style: {
-                "--swipe-offset": `${swipeOffset}px`,
-                "--swipe-scale": isDragging ? "0.994" : "1"
-              }
-            }, ({
-              schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
-              supplies: React.createElement(Supplies),
-              maps: React.createElement(TravelInfo),
-            })[safeActive])
-          ),
+          React.createElement("div", { className: "view-shell" }, ({
+            schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
+            supplies: React.createElement(Supplies),
+            maps: React.createElement(TravelInfo),
+          })[safeActive]),
         )
       );
     }

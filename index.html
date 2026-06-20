@@ -66,9 +66,7 @@
       gap: 16px;
     }
     .top-rail {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      display: grid;
       gap: 12px;
       margin-bottom: 2px;
     }
@@ -77,8 +75,6 @@
       align-items: center;
       gap: 10px;
       padding: 6px 2px 0;
-      width: 100%;
-      justify-content: flex-end;
     }
     .menu-toggle {
       position: relative;
@@ -106,124 +102,64 @@
     }
     .view-shell {
       position: relative;
-      overflow: hidden;
-      touch-action: pan-y pinch-zoom;
-      overscroll-behavior: contain;
-    }
-    .view-panel {
-      position: relative;
-      padding-top: 2px;
-      touch-action: pan-y pinch-zoom;
-      will-change: transform, opacity;
-      transform: translate3d(var(--swipe-offset, 0px), 0, 0) scale(var(--swipe-scale, 1));
-      transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
-      animation: panelFadeIn 640ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .view-panel.is-dragging {
-      transition: none;
-    }
-    .view-panel.swipe-forward {
-      animation-name: slideForward;
-    }
-    .view-panel.swipe-backward {
-      animation-name: slideBackward;
-    }
-    @keyframes panelFadeIn {
-      from {
-        opacity: 0;
-        transform: translate3d(0, 12px, 0) scale(0.995);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    @keyframes slideForward {
-      from {
-        opacity: 0;
-        transform: translate3d(14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-    @keyframes slideBackward {
-      from {
-        opacity: 0;
-        transform: translate3d(-14px, 0, 0) scale(0.996);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
     }
     .menu-overlay {
-      position: fixed;
-      inset: 0;
+      position: relative;
       z-index: 200;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       pointer-events: none;
       opacity: 0;
-      transition: opacity 180ms ease;
+      transition: opacity 180ms ease, max-height 260ms cubic-bezier(0.22, 1, 0.36, 1), margin 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 0;
     }
     .menu-overlay.is-open {
       pointer-events: auto;
       opacity: 1;
+      max-height: 320px;
+      margin-top: 10px;
     }
     .menu-backdrop {
-      position: absolute;
-      inset: 0;
-      border: 0;
-      background: rgba(24, 38, 45, 0.36);
-      backdrop-filter: blur(6px);
+      display: none;
     }
     .menu-panel {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: min(88vw, 360px);
-      height: 100%;
-      padding: 18px 16px 20px;
-      background: rgba(255, 255, 253, 0.98);
+      width: 100%;
+      padding: 10px 0 0;
+      background: transparent;
       border: 0;
-      border-radius: 28px 0 0 28px;
-      box-shadow: -18px 0 38px rgba(24, 38, 45, 0.18);
-      transform: translate3d(100%, 0, 0);
-      transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: none;
+      transform: translate3d(0, -8px, 0);
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
       display: grid;
       align-content: start;
       gap: 12px;
-      overflow-y: auto;
     }
     .menu-overlay.is-open .menu-panel {
       transform: translate3d(0, 0, 0);
     }
     .menu-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding-bottom: 4px;
+      display: none;
     }
     .menu-list {
-      display: grid;
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .menu-item {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       gap: 10px;
-      min-height: 48px;
-      padding: 12px 14px;
-      border-radius: 18px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 16px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       background: #f8fcff;
       color: var(--aqua-dark);
       box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       font-weight: 900;
       text-align: left;
     }
@@ -234,14 +170,14 @@
       box-shadow: 0 10px 22px rgba(15, 94, 153, 0.22);
     }
     .menu-item span {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 8px;
       display: inline-grid;
       place-items: center;
       background: rgba(15, 94, 153, 0.08);
       color: inherit;
-      font-size: 1rem;
+      font-size: 0.9rem;
       flex: 0 0 auto;
     }
     .menu-item.primary span {
@@ -273,50 +209,72 @@
     .hero-search {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-height: 58px;
-      padding: 12px 15px;
-      border-radius: 22px;
-      border: 1px solid rgba(42, 139, 185, 0.14);
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(244, 251, 255, 0.96));
-      box-shadow: 0 10px 24px rgba(24, 38, 45, 0.08);
+      gap: 10px;
+      min-height: 52px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(42, 139, 185, 0.18);
+      background: linear-gradient(180deg, #ffffff, #f4fbff);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
     .hero-search-mark {
       flex: 0 0 auto;
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #0f5e99, #2a8bb9);
+      background: #0f5e99;
       color: #fff;
       font-family: var(--headline);
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 900;
-      box-shadow: 0 10px 18px rgba(15, 94, 153, 0.18);
     }
     .hero-search-pill {
       min-width: 0;
       display: grid;
-      gap: 3px;
+      gap: 2px;
     }
     .hero-search-pill strong {
-      font-size: 1.08rem;
+      font-size: 0.92rem;
       color: var(--aqua-dark);
-      letter-spacing: -0.04em;
-      line-height: 1.08;
+      letter-spacing: -0.02em;
     }
     .hero-search-pill span {
       color: var(--muted);
-      font-size: 0.84rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .hero-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .hero-summary-card {
+      display: grid;
+      gap: 4px;
+      padding: 12px 12px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
+    }
+    .hero-summary-card b {
+      color: var(--ocean);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-summary-card span {
+      color: var(--aqua-dark);
+      font-size: 0.9rem;
+      font-weight: 900;
     }
     .hero-note {
       margin: 0;
       color: var(--muted);
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       line-height: 1.45;
     }
     .splash {
@@ -431,6 +389,86 @@
       0%, 100% { transform: translateX(0); }
       50% { transform: translateX(122%); }
     }
+    .eyebrow {
+      margin: 0;
+      color: var(--ocean);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      margin: 0;
+      display: grid;
+      gap: 8px;
+      text-wrap: balance;
+    }
+    .hero-title .title-kicker {
+      color: var(--aqua-dark);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .hero-title .title-main {
+      max-width: 9ch;
+      color: var(--aqua-dark);
+      font-family: var(--headline);
+      font-size: clamp(2.3rem, 9vw, 4.6rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+    .hero-title .title-sub {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 0;
+    }
+    .fact {
+      min-height: 62px;
+      padding: 10px 11px 10px;
+      border: 1px solid rgba(36, 56, 67, 0.08);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
+      backdrop-filter: blur(10px);
+      overflow-wrap: anywhere;
+    }
+    .fact b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--aqua-dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+    .fact span { font-size: 0.84rem; font-weight: 800; }
+    .hero-meta-note {
+      padding: 11px 13px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(242, 118, 91, 0.1), rgba(241, 184, 93, 0.12), rgba(156, 207, 201, 0.12));
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
     .tabbar {
       position: sticky;
       top: 0;
@@ -445,13 +483,6 @@
       border-block: 1px solid rgba(36, 56, 67, 0.06);
       box-shadow: 0 6px 14px rgba(24, 38, 45, 0.05);
       backdrop-filter: saturate(140%) blur(10px);
-      transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
-    }
-    .tabbar.is-hidden {
-      opacity: 0;
-      transform: translateY(-120%);
-      pointer-events: none;
-      filter: blur(2px);
     }
     .tabbar::after {
       content: none;
@@ -795,14 +826,17 @@
     .supply-page {
       position: relative;
       display: grid;
+      grid-template-rows: auto auto;
       gap: 12px;
-      min-height: calc(100svh - 32px);
-      max-height: calc(100svh - 32px);
-      padding-bottom: 140px;
+      height: auto;
+      padding-bottom: 0;
+      overflow: visible;
+    }
+    .supply-page-scroll {
+      min-height: 0;
+      overflow: visible;
       padding-right: 2px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
     }
     .supply-summary {
       position: relative;
@@ -1003,18 +1037,14 @@
       font-size: 0.84rem;
     }
     .supply-dock {
-      position: fixed;
-      left: max(18px, env(safe-area-inset-left));
-      right: max(18px, env(safe-area-inset-right));
-      bottom: calc(14px + env(safe-area-inset-bottom));
+      position: relative;
       z-index: 2;
       padding: 0;
       pointer-events: none;
     }
     .supply-dock button {
       pointer-events: auto;
-      width: min(100%, 1080px);
-      margin: 0 auto;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1104,114 +1134,6 @@
       color: var(--aqua-dark);
       font-size: 0.76rem;
       font-weight: 800;
-    }
-    .owner-picker {
-      position: relative;
-      width: 100%;
-      min-width: 0;
-    }
-    .owner-picker-trigger {
-      width: 100%;
-      min-height: 46px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(36, 56, 67, 0.12);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 252, 0.96)),
-        linear-gradient(135deg, rgba(97, 194, 206, 0.12), rgba(143, 90, 217, 0.08));
-      color: var(--aqua-dark);
-      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.06);
-      font-size: 0.92rem;
-      font-weight: 850;
-      text-align: left;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-    }
-    .owner-picker-trigger:hover,
-    .owner-picker-trigger.is-open {
-      border-color: rgba(97, 194, 206, 0.45);
-      box-shadow: 0 14px 24px rgba(24, 38, 45, 0.09);
-      transform: translateY(-1px);
-    }
-    .owner-picker-trigger:focus-visible {
-      border-color: rgba(97, 194, 206, 0.7);
-      box-shadow: 0 0 0 4px rgba(97, 194, 206, 0.16), 0 14px 24px rgba(24, 38, 45, 0.09);
-      outline: none;
-    }
-    .owner-picker-value {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .owner-picker-caret {
-      flex: none;
-      color: rgba(36, 56, 67, 0.76);
-      font-size: 1rem;
-      line-height: 1;
-    }
-    .owner-picker-menu {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: calc(100% + 8px);
-      z-index: 20;
-      display: grid;
-      gap: 6px;
-      padding: 10px;
-      max-height: 280px;
-      overflow: auto;
-      overscroll-behavior: contain;
-      border-radius: 18px;
-      border: 1px solid rgba(36, 56, 67, 0.12);
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 24px 42px rgba(24, 38, 45, 0.14);
-      backdrop-filter: blur(16px);
-    }
-    .owner-picker-option {
-      width: 100%;
-      min-height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--aqua-dark);
-      font-size: 0.9rem;
-      font-weight: 850;
-      cursor: pointer;
-      text-align: left;
-      transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
-    }
-    .owner-picker-option:hover,
-    .owner-picker-option.is-active {
-      background: rgba(97, 194, 206, 0.12);
-      border-color: rgba(97, 194, 206, 0.18);
-      transform: translateX(1px);
-    }
-    .owner-picker-option em {
-      flex: none;
-      font-style: normal;
-      color: var(--ocean);
-      font-size: 0.74rem;
-      font-weight: 900;
-    }
-    .supply-field .owner-picker {
-      margin-top: 2px;
-    }
-    .supply-field .owner-picker-trigger {
-      min-height: 50px;
-      padding: 11px 14px;
     }
     .supply-sheet-actions {
       display: flex;
@@ -1422,8 +1344,8 @@
       align-content: end;
       gap: 10px;
       min-height: 420px;
-      max-height: 62svh;
-      overflow-y: auto;
+      max-height: none;
+      overflow: visible;
       padding: 14px 12px 16px;
       background:
         radial-gradient(circle at 10% 12%, rgba(255, 232, 189, 0.5), transparent 10rem),
@@ -1431,8 +1353,6 @@
         radial-gradient(circle at 82% 82%, rgba(143, 90, 217, 0.22), transparent 14rem),
         linear-gradient(180deg, #f8c06a 0%, #f39b76 26%, #e78cb5 48%, #8e6dd8 72%, #355fd0 100%);
       scroll-behavior: smooth;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
     }
     .message-row {
       display: grid;
@@ -2066,6 +1986,49 @@
     .hero-visual {
       filter: saturate(1.01) contrast(1.01);
     }
+    .eyebrow {
+      margin: 0;
+      color: var(--hibiscus);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 36rem;
+    }
+    .quick-facts {
+      display: grid;
+      gap: 10px;
+      margin-top: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fact {
+      min-height: 68px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(242, 244, 241, 0.94));
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
+      backdrop-filter: blur(10px);
+      overflow-wrap: anywhere;
+    }
+    .fact b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--aqua-dark);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+    .fact span {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 850;
+    }
     .checklist {
       list-style: none;
       margin: 14px 0 0;
@@ -2104,46 +2067,9 @@
     .supply-item-controls select {
       width: 100%;
       min-width: 0;
-      min-height: 46px;
-      padding: 10px 40px 10px 14px;
-      font-size: 0.92rem;
-      font-weight: 850;
-      border-radius: 16px;
-      border: 1px solid rgba(36, 56, 67, 0.12);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 252, 0.96)),
-        linear-gradient(135deg, rgba(97, 194, 206, 0.12), rgba(143, 90, 217, 0.08));
-      color: var(--aqua-dark);
-      box-shadow: 0 10px 20px rgba(24, 38, 45, 0.06);
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, rgba(36, 56, 67, 0.82) 50%),
-        linear-gradient(135deg, rgba(36, 56, 67, 0.82) 50%, transparent 50%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 252, 0.96)),
-        linear-gradient(135deg, rgba(97, 194, 206, 0.12), rgba(143, 90, 217, 0.08));
-      background-position:
-        calc(100% - 18px) 50%,
-        calc(100% - 12px) 50%,
-        0 0,
-        0 0;
-      background-size:
-        6px 6px,
-        6px 6px,
-        100% 100%,
-        100% 100%;
-      background-repeat: no-repeat;
-      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-    }
-    .supply-item-controls select:hover {
-      border-color: rgba(97, 194, 206, 0.45);
-      box-shadow: 0 14px 24px rgba(24, 38, 45, 0.09);
-      transform: translateY(-1px);
-    }
-    .supply-item-controls select:focus {
-      border-color: rgba(97, 194, 206, 0.7);
-      box-shadow: 0 0 0 4px rgba(97, 194, 206, 0.16), 0 14px 24px rgba(24, 38, 45, 0.09);
+      min-height: 42px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
     }
     .travel-info-shell {
       display: grid;
@@ -2214,13 +2140,14 @@
     @media (min-width: 720px) {
       .shell { padding-inline: 24px; }
       .hero {
-        min-height: 72vh;
+        min-height: 0;
         grid-template-columns: minmax(0, 1fr);
-        justify-items: start;
-        gap: 20px;
+        align-items: start;
+        gap: 16px;
       }
-      .hero-copy { padding: 8px 0 6px; }
-      .hero-panel { padding: 20px 20px 18px; }
+      .hero-copy { padding: 4px 0 2px; }
+      .hero-panel { padding: 20px; }
+      .quick-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .toolbar { margin-inline: -24px; padding-inline: 24px; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .chat-list { min-height: 500px; }
@@ -2232,15 +2159,17 @@
         grid-template-columns: 1fr;
         gap: 14px;
       }
-      .hero-visual {
-        min-height: 240px;
-        border-radius: 28px;
+      .hero-panel {
+        padding: 16px;
+        border-radius: 24px;
       }
-      .hero-panel { padding: 16px; border-radius: 24px; }
-      .hero-search { min-height: 54px; padding: 11px 13px; }
-      .hero-search-mark { width: 36px; height: 36px; font-size: 0.98rem; }
-      .hero-search-pill strong { font-size: 1.02rem; }
-      .hero-search-pill span { font-size: 0.8rem; }
+      .hero-title .title-main {
+        max-width: 100%;
+        font-size: clamp(2.5rem, 18vw, 4rem);
+      }
+      .hero-title .title-sub {
+        font-size: clamp(1.8rem, 10vw, 2.4rem);
+      }
       .tab-page {
         padding: 14px;
       }
@@ -2280,12 +2209,8 @@
         gap: 8px;
         margin-top: 4px;
       }
-      .owner-picker-trigger,
       .supply-item-controls select {
         min-height: 44px;
-      }
-      .owner-picker-menu {
-        max-height: 240px;
       }
       .supply-sheet {
         width: 100%;
@@ -2296,8 +2221,7 @@
         flex-direction: column;
       }
       .supply-dock {
-        left: 14px;
-        right: 14px;
+        padding-inline: 0;
       }
       .gallery-actions .primary-action,
       .gallery-actions .ghost-action,
@@ -2388,59 +2312,6 @@
       ["maps", "여행정보"],
     ];
     const tabIds = tabs.map(([id]) => id);
-
-    function OwnerPicker({ value, onChange, ariaLabel, className = "" }) {
-      const [open, setOpen] = useState(false);
-      const rootRef = useRef(null);
-      const currentValue = value || SUPPLY_PEOPLE[0];
-
-      useEffect(() => {
-        if (!open) return;
-        const handlePointerDown = (event) => {
-          if (!(event.target instanceof Node) || !rootRef.current || rootRef.current.contains(event.target)) return;
-          setOpen(false);
-        };
-        const handleKeyDown = (event) => {
-          if (event.key === "Escape") setOpen(false);
-        };
-        window.addEventListener("pointerdown", handlePointerDown);
-        window.addEventListener("keydown", handleKeyDown);
-        return () => {
-          window.removeEventListener("pointerdown", handlePointerDown);
-          window.removeEventListener("keydown", handleKeyDown);
-        };
-      }, [open]);
-
-      return React.createElement("div", { ref: rootRef, className: `owner-picker ${className}`.trim() },
-        React.createElement("button", {
-          type: "button",
-          className: `owner-picker-trigger ${open ? "is-open" : ""}`,
-          "aria-label": ariaLabel,
-          "aria-haspopup": "listbox",
-          "aria-expanded": open,
-          onClick: () => setOpen((current) => !current)
-        },
-          React.createElement("span", { className: "owner-picker-value" }, currentValue),
-          React.createElement("span", { className: "owner-picker-caret", "aria-hidden": "true" }, "⌄")
-        ),
-        open ? React.createElement("div", { className: "owner-picker-menu", role: "listbox", "aria-label": `${ariaLabel} 목록` },
-          SUPPLY_PEOPLE.map((person) => React.createElement("button", {
-            key: person,
-            type: "button",
-            className: `owner-picker-option ${person === currentValue ? "is-active" : ""}`,
-            role: "option",
-            "aria-selected": person === currentValue,
-            onClick: () => {
-              onChange(person);
-              setOpen(false);
-            }
-          },
-            React.createElement("span", null, person),
-            person === currentValue ? React.createElement("em", null, "선택됨") : null
-          ))
-        ) : null
-      );
-    }
 
     function normalizeScheduleStop(stop) {
       if (Array.isArray(stop)) {
@@ -3307,23 +3178,34 @@
     }
 
     function Header() {
+      const heroStats = [
+        ["일정", `${days.length}일`],
+        ["준비물", `${supplySections.length}섹션`],
+        ["여행정보", `${travelInfo.length}개`],
+      ];
       return (
         React.createElement("section", { className: "hero" },
           React.createElement("div", { className: "hero-copy" },
             React.createElement("div", { className: "hero-panel" },
               React.createElement("div", { className: "hero-search" },
                 React.createElement("div", { className: "hero-search-pill" },
-                  React.createElement("strong", null, "Hong's 햅삐한 하와이여행"),
+                  React.createElement("strong", null, "Hong's 햅삐한 하와이여행")
                 )
               ),
+           ),
+            React.createElement("div", { className: "hero-summary" },
+              heroStats.map(([label, value]) => React.createElement("div", { className: "hero-summary-card", key: label },
+                React.createElement("b", null, label),
+                React.createElement("span", null, value)
+              ))
             )
           )
         )
       );
     }
 
-    function Tabbar({ active, setActive, className = "" }) {
-      return React.createElement("nav", { className: `tabbar ${className}`.trim(), "aria-label": "주요 탭" },
+    function Tabbar({ active, setActive }) {
+      return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
         tabs.map(([id, label, href]) => href ? React.createElement("a", {
           key: id,
           className: `tab ${active === id ? "active" : ""}`,
@@ -3515,7 +3397,7 @@
         },
           React.createElement("div", { className: "schedule-head" },
             React.createElement("div", { className: "schedule-head-copy" },
-              React.createElement("h2", { className: "section-title" }, "")
+              React.createElement("h2", { className: "section-title" }, "여행 일정")
             ),
             React.createElement("button", {
               type: "button",
@@ -3567,6 +3449,7 @@
               React.createElement("div", { className: "actions" },
                 day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
               ),
+              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
             ))
           )
         ),
@@ -3607,11 +3490,25 @@
                 })
               ),
               React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "메모 제목"),
+                React.createElement("input", {
+                  value: editorDraft.memoTitle,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, memoTitle: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
+                React.createElement("span", null, "메모"),
+                React.createElement("textarea", {
+                  value: editorDraft.memo,
+                  onChange: (e) => setEditorDraft((current) => ({ ...current, memo: e.target.value }))
+                })
+              ),
+              React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "일정 항목"),
                 React.createElement("textarea", {
                   value: editorDraft.stopsText,
                   onChange: (e) => setEditorDraft((current) => ({ ...current, stopsText: e.target.value })),
-                  placeholder: "형식: 시간 | 제목"
+                  placeholder: "형식: 시간 | 제목 | 메모"
                 })
               ),
               React.createElement("label", { className: "supply-field" },
@@ -3715,7 +3612,7 @@
 
       return React.createElement(React.Fragment, null,
         React.createElement("section", { className: "supply-page" },
-          React.createElement("div", { className: "supply-page-body" },
+          React.createElement("div", { className: "supply-page-scroll" },
             React.createElement("div", { className: "supply-stats" },
               React.createElement("div", { className: "supply-stat" },
                 React.createElement("b", null, "전체"),
@@ -3759,11 +3656,13 @@
                       )
                     ),
                     React.createElement("div", { className: "supply-item-controls" },
-                      React.createElement(OwnerPicker, {
-                        value: item.owner,
-                        onChange: (nextOwner) => updateItem(section.id, item.id, { owner: nextOwner }),
-                        ariaLabel: "준비자"
-                      }),
+                      React.createElement("select", {
+                        "aria-label": "준비자",
+                        value: item.owner || SUPPLY_PEOPLE[0],
+                        onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
+                      },
+                        SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                      ),
                       React.createElement("select", {
                         "aria-label": "상태",
                         value: item.status,
@@ -3806,13 +3705,14 @@
                   sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
                 )
               ),
-              React.createElement("div", { className: "supply-field" },
+              React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "준비자"),
-                React.createElement(OwnerPicker, {
+                React.createElement("select", {
                   value: draft.owner,
-                  onChange: (nextOwner) => setDraft((current) => ({ ...current, owner: nextOwner })),
-                  ariaLabel: "준비자"
-                })
+                  onChange: (e) => setDraft((current) => ({ ...current, owner: e.target.value }))
+                },
+                  SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
+                )
               ),
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "항목"),
@@ -4899,6 +4799,7 @@
 
     function TravelInfo() {
       return React.createElement("section", { className: "travel-info-shell" },
+        React.createElement("h2", { className: "section-title" }, "여행 정보"),
         React.createElement("div", { className: "map-hub travel-info-map-hub" },
           travelInfo.slice(0, 5).map((item) => React.createElement("a", {
             className: "map-btn",
@@ -4964,12 +4865,17 @@
               type: "button",
               className: "menu-item",
               onClick: onTranslate
-            }, React.createElement("span", { "aria-hidden": "true" }, ""), "구글번역"),
+            }, React.createElement("span", { "aria-hidden": "true" }, "A"), "구글번역"),
             React.createElement("button", {
               type: "button",
               className: "menu-item",
               onClick: onMap
-            }, React.createElement("span", { "aria-hidden": "true" }, ""), "은애's gmap"),
+            }, React.createElement("span", { "aria-hidden": "true" }, "M"), "은애's gmap"),
+            React.createElement("button", {
+              type: "button",
+              className: "menu-item primary",
+              onClick: onEdit
+            }, React.createElement("span", { "aria-hidden": "true" }, "✎"), "수정")
           )
         )
       );
@@ -4979,19 +4885,9 @@
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
       const [menuOpen, setMenuOpen] = useState(false);
       const [active, setActive] = useState("schedule");
-      const [swipeDirection, setSwipeDirection] = useState("forward");
-      const [swipeOffset, setSwipeOffset] = useState(0);
-      const [isDragging, setIsDragging] = useState(false);
       const [scheduleEditSignal, setScheduleEditSignal] = useState(0);
-      const [isAtTop, setIsAtTop] = useState(() => window.scrollY <= 8);
-      const touchStartRef = useRef(null);
       const safeActive = tabIds.includes(active) ? active : tabIds[0];
-      const activeIndex = tabIds.indexOf(safeActive);
       const splashTimerRef = useRef(null);
-
-      const scrollTabsToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      };
 
       const finishSplash = () => {
         if (!showSplash) return;
@@ -5005,34 +4901,9 @@
         }
       }, [active, safeActive]);
 
-      useEffect(() => {
-        let rafId = 0;
-        const updateTopState = () => {
-          rafId = 0;
-          setIsAtTop(window.scrollY <= 8);
-        };
-        const handleScroll = () => {
-          if (rafId) return;
-          rafId = window.requestAnimationFrame(updateTopState);
-        };
-        updateTopState();
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => {
-          window.removeEventListener("scroll", handleScroll);
-          if (rafId) window.cancelAnimationFrame(rafId);
-        };
-      }, []);
-
       const selectTab = (nextId) => {
-        const nextIndex = tabIds.indexOf(nextId);
-        if (nextIndex === -1) return;
-        scrollTabsToTop();
-        if (nextIndex === activeIndex) return;
-        setSwipeDirection(nextIndex > activeIndex ? "forward" : "backward");
+        if (!tabIds.includes(nextId) || nextId === safeActive) return;
         setActive(nextId);
-        setSwipeOffset(0);
-        setIsDragging(false);
-        touchStartRef.current = null;
       };
 
       useEffect(() => {
@@ -5073,65 +4944,9 @@
         setMenuOpen(false);
       };
       const openScheduleEdit = () => {
-        scrollTabsToTop();
         setActive("schedule");
         setScheduleEditSignal((current) => current + 1);
         setMenuOpen(false);
-      };
-
-      const handleTouchStart = (event) => {
-        const touch = event.touches?.[0];
-        if (!touch) return;
-        touchStartRef.current = {
-          x: touch.clientX,
-          y: touch.clientY,
-          startedAt: Date.now(),
-          locked: false
-        };
-        setIsDragging(false);
-        setSwipeOffset(0);
-      };
-
-      const handleTouchMove = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.touches?.[0];
-        if (!start || !touch) return;
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        if (!start.locked) {
-          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
-          start.locked = Math.abs(dx) > Math.abs(dy) * 1.15;
-        }
-        if (!start.locked) return;
-        if (event.cancelable) event.preventDefault();
-        setIsDragging(true);
-        const nextOffset = Math.max(-72, Math.min(72, dx * 0.28));
-        setSwipeOffset(nextOffset);
-      };
-
-      const handleTouchEnd = (event) => {
-        const start = touchStartRef.current;
-        const touch = event.changedTouches?.[0];
-        touchStartRef.current = null;
-        if (!start || !touch) {
-          setIsDragging(false);
-          setSwipeOffset(0);
-          return;
-        }
-        const dx = touch.clientX - start.x;
-        const dy = touch.clientY - start.y;
-        const dt = Date.now() - start.startedAt;
-        const committed = start.locked && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
-        if (committed) {
-          const nextIndex = dx < 0 ? activeIndex + 1 : activeIndex - 1;
-          if (nextIndex >= 0 && nextIndex < tabIds.length) {
-            setSwipeDirection(dx < 0 ? "forward" : "backward");
-            scrollTabsToTop();
-            setActive(tabIds[nextIndex]);
-          }
-        }
-        setIsDragging(false);
-        setSwipeOffset(0);
       };
       return React.createElement(React.Fragment, null,
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
@@ -5150,7 +4965,7 @@
                 "aria-label": "빠른 메뉴 열기",
                 "aria-expanded": menuOpen,
                 onClick: () => setMenuOpen((current) => !current)
-              }, React.createElement("span", { "aria-hidden": "true" }, "☰"))
+              }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
             ),
             React.createElement(SiteMenu, {
               open: menuOpen,
@@ -5161,31 +4976,12 @@
             })
           ),
           React.createElement(Header),
-          React.createElement(Tabbar, {
-            active: safeActive,
-            setActive: selectTab,
-            className: isAtTop ? "" : "is-hidden"
-          }),
-          React.createElement("div", {
-            className: "view-shell",
-            onTouchStart: safeActive === "schedule" ? undefined : handleTouchStart,
-            onTouchMove: safeActive === "schedule" ? undefined : handleTouchMove,
-            onTouchEnd: safeActive === "schedule" ? undefined : handleTouchEnd,
-            onTouchCancel: safeActive === "schedule" ? undefined : handleTouchEnd
-          },
-            React.createElement("div", {
-              className: `view-panel ${isDragging ? "is-dragging" : ""} ${swipeDirection === "forward" ? "swipe-forward" : "swipe-backward"}`,
-              key: safeActive,
-              style: {
-                "--swipe-offset": `${swipeOffset}px`,
-                "--swipe-scale": isDragging ? "0.994" : "1"
-              }
-            }, ({
-              schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
-              supplies: React.createElement(Supplies),
-              maps: React.createElement(TravelInfo),
-            })[safeActive])
-          ),
+          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
+          React.createElement("div", { className: "view-shell" }, ({
+            schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
+            supplies: React.createElement(Supplies),
+            maps: React.createElement(TravelInfo),
+          })[safeActive]),
         )
       );
     }
