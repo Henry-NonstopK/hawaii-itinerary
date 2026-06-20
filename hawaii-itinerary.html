@@ -1535,12 +1535,13 @@
     .photo-overlay {
       position: fixed;
       inset: 0;
-      z-index: 50;
+      z-index: 10020;
       display: grid;
       align-items: end;
       padding: 16px;
       background: rgba(8, 18, 22, 0.64);
       backdrop-filter: blur(12px);
+      pointer-events: auto;
     }
     .photo-modal {
       width: min(100%, 720px);
@@ -1551,6 +1552,7 @@
       box-shadow: 0 30px 80px rgba(24, 38, 45, 0.28);
       display: grid;
       gap: 12px;
+      pointer-events: auto;
     }
     .photo-modal-head {
       display: flex;
@@ -1875,6 +1877,7 @@
     }
     .instagram-modal {
       gap: 12px;
+      pointer-events: auto;
     }
     .instagram-modal-caption {
       margin: 0;
