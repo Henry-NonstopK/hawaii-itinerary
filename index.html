@@ -474,7 +474,7 @@
       top: 0;
       z-index: 5;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       overflow: visible;
       margin: 0 -14px 14px;
@@ -1598,6 +1598,193 @@
       color: var(--muted);
       font-size: 0.88rem;
     }
+    .instagram-shell {
+      display: grid;
+      gap: 14px;
+    }
+    .instagram-hero {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 244, 232, 0.98), rgba(246, 248, 255, 0.96));
+      box-shadow: 0 16px 34px rgba(24, 38, 45, 0.08);
+    }
+    .instagram-hero-copy {
+      display: grid;
+      gap: 6px;
+    }
+    .instagram-kicker {
+      color: var(--hibiscus);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .instagram-blurb {
+      margin: 0;
+      color: var(--aqua-dark);
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .instagram-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .instagram-stat {
+      display: grid;
+      gap: 3px;
+      padding: 12px 12px 11px;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: rgba(255, 255, 255, 0.96);
+    }
+    .instagram-stat b {
+      color: var(--ocean);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .instagram-stat span {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+    .instagram-compose {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 14px 30px rgba(24, 38, 45, 0.07);
+    }
+    .instagram-compose-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .instagram-field {
+      display: grid;
+      gap: 8px;
+    }
+    .instagram-field span {
+      color: var(--aqua-dark);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .instagram-field input,
+    .instagram-field textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid rgba(36, 56, 67, 0.12);
+      border-radius: 18px;
+      background: rgba(248, 252, 255, 0.96);
+      color: var(--ink);
+      resize: vertical;
+    }
+    .instagram-field textarea {
+      min-height: 88px;
+    }
+    .instagram-compose-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .instagram-selected {
+      padding: 11px 12px;
+      border: 1px dashed rgba(36, 56, 67, 0.14);
+      border-radius: 18px;
+      background: rgba(247, 251, 255, 0.92);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .instagram-feed {
+      display: grid;
+      gap: 14px;
+    }
+    .instagram-post {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 14px 32px rgba(24, 38, 45, 0.08);
+      text-align: left;
+    }
+    .instagram-post-media {
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      border: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(243, 125, 114, 0.16), rgba(241, 190, 88, 0.18), rgba(102, 201, 206, 0.16), rgba(143, 90, 217, 0.12));
+      aspect-ratio: 4 / 5;
+    }
+    .instagram-post-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .instagram-post-body {
+      display: grid;
+      gap: 10px;
+      padding: 0 2px 2px;
+    }
+    .instagram-post-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .instagram-post-head strong {
+      color: var(--aqua-dark);
+      font-size: 1rem;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+    .instagram-post-head span {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .instagram-caption {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .instagram-post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .instagram-modal {
+      gap: 12px;
+    }
+    .instagram-modal-caption {
+      margin: 0;
+      padding: 0 2px;
+      color: var(--ink);
+      font-size: 0.96rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
     .ai-shell {
       display: grid;
       gap: 14px;
@@ -2173,6 +2360,10 @@
       .tab-page {
         padding: 14px;
       }
+      .tabbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
       .menu-toggle {
         min-width: 42px;
         min-height: 42px;
@@ -2251,6 +2442,24 @@
       .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
       .photo-frame { aspect-ratio: 1 / 1.08; }
       .photo-meta strong { font-size: 0.8rem; }
+      .instagram-hero-stats {
+        grid-template-columns: 1fr;
+      }
+      .instagram-compose-actions {
+        flex-direction: column;
+      }
+      .instagram-compose-actions .ghost-action,
+      .instagram-compose-actions .primary-action {
+        width: 100%;
+      }
+      .instagram-post-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .instagram-post-meta {
+        flex-direction: column;
+        gap: 4px;
+      }
       .photo-modal {
         width: 100%;
         padding: 12px;
@@ -2293,10 +2502,12 @@
     const chatBroadcast = "BroadcastChannel" in window ? new BroadcastChannel("hawaii-family-chat") : null;
     const PHOTO_BUCKET = "hawaii-photos";
     const PHOTO_FOLDER = "gallery";
+    const INSTAGRAM_FOLDER = "kongs-instagram";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
     const SCHEDULE_STATE_KEY = "hawaii-schedule-state";
     const SUPPLY_STATE_KEY = "hawaii-supply-state";
+    const KONGS_INSTAGRAM_STATE_KEY = "kongs-instagram-state";
     const SUPPLY_PEOPLE = ["은애", "상봉", "문식", "은경", "아빠", "엄마"];
     const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
     const LIVE_TRANSLATE_SOURCE = "en";
@@ -2310,6 +2521,7 @@
       ["schedule", "일정"],
       ["supplies", "준비물"],
       ["maps", "여행정보"],
+      ["kongs", "Kong's 인스타"],
     ];
     const tabIds = tabs.map(([id]) => id);
 
@@ -2903,6 +3115,24 @@
       };
     }
 
+    function normalizeInstagramPost(post) {
+      const createdAt = post?.createdAt || post?.created_at || new Date().toISOString();
+      const path = post?.path || post?.id || `${INSTAGRAM_FOLDER}/${crypto.randomUUID()}.jpg`;
+      const publicUrl = post?.publicUrl || supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl;
+      return {
+        id: post?.id || path,
+        path,
+        publicUrl,
+        title: String(post?.title || "").trim() || "제목 없음",
+        caption: String(post?.caption || "").trim(),
+        name: String(post?.name || post?.title || "사진").trim() || "사진",
+        size: Number(post?.size || 0),
+        width: Number(post?.width || 0),
+        height: Number(post?.height || 0),
+        createdAt
+      };
+    }
+
     function useSupabasePhotoGallery() {
       const [photos, setPhotos] = useState([]);
       const [status, setStatus] = useState("loading");
@@ -3029,6 +3259,106 @@
       }
 
       return { photos, status, addFiles, removePhoto, clearPhotos, error, reload: loadPhotos };
+    }
+
+    function useKongsInstagramFeed() {
+      const [posts, setPosts] = useState(() => {
+        try {
+          const stored = JSON.parse(readStoredValue(KONGS_INSTAGRAM_STATE_KEY, "null"));
+          if (!stored || !Array.isArray(stored.posts)) throw new Error("no saved state");
+          return stored.posts.map(normalizeInstagramPost).sort(byNewest);
+        } catch {
+          return [];
+        }
+      });
+      const [status, setStatus] = useState("ready");
+      const [error, setError] = useState("");
+
+      useEffect(() => {
+        writeStoredValue(KONGS_INSTAGRAM_STATE_KEY, JSON.stringify({ posts }));
+      }, [posts]);
+
+      async function addFiles(fileList, { title, caption } = {}) {
+        const files = Array.from(fileList || []).filter((file) => file.type.startsWith("image/"));
+        if (files.length === 0) return [];
+        setStatus("loading");
+        setError("");
+        const created = [];
+
+        for (const file of files) {
+          const compressed = await compressImage(file);
+          const uploadBlob = compressed.blob || await (await fetch(compressed.dataUrl)).blob();
+          if (uploadBlob.size > PHOTO_MAX_UPLOAD_BYTES) {
+            setError("50MB 이하로 압축하지 못했어요. 사진을 더 작게 잘라서 다시 올려주세요.");
+            continue;
+          }
+          const stamp = `${Date.now()}-${crypto.randomUUID()}`;
+          const path = `${INSTAGRAM_FOLDER}/${stamp}.jpg`;
+          const { error: uploadError } = await supabase.storage.from(PHOTO_BUCKET).upload(path, uploadBlob, {
+            cacheControl: "3600",
+            contentType: "image/jpeg",
+            upsert: false,
+            metadata: {
+              originalName: file.name,
+              originalSize: String(file.size),
+              uploadSize: String(uploadBlob.size),
+              width: String(compressed.width),
+              height: String(compressed.height),
+              mimeType: "image/jpeg"
+            }
+          });
+
+          if (uploadError) {
+            setError(uploadError.message);
+            continue;
+          }
+
+          created.push(normalizeInstagramPost({
+            id: path,
+            path,
+            publicUrl: supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl,
+            title: title || file.name.replace(/\.[^.]+$/, "") || "제목 없음",
+            caption: caption || "",
+            name: file.name.replace(/\.[^.]+$/, "") || "사진",
+            size: uploadBlob.size,
+            width: compressed.width,
+            height: compressed.height,
+            createdAt: new Date().toISOString()
+          }));
+        }
+
+        if (created.length > 0) {
+          setPosts((current) => [...created, ...current].map(normalizeInstagramPost).sort(byNewest));
+        }
+        setStatus("ready");
+        return created;
+      }
+
+      async function removePost(post) {
+        if (!post?.path) return false;
+        setError("");
+        const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove([post.path]);
+        if (removeError) {
+          setError(removeError.message);
+          return false;
+        }
+        setPosts((current) => current.filter((item) => item.path !== post.path));
+        return true;
+      }
+
+      async function clearPosts() {
+        if (!posts.length) return true;
+        setError("");
+        const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove(posts.map((post) => post.path));
+        if (removeError) {
+          setError(removeError.message);
+          return false;
+        }
+        setPosts([]);
+        return true;
+      }
+
+      return { posts, status, error, addFiles, removePost, clearPosts };
     }
 
     function byNewest(a, b) {
@@ -4652,46 +4982,197 @@
       );
     }
 
-    function Board() {
-      const { items: posts, status, error, insertRow } = useSupabaseRows("posts", normalizePost, byNewest);
-      const [form, setForm] = useState({ author: "", category: "일정문의", title: "", content: "" });
+    function KongsInstagram() {
+      const { posts, status, error, addFiles, removePost, clearPosts } = useKongsInstagramFeed();
+      const [draft, setDraft] = useState({ title: "", caption: "" });
+      const [selectedFiles, setSelectedFiles] = useState([]);
+      const [busy, setBusy] = useState(false);
+      const [viewerIndex, setViewerIndex] = useState(null);
+      const fileInputRef = useRef(null);
+      const activePost = viewerIndex === null ? null : posts[viewerIndex];
+      const selectedLabel = selectedFiles.length
+        ? selectedFiles.length === 1
+          ? selectedFiles[0].name
+          : `${selectedFiles.length}장 선택됨`
+        : "선택된 사진 없음";
+
+      const openPicker = () => fileInputRef.current?.click();
+
+      const handlePick = (event) => {
+        const files = Array.from(event.target.files || []).filter((file) => file.type.startsWith("image/"));
+        setSelectedFiles(files);
+        event.target.value = "";
+      };
+
+      const clearComposer = () => {
+        setDraft({ title: "", caption: "" });
+        setSelectedFiles([]);
+      };
+
       const submit = async (event) => {
         event.preventDefault();
-        if (!form.title.trim() || !form.content.trim()) return;
-        const ok = await insertRow({
-          id: crypto.randomUUID(),
-          author: form.author.trim() || "가족",
-          title: form.title.trim(),
-          content: form.content.trim(),
-          created_at: new Date().toISOString()
-        });
-        if (ok) setForm({ author: form.author, category: form.category, title: "", content: "" });
+        const title = draft.title.trim();
+        const caption = draft.caption.trim();
+        if (!title || !selectedFiles.length) return;
+        setBusy(true);
+        try {
+          const added = await addFiles(selectedFiles, { title, caption });
+          if (added.length > 0) {
+            clearComposer();
+            setViewerIndex(0);
+          }
+        } finally {
+          setBusy(false);
+        }
       };
-      return React.createElement("section", null,
-        React.createElement("h2", { className: "section-title" }, "가족 게시판"),
+
+      const clearAll = async () => {
+        if (!posts.length) return;
+        if (!window.confirm("Kong's 인스타 게시물을 모두 지울까요?")) return;
+        const ok = await clearPosts();
+        if (ok) {
+          setViewerIndex(null);
+        }
+      };
+
+      const deleteActive = async () => {
+        if (!activePost) return;
+        const ok = await removePost(activePost);
+        if (ok) {
+          setViewerIndex((current) => {
+            if (current === null) return null;
+            return posts.length > 1 ? Math.min(current, posts.length - 2) : null;
+          });
+        }
+      };
+
+      return React.createElement("section", { className: "instagram-shell" },
+        React.createElement("h2", { className: "section-title" }, "Kong's 인스타"),
+        React.createElement("div", { className: "instagram-hero card featured" },
+          React.createElement("div", { className: "instagram-hero-copy" },
+            React.createElement("span", { className: "instagram-kicker" }, "새 사진이 맨 위"),
+            React.createElement("p", { className: "instagram-blurb" }, "사진 한 장, 제목 한 줄, 짧은 문구만 올리는 인스타 느낌 피드입니다. 작성자는 숨기고, 누가 올리든 최신 글이 위로 올라옵니다.")
+          ),
+          React.createElement("div", { className: "instagram-hero-stats" },
+            React.createElement("div", { className: "instagram-stat" },
+              React.createElement("b", null, "게시물"),
+              React.createElement("span", null, `${posts.length}개`)
+            ),
+            React.createElement("div", { className: "instagram-stat" },
+              React.createElement("b", null, "정렬"),
+              React.createElement("span", null, "최신순")
+            ),
+            React.createElement("div", { className: "instagram-stat" },
+              React.createElement("b", null, "확대"),
+              React.createElement("span", null, "탭해서 보기")
+            )
+          )
+        ),
         error ? React.createElement("div", { className: "empty" }, `Supabase 오류: ${error}`) : null,
-        React.createElement("form", { className: "form", onSubmit: submit },
-          React.createElement("div", { className: "form-row" },
-            React.createElement("input", { placeholder: "작성자", value: form.author, onChange: (e) => setForm({ ...form, author: e.target.value }) }),
-            React.createElement("select", { value: form.category, onChange: (e) => setForm({ ...form, category: e.target.value }) },
-              ["일정문의", "맛집", "준비물", "공지"].map((value) => React.createElement("option", { key: value, value }, value))
+        React.createElement("form", { className: "instagram-compose", onSubmit: submit },
+          React.createElement("div", { className: "instagram-compose-grid" },
+            React.createElement("label", { className: "instagram-field" },
+              React.createElement("span", null, "제목"),
+              React.createElement("input", {
+                placeholder: "예: 바닷가 산책",
+                value: draft.title,
+                onChange: (event) => setDraft((current) => ({ ...current, title: event.target.value }))
+              })
+            ),
+            React.createElement("label", { className: "instagram-field" },
+              React.createElement("span", null, "짧은 문구"),
+              React.createElement("textarea", {
+                placeholder: "한두 줄 정도의 짧은 문구",
+                value: draft.caption,
+                onChange: (event) => setDraft((current) => ({ ...current, caption: event.target.value }))
+              })
             )
           ),
-          React.createElement("input", { placeholder: "제목", value: form.title, onChange: (e) => setForm({ ...form, title: e.target.value }) }),
-          React.createElement("textarea", { placeholder: "내용을 적어주세요", value: form.content, onChange: (e) => setForm({ ...form, content: e.target.value }) }),
-          React.createElement("button", { className: "primary-action", type: "submit" }, "글쓰기")
+          React.createElement("div", { className: "instagram-compose-actions" },
+            React.createElement("button", { className: "ghost-action", type: "button", onClick: openPicker }, selectedFiles.length ? `${selectedFiles.length}장 선택됨` : "사진 선택"),
+            React.createElement("button", { className: "primary-action", type: "submit", disabled: busy || !selectedFiles.length || !draft.title.trim() }, busy ? "올리는 중..." : "게시"),
+            React.createElement("button", { className: "ghost-action", type: "button", onClick: clearComposer }, "지우기"),
+            React.createElement("button", { className: "ghost-action", type: "button", onClick: clearAll, disabled: !posts.length }, "모두 삭제")
+          ),
+          React.createElement("div", { className: "instagram-selected" }, selectedLabel),
+          React.createElement("input", {
+            ref: fileInputRef,
+            type: "file",
+            accept: "image/*",
+            capture: "environment",
+            multiple: true,
+            hidden: true,
+            onChange: handlePick
+          })
         ),
-        status === "loading" ? React.createElement("div", { className: "empty" }, "게시글을 불러오는 중입니다.") :
-        posts.length === 0 ? React.createElement("div", { className: "empty" }, "아직 글이 없습니다.") :
-          posts.map((post) => React.createElement("article", { className: "post", key: post.id },
-            React.createElement("div", { className: "post-meta" },
-              React.createElement("span", { className: "category" }, post.category),
-              React.createElement("span", null, post.author),
-              React.createElement("span", null, new Date(post.createdAt).toLocaleString("ko-KR"))
+        status === "loading" ? React.createElement("div", { className: "empty" }, "게시물을 불러오는 중입니다.") :
+        posts.length === 0 ? React.createElement("div", { className: "photo-empty" }, "아직 게시물이 없어요. 사진을 골라 제목과 문구를 넣어 첫 게시물을 올려보세요.") :
+          React.createElement("div", { className: "instagram-feed" },
+            posts.map((post, index) => React.createElement("article", { className: "instagram-post", key: post.id },
+              React.createElement("button", {
+                className: "instagram-post-media",
+                type: "button",
+                onClick: () => setViewerIndex(index)
+              },
+                React.createElement("img", { src: post.publicUrl, alt: post.title, loading: "lazy" }),
+                React.createElement("span", { className: "photo-badge" }, index === 0 ? "최신" : "눌러서 확대")
+              ),
+              React.createElement("div", { className: "instagram-post-body" },
+                React.createElement("div", { className: "instagram-post-head" },
+                  React.createElement("strong", null, post.title),
+                  React.createElement("span", null, index === 0 ? "맨 위" : `#${index + 1}`)
+                ),
+                React.createElement("p", { className: "instagram-caption" }, post.caption || "짧은 문구 없음"),
+                React.createElement("div", { className: "instagram-post-meta" },
+                  React.createElement("span", null, new Date(post.createdAt).toLocaleString("ko-KR")),
+                  React.createElement("span", null, `${formatBytes(post.size)} · ${post.width}×${post.height}`)
+                )
+              )
+            ))
+          ),
+        activePost ? React.createElement("div", {
+          className: "photo-overlay",
+          role: "presentation",
+          onClick: () => setViewerIndex(null)
+        },
+          React.createElement("div", {
+            className: "photo-modal instagram-modal",
+            role: "dialog",
+            "aria-modal": "true",
+            "aria-label": activePost.title,
+            onClick: (event) => event.stopPropagation()
+          },
+            React.createElement("div", { className: "photo-modal-head" },
+              React.createElement("div", { className: "photo-modal-title" },
+                React.createElement("b", null, activePost.title),
+                React.createElement("span", null, `${new Date(activePost.createdAt).toLocaleString("ko-KR")} · ${activePost.width}×${activePost.height}`)
+              ),
+              React.createElement("button", { className: "ghost-action", type: "button", onClick: () => setViewerIndex(null) }, "닫기")
             ),
-            React.createElement("h3", null, post.title),
-            React.createElement("p", null, post.content)
-          ))
+            React.createElement("div", { className: "photo-stage" },
+              React.createElement("img", { src: activePost.publicUrl, alt: activePost.title })
+            ),
+            React.createElement("p", { className: "instagram-modal-caption" }, activePost.caption || "짧은 문구 없음"),
+            React.createElement("div", { className: "photo-modal-actions" },
+              React.createElement("div", { className: "group" },
+                React.createElement("button", {
+                  className: "ghost-action",
+                  type: "button",
+                  onClick: () => setViewerIndex((current) => (current - 1 + posts.length) % posts.length)
+                }, "이전"),
+                React.createElement("button", {
+                  className: "ghost-action",
+                  type: "button",
+                  onClick: () => setViewerIndex((current) => (current + 1) % posts.length)
+                }, "다음")
+              ),
+              React.createElement("div", { className: "group" },
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: deleteActive }, "삭제"),
+                React.createElement("button", { className: "primary-action", type: "button", onClick: () => setViewerIndex(null) }, "확인")
+              )
+            )
+          )
+        ) : null
       );
     }
 
@@ -4981,6 +5462,7 @@
             schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
             supplies: React.createElement(Supplies),
             maps: React.createElement(TravelInfo),
+            kongs: React.createElement(KongsInstagram),
           })[safeActive]),
         )
       );
