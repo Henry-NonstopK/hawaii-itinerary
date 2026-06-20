@@ -474,7 +474,7 @@
       top: 0;
       z-index: 5;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
       overflow: visible;
       margin: 0 -14px 14px;
@@ -1888,6 +1888,181 @@
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
+    .stay-shell {
+      display: grid;
+      gap: 14px;
+    }
+    .stay-hero {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(244, 251, 255, 0.98), rgba(255, 247, 240, 0.96));
+      box-shadow: 0 16px 34px rgba(24, 38, 45, 0.08);
+    }
+    .stay-hero-copy {
+      display: grid;
+      gap: 6px;
+    }
+    .stay-kicker {
+      color: var(--hibiscus);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .stay-hero-copy h3 {
+      margin: 0;
+      color: var(--aqua-dark);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .stay-hero-copy p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+    .stay-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .stay-stat {
+      display: grid;
+      gap: 4px;
+      padding: 12px 12px 11px;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: rgba(255, 255, 255, 0.96);
+    }
+    .stay-stat b {
+      color: var(--ocean);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .stay-stat span {
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+    .stay-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .stay-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 8px;
+      border: 1px solid rgba(36, 56, 67, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--aqua-dark);
+      font-size: 0.74rem;
+      font-weight: 800;
+      box-shadow: 0 9px 20px rgba(24, 38, 45, 0.08);
+    }
+    .stay-tab.active {
+      border-color: rgba(15, 94, 153, 0.24);
+      background: #0f5e99;
+      color: #fff;
+    }
+    .stay-panel {
+      display: grid;
+      gap: 12px;
+    }
+    .stay-panel-head {
+      display: grid;
+      gap: 5px;
+      padding: 14px 16px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 14px 30px rgba(24, 38, 45, 0.07);
+    }
+    .stay-panel-head span {
+      color: var(--hibiscus);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .stay-panel-head h3 {
+      margin: 0;
+      color: var(--aqua-dark);
+      font-size: 1.18rem;
+    }
+    .stay-panel-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .stay-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .stay-card-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .stay-card {
+      display: grid;
+      gap: 8px;
+      padding: 14px 14px 13px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 26px rgba(24, 38, 45, 0.05);
+    }
+    .stay-card h4 {
+      margin: 0;
+      color: var(--aqua-dark);
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+    .stay-card p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.58;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .stay-card.callout {
+      border-color: rgba(15, 94, 153, 0.18);
+      background: linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(255, 250, 243, 0.96));
+    }
+    .stay-list {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 6px;
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .stay-list li {
+      overflow-wrap: anywhere;
+    }
+    .stay-highlight {
+      padding: 12px 13px;
+      border-radius: 18px;
+      background: rgba(15, 94, 153, 0.08);
+      color: var(--aqua-dark);
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
     .ai-shell {
       display: grid;
       gap: 14px;
@@ -2545,6 +2720,13 @@
       .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
       .photo-frame { aspect-ratio: 1 / 1.08; }
       .photo-meta strong { font-size: 0.8rem; }
+      .stay-stats,
+      .stay-stat-grid {
+        grid-template-columns: 1fr;
+      }
+      .stay-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .instagram-hero-stats {
         grid-template-columns: 1fr;
       }
@@ -2614,6 +2796,13 @@
     const INSTAGRAM_FOLDER = "kongs-instagram";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
     const KONGS_AUTHORS = ["은애", "문식", "상범", "은경", "엄마", "아빠"];
+    const STAY_TABS = [
+      ["overview", "핵심"],
+      ["checkin", "입실"],
+      ["living", "숙소생활"],
+      ["amenities", "편의"],
+      ["checkout", "퇴실"],
+    ];
     const SPLASH_SEEN_KEY = "hawaii-splash-seen";
     const SCHEDULE_STATE_KEY = "hawaii-schedule-state";
     const SUPPLY_STATE_KEY = "hawaii-supply-state";
@@ -2625,12 +2814,188 @@
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
     const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
 
+    const STAY_PAGES = {
+      overview: {
+        eyebrow: "Aloha Sangbeom!",
+        title: "와이키키 숙소 핵심",
+        description: "체크인, 체크아웃, 주소, 와이파이 같은 핵심 정보를 먼저 보여줍니다. 숙소 규칙과 도착 준비를 한 화면에서 빠르게 확인하세요.",
+        stats: [
+          ["체크인", "2026.06.24 16:00"],
+          ["체크아웃", "2026.06.29 11:00"],
+          ["주소", "Hawaiian Monarch · PH201"],
+          ["와이파이", "hm-ph201_2Ghz / red665wolf8"],
+        ],
+        cards: [
+          {
+            title: "잠금 상자 안내",
+            body: "체크인 2시간 전에 코드가 전달됩니다. 숙소 이용규칙에 따라 해결 센터를 통해 환불 가능한 부대비용 300달러를 수령한 뒤 공개되는 방식입니다."
+          },
+          {
+            title: "숙소 위치",
+            body: "하와이안 모나크 444 Niu Street, Honolulu, HI 96815. 40층(PH2), 숙소 번호는 PH201입니다."
+          },
+          {
+            title: "입실/퇴실 시간",
+            body: "체크인은 2026년 6월 24일 오후 4시, 체크아웃은 2026년 6월 29일 오전 11시입니다. 조기 체크인과 늦은 체크아웃은 불가합니다."
+          },
+          {
+            title: "와이파이",
+            body: "네트워크: hm-ph201_2Ghz / 비밀번호: red665wolf8"
+          }
+        ]
+      },
+      checkin: {
+        eyebrow: "도착 전에",
+        title: "체크인과 열쇠",
+        description: "잠금 상자와 키 카드 위치, 열고 닫는 순서를 한 번에 볼 수 있게 정리했습니다.",
+        stats: [
+          ["보관함", "LL / 사서함 184"],
+          ["키 카드", "2장"],
+          ["분실 수수료", "$20 / 장"],
+          ["보안 사무실", "LL 레벨"],
+        ],
+        cards: [
+          {
+            title: "보관함 위치",
+            body: "진입로에서 건물로 들어가 저층(LL)으로 이동하세요. 로비 층(L)에 있다면 엘리베이터로 LL로 내려가면 됩니다. 사서함은 184번입니다."
+          },
+          {
+            title: "보관함 사용 방법",
+            bullets: [
+              "검은 덮개를 아래로 젖힙니다.",
+              "4자리 코드를 입력합니다.",
+              "은색 레버를 아래로 당겨 엽니다.",
+              "키 카드 2장을 꺼낸 뒤 같은 방식으로 닫아 주세요."
+            ]
+          },
+          {
+            title: "키 카드 주의",
+            body: "키 카드는 숙소와 건물 편의시설의 열쇠입니다. 하나라도 작동하지 않으면 LL 레벨 보안 사무실에서 재설정을 도와줄 수 있습니다."
+          },
+          {
+            title: "체크인 메모",
+            body: "현관 테이블에 키 카드를 남겨두고, 앱의 체크인 안내 사진을 따라 움직이면 됩니다. 체크인 후에는 문과 보관함이 완전히 닫혔는지 꼭 확인하세요."
+          }
+        ]
+      },
+      living: {
+        eyebrow: "숙소 사용법",
+        title: "생활과 관리",
+        description: "가구, 세탁, 수건, 침구처럼 숙소 안에서 자주 쓰는 부분만 따로 모았습니다.",
+        stats: [
+          ["가구", "대나무 가구"],
+          ["세탁", "세탁기 / 건조기"],
+          ["비치타월", "게스트 1인 1세트"],
+          ["스타터 키트", "기본 세면/주방 용품"],
+        ],
+        cards: [
+          {
+            title: "대나무 가구 주의",
+            body: "열, 습기, 강한 화학 물질로 얼룩이나 손상이 생길 수 있습니다. 알코올 물티슈나 클로록스 같은 제품은 쓰지 말고, 필요할 때는 순한 비누를 묻힌 젖은 천만 사용하세요."
+          },
+          {
+            title: "수건과 세탁",
+            body: "게스트 1인당 목욕 수건, 핸드타월, 세안타월, 비치타월이 제공됩니다. 일일 하우스키핑은 없고, 세탁기와 건조기는 숙소 안에 있습니다."
+          },
+          {
+            title: "건조기 참고",
+            body: "통풍구가 없는 건조기라 시간이 더 걸리고 완전히 마른 느낌이 늦을 수 있습니다. 꺼낸 뒤 10~15분 지나면 완전히 마른 상태로 느껴집니다."
+          },
+          {
+            title: "침구와 소파베드",
+            bullets: [
+              "모든 침실에는 시트 세트가 있습니다.",
+              "소파베드 침구는 옷장과 TV 콘솔 서랍에 있습니다.",
+              "거실 소파는 소파베드가 아닙니다.",
+              "침실의 트윈 소파베드는 옷장 옆으로 옮겨 펼쳐 주세요."
+            ]
+          },
+          {
+            title: "스타터 용품",
+            body: "화장지, 종이 타월, 캔 라이너, 식기 세척제, 스폰지, 핸드솝, 샴푸, 린스, 바디로션, 바 비누가 준비되어 있습니다. 기본 키트이니 부족하면 현지 ABC 매장에서 추가로 구입하면 됩니다."
+          }
+        ]
+      },
+      amenities: {
+        eyebrow: "주차와 편의",
+        title: "주차, 짐, 쓰레기",
+        description: "숙소 주변에서 필요한 이동과 편의 정보입니다. 주차와 짐 보관은 비용이 따로 있습니다.",
+        stats: [
+          ["주차", "약 $45 / 일"],
+          ["짐 보관", "$5 / 가방"],
+          ["헬스장", "$5 고정 요금"],
+          ["쓰레기실", "엘리베이터 맞은편"],
+        ],
+        cards: [
+          {
+            title: "주차",
+            body: "건물 내 주차장은 하루 약 45달러의 추가 요금이 있고 현금만 가능합니다. 선착순이라 예약은 할 수 없습니다."
+          },
+          {
+            title: "짐 보관",
+            body: "보안팀이 가방당 5달러로 짐을 보관해 줍니다."
+          },
+          {
+            title: "쓰레기",
+            body: "쓰레기실은 엘리베이터 맞은편 문입니다. 쓰레기는 자주 정리해서 해충을 막아 주세요."
+          },
+          {
+            title: "헬스장",
+            body: "헬스장 이용 시 보안팀에 5달러의 고정 요금이 부과됩니다."
+          }
+        ]
+      },
+      checkout: {
+        eyebrow: "떠나기 전에",
+        title: "퇴실과 연락처",
+        description: "체크아웃 체크리스트, 이동 정보, 비상 연락처를 한 번에 정리했습니다.",
+        stats: [
+          ["공항", "차로 약 20분"],
+          ["택시", "약 $35+"],
+          ["응급", "911"],
+          ["연락처", "Catherine Tang"],
+        ],
+        cards: [
+          {
+            title: "체크아웃 정리",
+            bullets: [
+              "문을 잠그고 모든 창문을 닫아 주세요.",
+              "키 카드는 주방 카운터에 남겨 두세요.",
+              "조명과 에어컨을 끄고 떠나 주세요."
+            ]
+          },
+          {
+            title: "연락처",
+            body: "Catherine Tang: 408-603-0418. 긴급 상황에서 먼저 연락이 닿지 않으면 408-489-2872, 808-330-4064 순서로 연락하세요."
+          },
+          {
+            title: "오시는 길",
+            body: "호놀룰루 공항에서 차로 약 20분 거리이고, 교통 상황에 따라 택시 요금은 약 35달러 이상이 될 수 있습니다."
+          },
+          {
+            title: "긴급/현지 정보",
+            bullets: [
+              "화재/경찰/구급차: 911",
+              "미국 적십자: 808-734-2101",
+              "아동 분실 센터: 808-753-9797",
+              "독극물 센터: 808-941-4411",
+              "버스 서비스: 808-848-5555",
+              "우체국: 808-832-0046",
+              "긴급 진료 클리닉: 808-924-3399",
+              "스트라우브 클리닉 및 병원: 808-522-4000",
+            ]
+          }
+        ]
+      }
+    };
+
     let tesseractModulePromise = null;
 
     const tabs = [
       ["schedule", "일정"],
       ["supplies", "준비물"],
       ["maps", "여행정보"],
+      ["stay", "숙소정보"],
       ["kongs", "Kong's 인스타"],
     ];
     const tabIds = tabs.map(([id]) => id);
@@ -4198,6 +4563,63 @@
       );
     }
 
+    function StayInfo() {
+      const [activeTab, setActiveTab] = useState(STAY_TABS[0][0]);
+      const activePage = STAY_PAGES[activeTab] || STAY_PAGES.overview;
+      return React.createElement("section", { className: "tab-page stay-shell" },
+        React.createElement("h2", { className: "section-title" }, "숙소정보"),
+        React.createElement("div", { className: "stay-hero card featured" },
+          React.createElement("div", { className: "stay-hero-copy" },
+            React.createElement("span", { className: "stay-kicker" }, activePage.eyebrow),
+            React.createElement("h3", null, activePage.title),
+            React.createElement("p", null, activePage.description)
+          ),
+          React.createElement("div", { className: "stay-stats" },
+            activePage.stats.map(([label, value]) => React.createElement("div", { className: "stay-stat", key: label },
+              React.createElement("b", null, label),
+              React.createElement("span", null, value)
+            ))
+          )
+        ),
+        React.createElement("div", { className: "stay-tabs", role: "tablist", "aria-label": "숙소 정보 탭" },
+          STAY_TABS.map(([id, label]) => React.createElement("button", {
+            key: id,
+            type: "button",
+            className: `stay-tab ${activeTab === id ? "active" : ""}`,
+            onClick: () => setActiveTab(id),
+            role: "tab",
+            "aria-selected": activeTab === id
+          }, label))
+        ),
+        React.createElement("div", { className: "stay-panel" },
+          React.createElement("div", { className: "stay-panel-head" },
+            React.createElement("span", null, activePage.eyebrow),
+            React.createElement("h3", null, activePage.title),
+            React.createElement("p", null, activePage.description)
+          ),
+          React.createElement("div", { className: "stay-stat-grid" },
+            activePage.stats.map(([label, value]) => React.createElement("div", { className: "stay-card callout", key: label },
+              React.createElement("h4", null, label),
+              React.createElement("p", null, value)
+            ))
+          ),
+          React.createElement("div", { className: "stay-card-grid" },
+            activePage.cards.map((card) => React.createElement("article", {
+              className: `stay-card ${card.variant || ""}`,
+              key: card.title
+            },
+              React.createElement("h4", null, card.title),
+              card.body ? React.createElement("p", null, card.body) : null,
+              card.highlight ? React.createElement("div", { className: "stay-highlight" }, card.highlight) : null,
+              card.bullets ? React.createElement("ul", { className: "stay-list" },
+                card.bullets.map((bullet) => React.createElement("li", { key: bullet }, bullet))
+              ) : null
+            ))
+          )
+        )
+      );
+    }
+
     function Photos({ showGallery = true, showPhotoAnalysis = true, showLiveTranslator = false } = {}) {
       const { photos, status, addFiles, removePhoto, clearPhotos, error: galleryError } = useSupabasePhotoGallery();
       const [viewerIndex, setViewerIndex] = useState(null);
@@ -5704,6 +6126,7 @@
             schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
             supplies: React.createElement(Supplies),
             maps: React.createElement(TravelInfo),
+            stay: React.createElement(StayInfo),
             kongs: React.createElement(KongsInstagram),
           })[safeActive]),
         )
