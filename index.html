@@ -2169,11 +2169,37 @@
       font-size: 0.74rem;
       font-weight: 800;
       box-shadow: 0 9px 20px rgba(24, 38, 45, 0.08);
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease, background 140ms ease;
+    }
+    .stay-tabs > .stay-tab:nth-child(1) {
+      background: linear-gradient(135deg, #f8e8f1, #fff7fb);
+      border-color: rgba(237, 184, 208, 0.72);
+    }
+    .stay-tabs > .stay-tab:nth-child(2) {
+      background: linear-gradient(135deg, #e8f3ff, #f8fbff);
+      border-color: rgba(180, 211, 244, 0.72);
+    }
+    .stay-tabs > .stay-tab:nth-child(3) {
+      background: linear-gradient(135deg, #e7f7ef, #f8fff9);
+      border-color: rgba(175, 223, 194, 0.74);
+    }
+    .stay-tabs > .stay-tab:nth-child(4) {
+      background: linear-gradient(135deg, #fff3df, #fffaf0);
+      border-color: rgba(237, 205, 146, 0.74);
+    }
+    .stay-tabs > .stay-tab:nth-child(5) {
+      background: linear-gradient(135deg, #ede6ff, #faf8ff);
+      border-color: rgba(195, 183, 241, 0.74);
+    }
+    .stay-tabs > .stay-tab:hover {
+      transform: translateY(-1px);
+      filter: saturate(1.02);
     }
     .stay-tab.active {
       border-color: rgba(15, 94, 153, 0.24);
-      background: #0f5e99;
+      background: linear-gradient(135deg, #0f5e99, #2f7fc0);
       color: #fff;
+      box-shadow: 0 11px 24px rgba(15, 94, 153, 0.2);
     }
     .stay-panel {
       display: grid;
