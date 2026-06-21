@@ -2196,6 +2196,29 @@
       gap: 8px;
       margin-top: 2px;
     }
+    .wifi-modal {
+      width: min(100%, 420px);
+      gap: 12px;
+    }
+    .wifi-modal-stage {
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(239, 247, 255, 0.98), rgba(255, 255, 255, 0.98));
+      border: 1px solid rgba(24, 38, 45, 0.08);
+    }
+    .wifi-modal-stage img {
+      width: min(100%, 320px);
+      aspect-ratio: 1;
+      display: block;
+    }
+    .wifi-modal-caption {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
     .stay-card.callout {
       border-color: rgba(15, 94, 153, 0.18);
       background: linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(255, 250, 243, 0.96));
@@ -3019,7 +3042,7 @@
             title: "와이파이",
             body: "네트워크: hm-ph201_2Ghz / 비밀번호: red665wolf8",
             actions: [
-              { label: "QR 코드", href: WIFI_QR_URL }
+              { label: "QR 코드", kind: "wifi-qr" }
             ]
           }
         ]
@@ -4972,7 +4995,18 @@
 
     function StayInfo() {
       const [activeTab, setActiveTab] = useState(STAY_TABS[0][0]);
+      const [wifiQrOpen, setWifiQrOpen] = useState(false);
       const activePage = STAY_PAGES[activeTab] || STAY_PAGES.overview;
+      const closeWifiQr = () => setWifiQrOpen(false);
+      const openWifiQr = () => setWifiQrOpen(true);
+      useEffect(() => {
+        if (!wifiQrOpen) return;
+        const onKeyDown = (event) => {
+          if (event.key === "Escape") closeWifiQr();
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+      }, [wifiQrOpen]);
       return React.createElement("section", { className: "tab-page stay-shell" },
         React.createElement("h2", { className: "section-title" }, "숙소정보"),
         React.createElement("div", { className: "stay-tabs", role: "tablist", "aria-label": "숙소 정보 탭" },
@@ -5009,16 +5043,50 @@
                 card.bullets.map((bullet) => React.createElement("li", { key: bullet }, bullet))
               ) : null,
               card.actions?.length ? React.createElement("div", { className: "stay-card-actions" },
-                card.actions.map((action) => React.createElement("a", {
+                card.actions.map((action) => action.kind === "wifi-qr" ? React.createElement("button", {
+                  className: "map-btn",
+                  type: "button",
+                  onClick: openWifiQr,
+                  "aria-haspopup": "dialog",
+                  key: action.label
+                }, action.label) : React.createElement("a", {
                   className: "map-btn",
                   href: action.href,
                   target: action.target || "_blank",
                   rel: "noopener",
-                  key: action.href
+                  key: action.href || action.label
                 }, action.label))
               ) : null
             ))
-          )
+          ),
+          wifiQrOpen ? React.createElement("div", {
+            className: "photo-overlay",
+            role: "presentation",
+            onClick: closeWifiQr
+          },
+            React.createElement("div", {
+              className: "photo-modal wifi-modal",
+              role: "dialog",
+              "aria-modal": "true",
+              "aria-label": "와이파이 QR 코드",
+              onClick: (event) => event.stopPropagation()
+            },
+              React.createElement("div", { className: "photo-modal-head" },
+                React.createElement("div", { className: "photo-modal-title" },
+                  React.createElement("b", null, "와이파이 QR 코드"),
+                  React.createElement("span", null, `${WIFI_SSID} / ${WIFI_PASSWORD}`)
+                ),
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: closeWifiQr }, "닫기")
+              ),
+              React.createElement("div", { className: "wifi-modal-stage" },
+                React.createElement("img", {
+                  src: WIFI_QR_URL,
+                  alt: "와이파이 접속 QR 코드"
+                })
+              ),
+              React.createElement("p", { className: "wifi-modal-caption" }, "카메라로 스캔하면 바로 접속 정보를 불러올 수 있어요.")
+            )
+          ) : null
         )
       );
     }
