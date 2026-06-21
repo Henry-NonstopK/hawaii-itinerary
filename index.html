@@ -3236,7 +3236,7 @@
 
     const supplySections = [
       {
-        id: "prep",
+        id: "supply",
         title: "준비물",
         featured: false,
         items: [
@@ -3249,13 +3249,6 @@
           { id: "prep-bug", label: "벌레퇴치제", status: "미완료", note: "" },
           { id: "prep-insurance", label: "여행자 보험", status: "미완료", note: "" },
           { id: "prep-idp", label: "국제운전면허증", status: "미완료", note: "" },
-        ]
-      },
-      {
-        id: "personal",
-        title: "개인준비물",
-        featured: true,
-        items: [
           { id: "personal-passport", label: "여권", status: "완료", note: "" },
           { id: "personal-sunscreen", label: "선크림", status: "미완료", note: "SP 지수 높은 거" },
           { id: "personal-swim", label: "수영복", status: "미완료", note: "" },
@@ -3268,13 +3261,6 @@
           { id: "personal-glasses", label: "선글라스 & 모자", status: "미완료", note: "" },
           { id: "personal-clothes", label: "개인 옷", status: "미완료", note: "날이 더워 나시, 반바지 추천" },
           { id: "personal-supplement", label: "개인 영양제 & 약", status: "미완료", note: "" },
-        ]
-      },
-      {
-        id: "request",
-        title: "요청사항",
-        featured: false,
-        items: [
           { id: "request-newbalance-coat", label: "뉴발란스 외투 2벌", status: "완료", note: "은애" },
           { id: "request-newbalance-shoes", label: "뉴발란스 축구화", status: "완료", note: "은애" },
           { id: "request-glasses", label: "축구 안경", status: "미완료", note: "은경" },
@@ -4053,10 +4039,16 @@
     function decodeSupplyStateDoc(content, fallback) {
       const parsed = decodeStateDoc(content, null);
       if (Array.isArray(parsed)) {
-        return parsed.map(normalizeSupplySection);
+        return [{
+          ...supplySections[0],
+          items: parsed.flatMap((section) => (section?.items || [])).map(normalizeSupplyItem)
+        }];
       }
       if (!parsed || !Array.isArray(parsed.sections)) return fallback;
-      return parsed.sections.map(normalizeSupplySection);
+      return [{
+        ...supplySections[0],
+        items: parsed.sections.flatMap((section) => (section?.items || [])).map(normalizeSupplyItem)
+      }];
     }
 
     async function loadLatestStateDoc(title) {
@@ -4693,7 +4685,6 @@
       );
       const [sections, setSections] = useState(() => sharedSections);
       const [draft, setDraft] = useState({
-        sectionId: supplySections[0].id,
         label: "",
         note: "",
         owner: SUPPLY_PEOPLE[0]
@@ -4729,7 +4720,7 @@
         const label = draft.label.trim();
         if (!label) return;
         setSections((current) => {
-          const next = current.map((section) => section.id !== draft.sectionId ? section : ({
+          const next = current.map((section, index) => index !== 0 ? section : ({
             ...section,
             items: [
               ...section.items,
@@ -4758,7 +4749,6 @@
         }))
         .filter((section) => section.items.length > 0 || statusFilter === "전체");
       const visibleCount = visibleSections.reduce((sum, section) => sum + section.items.length, 0);
-      const sectionOptions = sections.map((section) => ({ value: section.id, label: section.title }));
       const ownerOptions = SUPPLY_PEOPLE.map((person) => ({ value: person, label: person }));
       const openSheet = () => {
         if (sheetCloseTimerRef.current) window.clearTimeout(sheetCloseTimerRef.current);
@@ -4864,20 +4854,11 @@
             onClick: (e) => e.stopPropagation()
           },
             React.createElement("div", { className: "supply-sheet-handle", "aria-hidden": "true" }),
-            React.createElement("div", { className: "supply-sheet-head" },
-              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록")
+                React.createElement("div", { className: "supply-sheet-head" },
+              React.createElement("h3", { className: "supply-sheet-title" }, "준비물 등록"),
+              React.createElement("p", { className: "section-kicker" }, "개인준비물과 요청사항을 하나로 합쳐서 등록합니다.")
             ),
             React.createElement("div", { className: "supply-sheet-body" },
-              React.createElement("label", { className: "supply-field" },
-                React.createElement("span", null, "카테고리"),
-                React.createElement(CustomDropdown, {
-                  label: "카테고리",
-                  value: draft.sectionId,
-                  options: sectionOptions,
-                  placeholder: "카테고리",
-                  onChange: (sectionId) => setDraft((current) => ({ ...current, sectionId }))
-                })
-              ),
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "준비자"),
                 React.createElement(CustomDropdown, {
