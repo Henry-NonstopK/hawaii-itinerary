@@ -50,7 +50,7 @@
       overflow-x: hidden;
       overscroll-behavior: none;
       background:
-        linear-gradient(180deg, rgba(245, 246, 244, 0.78), rgba(247, 247, 245, 0.86)),
+        linear-gradient(180deg, rgba(247, 251, 255, 0.76), rgba(237, 246, 252, 0.84)),
         url("./assets/hawaii-background.png") center center / cover no-repeat;
       color: var(--ink);
       line-height: 1.45;
@@ -236,6 +236,12 @@
       width: 100%;
       height: auto;
       border-radius: 20px;
+    }
+    .travel-info-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
     }
     .hero-panel {
       display: grid;
@@ -2184,6 +2190,12 @@
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
+    .stay-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
     .stay-card.callout {
       border-color: rgba(15, 94, 153, 0.18);
       background: linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(255, 250, 243, 0.96));
@@ -2971,6 +2983,10 @@
     const LIVE_TRANSLATE_TARGET = "ko";
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
     const EUNAE_GMAP_URL = "https://maps.app.goo.gl/PxQjbKPHc8PAVSFR7?g_st=i";
+    const WIFI_SSID = "hm-ph201_2Ghz";
+    const WIFI_PASSWORD = "red665wolf8";
+    const WIFI_QR_DATA = `WIFI:T:WPA;S:${WIFI_SSID};P:${WIFI_PASSWORD};;`;
+    const WIFI_QR_URL = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(WIFI_QR_DATA)}`;
 
     const STAY_PAGES = {
       overview: {
@@ -2990,7 +3006,10 @@
           },
           {
             title: "숙소 위치",
-            body: "하와이안 모나크 444 Niu Street, Honolulu, HI 96815. 40층(PH2), 숙소 번호는 PH201입니다."
+            body: "하와이안 모나크 444 Niu Street, Honolulu, HI 96815. 40층(PH2), 숙소 번호는 PH201입니다.",
+            actions: [
+              { label: "구글맵 열기", href: mapUrl("444 Niu Street Honolulu, HI 96815") }
+            ]
           },
           {
             title: "입실/퇴실 시간",
@@ -2998,7 +3017,10 @@
           },
           {
             title: "와이파이",
-            body: "네트워크: hm-ph201_2Ghz / 비밀번호: red665wolf8"
+            body: "네트워크: hm-ph201_2Ghz / 비밀번호: red665wolf8",
+            actions: [
+              { label: "QR 코드", href: WIFI_QR_URL }
+            ]
           }
         ]
       },
@@ -4344,7 +4366,7 @@
           React.createElement("div", { className: "hero-copy" },
             React.createElement("div", { className: "hero-banner" },
               React.createElement("img", {
-                src: "./assets/hawaii-header.png",
+                src: "./assets/hawaii-header-transparent.svg",
                 alt: "Hawaii 안내 이미지",
                 loading: "eager",
                 decoding: "async"
@@ -4985,6 +5007,15 @@
               card.highlight ? React.createElement("div", { className: "stay-highlight" }, card.highlight) : null,
               card.bullets ? React.createElement("ul", { className: "stay-list" },
                 card.bullets.map((bullet) => React.createElement("li", { key: bullet }, bullet))
+              ) : null,
+              card.actions?.length ? React.createElement("div", { className: "stay-card-actions" },
+                card.actions.map((action) => React.createElement("a", {
+                  className: "map-btn",
+                  href: action.href,
+                  target: action.target || "_blank",
+                  rel: "noopener",
+                  key: action.href
+                }, action.label))
               ) : null
             ))
           )
@@ -6284,6 +6315,14 @@
     function TravelInfo() {
       return React.createElement("section", { className: "travel-info-shell" },
         React.createElement("h2", { className: "section-title" }, "여행 정보"),
+        React.createElement("div", { className: "travel-info-actions" },
+          React.createElement("a", {
+            className: "map-btn",
+            href: EUNAE_GMAP_URL,
+            target: "_blank",
+            rel: "noopener"
+          }, "은애's gmap")
+        ),
         React.createElement("div", { className: "map-hub travel-info-map-hub" },
           travelInfo.slice(0, 5).map((item) => React.createElement("a", {
             className: "map-btn",
