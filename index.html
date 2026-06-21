@@ -4547,7 +4547,7 @@
             React.createElement("div", { className: "schedule-head-copy" },
               React.createElement("h2", { className: "section-title" }, "여행 일정"),
               scheduleSyncError ? React.createElement("p", { className: "section-kicker" }, `DB 오류: ${scheduleSyncError}`) :
-                React.createElement("p", { className: "section-kicker" }, scheduleSyncStatus === "loading" ? "DB에서 일정을 불러오는 중" : "DB로 일정이 공유됩니다")
+                React.createElement("p", { className: "section-kicker" }, scheduleSyncStatus === "loading" ? "일정을 불러오는 중" : "")
             ),
             React.createElement("button", {
               type: "button",
@@ -4798,7 +4798,7 @@
               )
             ),
             supplySyncError ? React.createElement("div", { className: "empty" }, `DB 오류: ${supplySyncError}`) :
-              React.createElement("div", { className: "section-kicker" }, supplySyncStatus === "loading" ? "DB에서 준비물을 불러오는 중" : "준비물 변경이 DB로 공유됩니다"),
+              React.createElement("div", { className: "section-kicker" }, supplySyncStatus === "loading" ? "준비물을 불러오는 중" : ""),
             React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
               SUPPLY_FILTERS.map((filter) => React.createElement("button", {
                 key: filter,
@@ -4927,19 +4927,6 @@
       const activePage = STAY_PAGES[activeTab] || STAY_PAGES.overview;
       return React.createElement("section", { className: "tab-page stay-shell" },
         React.createElement("h2", { className: "section-title" }, "숙소정보"),
-        React.createElement("div", { className: "stay-hero card featured" },
-          React.createElement("div", { className: "stay-hero-copy" },
-            React.createElement("span", { className: "stay-kicker" }, activePage.eyebrow),
-            React.createElement("h3", null, activePage.title),
-            React.createElement("p", null, activePage.description)
-          ),
-          React.createElement("div", { className: "stay-stats" },
-            activePage.stats.map(([label, value]) => React.createElement("div", { className: "stay-stat", key: label },
-              React.createElement("b", null, label),
-              React.createElement("span", null, value)
-            ))
-          )
-        ),
         React.createElement("div", { className: "stay-tabs", role: "tablist", "aria-label": "숙소 정보 탭" },
           STAY_TABS.map(([id, label]) => React.createElement("button", {
             key: id,
@@ -5990,26 +5977,7 @@
 
       return React.createElement("section", { className: "instagram-shell" },
         React.createElement("h2", { className: "section-title" }, "Kong's 인스타"),
-        React.createElement("div", { className: "instagram-hero card featured" },
-          React.createElement("div", { className: "instagram-hero-copy" },
-            React.createElement("span", { className: "instagram-kicker" }, "새 사진이 맨 위"),
-            React.createElement("p", { className: "instagram-blurb" }, "사진 한 장, 제목 한 줄, 짧은 문구만 올리는 인스타 느낌 피드입니다. 작성자는 숨기고, 누가 올리든 최신 글이 위로 올라옵니다.")
-          ),
-          React.createElement("div", { className: "instagram-hero-stats" },
-            React.createElement("div", { className: "instagram-stat" },
-              React.createElement("b", null, "게시물"),
-            React.createElement("span", null, `${safePosts.length}개`)
-            ),
-            React.createElement("div", { className: "instagram-stat" },
-              React.createElement("b", null, "정렬"),
-              React.createElement("span", null, "최신순")
-            ),
-            React.createElement("div", { className: "instagram-stat" },
-              React.createElement("b", null, "확대"),
-              React.createElement("span", null, "탭해서 보기")
-            )
-          )
-        ),
+
         React.createElement("div", { className: "supply-dock" },
           React.createElement("button", { type: "button", onClick: openComposer }, "등록")
         ),
@@ -6374,12 +6342,10 @@
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
           React.createElement("div", { className: "splash-card", role: "dialog", "aria-label": "앱 시작 화면" },
             React.createElement("div", { className: "splash-mark", "aria-hidden": "true" }),
-            React.createElement("h2", null, "Hong's 햅삐한 하와이여행"),
             React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
           )
         ) : null,
         React.createElement("main", { className: "shell" },
-          React.createElement(Header),
           React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
           React.createElement("div", { className: "view-shell" }, ({
             schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
