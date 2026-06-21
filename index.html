@@ -516,13 +516,19 @@
       color: #fff;
       box-shadow: 0 9px 20px rgba(24, 38, 45, 0.16);
     }
-    .top-links {
+    .instagram-head-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .instagram-head-links {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 0 0 12px;
     }
-    .top-links .link-btn {
+    .instagram-head-links .link-btn {
       min-height: 40px;
       padding: 9px 12px;
       border-radius: 999px;
@@ -2654,9 +2660,6 @@
       }
       .tab-page {
         padding: 14px;
-      }
-      .top-links {
-        margin-bottom: 10px;
       }
       .tabbar {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5536,7 +5539,7 @@
       );
     }
 
-    function KongsInstagram() {
+    function KongsInstagram({ onOpenTranslate, onOpenMap }) {
       const { posts, status, error, addFiles, removePost } = useKongsInstagramFeed();
       const [draft, setDraft] = useState({ title: "", caption: "", author: KONGS_AUTHORS[0] });
       const [selectedFiles, setSelectedFiles] = useState([]);
@@ -5561,6 +5564,24 @@
           selectedPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
         };
       }, [selectedPreviewUrls]);
+
+      useEffect(() => {
+        if (composerOpen || viewerIndex !== null) return;
+        document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.width = "";
+        document.body.style.touchAction = "";
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.position = "";
+        return () => {
+          document.body.style.overflow = "";
+          document.body.style.position = "";
+          document.body.style.width = "";
+          document.body.style.touchAction = "";
+          document.documentElement.style.overflow = "";
+          document.documentElement.style.position = "";
+        };
+      }, [composerOpen, viewerIndex]);
 
       const openLibraryPicker = () => libraryInputRef.current?.click();
 
@@ -5628,7 +5649,13 @@
       };
 
       return React.createElement("section", { className: "instagram-shell" },
-        React.createElement("h2", { className: "section-title" }, "Kong's 인스타"),
+        React.createElement("div", { className: "instagram-head-row" },
+          React.createElement("h2", { className: "section-title" }, "Kong's 인스타"),
+          React.createElement("div", { className: "instagram-head-links" },
+            React.createElement("button", { type: "button", className: "link-btn", onClick: onOpenTranslate }, "구글번역"),
+            React.createElement("button", { type: "button", className: "link-btn", onClick: onOpenMap }, "은애's gmap")
+          )
+        ),
         React.createElement("div", { className: "instagram-hero card featured" },
           React.createElement("div", { className: "instagram-hero-copy" },
             React.createElement("span", { className: "instagram-kicker" }, "새 사진이 맨 위"),
@@ -6024,10 +6051,6 @@
           )
         ) : null,
         React.createElement("main", { className: "shell" },
-          React.createElement("div", { className: "top-links" },
-            React.createElement("button", { type: "button", className: "link-btn", onClick: openTranslate }, "구글번역"),
-            React.createElement("button", { type: "button", className: "link-btn", onClick: openMap }, "은애's gmap")
-          ),
           React.createElement(Header),
           React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
           React.createElement("div", { className: "view-shell" }, ({
@@ -6035,7 +6058,10 @@
             supplies: React.createElement(Supplies),
             maps: React.createElement(TravelInfo),
             stay: React.createElement(StayInfo),
-            kongs: React.createElement(KongsInstagram),
+            kongs: React.createElement(KongsInstagram, {
+              onOpenTranslate: openTranslate,
+              onOpenMap: openMap
+            }),
           })[safeActive]),
         )
       );
