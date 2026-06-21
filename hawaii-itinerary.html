@@ -516,6 +516,23 @@
       color: #fff;
       box-shadow: 0 9px 20px rgba(24, 38, 45, 0.16);
     }
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+    .top-links .link-btn {
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(36, 56, 67, 0.1);
+      color: var(--aqua-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.08);
+    }
 
     .section-title {
       margin: 6px 4px 10px;
@@ -2637,6 +2654,9 @@
       }
       .tab-page {
         padding: 14px;
+      }
+      .top-links {
+        margin-bottom: 10px;
       }
       .tabbar {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5517,7 +5537,7 @@
     }
 
     function KongsInstagram() {
-      const { posts, status, error, addFiles, removePost, clearPosts } = useKongsInstagramFeed();
+      const { posts, status, error, addFiles, removePost } = useKongsInstagramFeed();
       const [draft, setDraft] = useState({ title: "", caption: "", author: KONGS_AUTHORS[0] });
       const [selectedFiles, setSelectedFiles] = useState([]);
       const [selectedPreviewUrls, setSelectedPreviewUrls] = useState([]);
@@ -5526,7 +5546,6 @@
       const [composerClosing, setComposerClosing] = useState(false);
       const [authorMenuOpen, setAuthorMenuOpen] = useState(false);
       const [viewerIndex, setViewerIndex] = useState(null);
-      const cameraInputRef = useRef(null);
       const libraryInputRef = useRef(null);
       const composerCloseTimerRef = useRef(null);
       const activePost = viewerIndex === null ? null : posts[viewerIndex];
@@ -5543,7 +5562,6 @@
         };
       }, [selectedPreviewUrls]);
 
-      const openCameraPicker = () => cameraInputRef.current?.click();
       const openLibraryPicker = () => libraryInputRef.current?.click();
 
       const openComposer = () => {
@@ -5595,15 +5613,6 @@
           }
         } finally {
           setBusy(false);
-        }
-      };
-
-      const clearAll = async () => {
-        if (!posts.length) return;
-        if (!window.confirm("Kong's 인스타 게시물을 모두 지울까요?")) return;
-        const ok = await clearPosts();
-        if (ok) {
-          setViewerIndex(null);
         }
       };
 
@@ -5702,10 +5711,8 @@
                 })
               ),
               React.createElement("div", { className: "instagram-compose-actions" },
-                React.createElement("button", { className: "ghost-action", type: "button", onClick: openCameraPicker }, "카메라로 찍기"),
-                React.createElement("button", { className: "ghost-action", type: "button", onClick: openLibraryPicker }, "갤러리에서 선택"),
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: openLibraryPicker }, "사진 등록"),
                 React.createElement("button", { className: "ghost-action", type: "button", onClick: clearComposer }, "지우기"),
-                React.createElement("button", { className: "ghost-action", type: "button", onClick: clearAll, disabled: !posts.length }, "모두 삭제"),
                 React.createElement("button", { className: "primary-action", type: "submit", disabled: busy || !selectedFiles.length || !draft.title.trim() }, busy ? "올리는 중..." : "등록")
               ),
               selectedPreviewUrls.length ? React.createElement("div", { className: "instagram-preview" },
@@ -5719,7 +5726,6 @@
                     type: "button",
                     key: url,
                     onClick: () => {
-                      const previewUrl = selectedPreviewUrls[index];
                       setSelectedPreviewUrls((current) => {
                         const next = [...current];
                         const [picked] = next.splice(index, 1);
@@ -5735,15 +5741,6 @@
               React.createElement("div", { className: "instagram-selected" }, selectedLabel)
             ),
             React.createElement("input", {
-              ref: cameraInputRef,
-              type: "file",
-              accept: "image/*",
-              capture: "environment",
-              multiple: true,
-              hidden: true,
-              onChange: handlePick
-            }),
-            React.createElement("input", {
               ref: libraryInputRef,
               type: "file",
               accept: "image/*",
@@ -5757,7 +5754,7 @@
           )
         ) : null,
         status === "loading" ? React.createElement("div", { className: "empty" }, "게시물을 불러오는 중입니다.") :
-        posts.length === 0 ? React.createElement("div", { className: "photo-empty" }, "아직 게시물이 없어요. 사진을 골라 제목과 문구를 넣어 첫 게시물을 올려보세요.") :
+        posts.length === 0 ? React.createElement("div", { className: "photo-empty" }, "아직 게시물이 없어요. 사진 등록 버튼을 눌러 첫 게시물을 올려보세요.") :
           React.createElement("div", { className: "instagram-feed" },
             posts.map((post, index) => React.createElement("article", { className: "instagram-post", key: post.id },
               React.createElement("button", {
@@ -5976,46 +5973,8 @@
       );
     }
 
-    function SiteMenu({ open, onClose, onTranslate, onMap, onEdit }) {
-      return React.createElement("div", {
-        className: `menu-overlay ${open ? "is-open" : ""}`,
-        role: "presentation"
-      },
-        React.createElement("button", {
-          className: "menu-backdrop",
-          type: "button",
-          "aria-label": "메뉴 닫기",
-          onClick: onClose
-        }),
-        React.createElement("aside", {
-          className: "menu-panel",
-          role: "dialog",
-          "aria-label": "빠른 메뉴"
-        },
-          React.createElement("div", { className: "menu-list" },
-            React.createElement("button", {
-              type: "button",
-              className: "menu-item",
-              onClick: onTranslate
-            }, React.createElement("span", { "aria-hidden": "true" }, "A"), "구글번역"),
-            React.createElement("button", {
-              type: "button",
-              className: "menu-item",
-              onClick: onMap
-            }, React.createElement("span", { "aria-hidden": "true" }, "M"), "은애's gmap"),
-            React.createElement("button", {
-              type: "button",
-              className: "menu-item primary",
-              onClick: onEdit
-            }, React.createElement("span", { "aria-hidden": "true" }, "✎"), "수정")
-          )
-        )
-      );
-    }
-
     function App() {
       const [showSplash, setShowSplash] = useState(() => !readSessionFlag(SPLASH_SEEN_KEY));
-      const [menuOpen, setMenuOpen] = useState(false);
       const [active, setActive] = useState("schedule");
       const [scheduleEditSignal, setScheduleEditSignal] = useState(0);
       const safeActive = tabIds.includes(active) ? active : tabIds[0];
@@ -6050,35 +6009,11 @@
         };
       }, [showSplash]);
 
-      useEffect(() => {
-        const handleKeyDown = (event) => {
-          if (event.key === "Escape") {
-            setMenuOpen(false);
-          }
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-      }, []);
-
-      useEffect(() => {
-        document.body.style.overflow = menuOpen ? "hidden" : "";
-        return () => {
-          document.body.style.overflow = "";
-        };
-      }, [menuOpen]);
-
       const openTranslate = () => {
         window.open(GOOGLE_TRANSLATE_URL, "_blank", "noopener");
-        setMenuOpen(false);
       };
       const openMap = () => {
         window.open(EUNAE_GMAP_URL, "_blank", "noopener");
-        setMenuOpen(false);
-      };
-      const openScheduleEdit = () => {
-        setActive("schedule");
-        setScheduleEditSignal((current) => current + 1);
-        setMenuOpen(false);
       };
       return React.createElement(React.Fragment, null,
         showSplash ? React.createElement("div", { className: "splash", role: "presentation", onClick: finishSplash },
@@ -6089,23 +6024,9 @@
           )
         ) : null,
         React.createElement("main", { className: "shell" },
-          React.createElement("div", { className: "top-rail" },
-            React.createElement("div", { className: "top-menu" },
-              React.createElement("button", {
-                type: "button",
-                className: "menu-toggle",
-                "aria-label": "빠른 메뉴 열기",
-                "aria-expanded": menuOpen,
-                onClick: () => setMenuOpen((current) => !current)
-              }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
-            ),
-            React.createElement(SiteMenu, {
-              open: menuOpen,
-              onClose: () => setMenuOpen(false),
-              onTranslate: openTranslate,
-              onMap: openMap,
-              onEdit: openScheduleEdit
-            })
+          React.createElement("div", { className: "top-links" },
+            React.createElement("button", { type: "button", className: "link-btn", onClick: openTranslate }, "구글번역"),
+            React.createElement("button", { type: "button", className: "link-btn", onClick: openMap }, "은애's gmap")
           ),
           React.createElement(Header),
           React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
