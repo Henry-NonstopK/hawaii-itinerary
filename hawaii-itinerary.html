@@ -82,7 +82,7 @@
     .shell {
       width: min(100%, 1080px);
       margin: 0 auto;
-      padding: 18px 18px 72px;
+      padding: 1px 18px 72px;
       position: relative;
       z-index: 1;
     }
@@ -96,14 +96,17 @@
       margin-bottom: 2px;
     }
     .top-menu {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 260;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 6px 2px 0;
     }
     .menu-toggle {
       position: relative;
-      z-index: 2;
+      z-index: 261;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -129,64 +132,83 @@
       position: relative;
     }
     .menu-overlay {
-      position: relative;
-      z-index: 200;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      display: block;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 180ms ease, max-height 260ms cubic-bezier(0.22, 1, 0.36, 1), margin 260ms cubic-bezier(0.22, 1, 0.36, 1);
-      max-height: 0;
-      overflow: hidden;
-      margin-top: 0;
+      transition: opacity 200ms ease;
     }
     .menu-overlay.is-open {
       pointer-events: auto;
       opacity: 1;
-      max-height: 320px;
-      margin-top: 10px;
     }
     .menu-backdrop {
-      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 18, 22, 0.52);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transition: opacity 200ms ease;
     }
+    .menu-overlay.is-open .menu-backdrop { opacity: 1; }
     .menu-panel {
-      width: 100%;
-      padding: 10px 0 0;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-      transform: translate3d(0, -8px, 0);
-      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(100vw, 390px);
+      height: 100%;
+      padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(255, 255, 253, 0.99), rgba(246, 249, 251, 0.98));
+      border-left: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: -22px 0 52px rgba(24, 38, 45, 0.18);
+      transform: translateX(100%);
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
       display: grid;
       align-content: start;
       gap: 12px;
+      overflow: auto;
+      overscroll-behavior: contain;
     }
     .menu-overlay.is-open .menu-panel {
-      transform: translate3d(0, 0, 0);
+      transform: translateX(0);
     }
     .menu-head {
-      display: none;
+      display: grid;
+      gap: 4px;
+      padding-top: 38px;
+      justify-items: start;
+    }
+    .menu-head b {
+      font-family: var(--headline);
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+    .menu-head span {
+      color: var(--muted);
+      font-size: 0.86rem;
     }
     .menu-list {
-      display: flex;
+      display: grid;
       gap: 10px;
-      flex-wrap: wrap;
     }
     .menu-item {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       gap: 10px;
       min-height: 42px;
-      padding: 10px 14px;
-      border-radius: 16px;
+      padding: 12px 14px;
+      border-radius: 18px;
       border: 1px solid rgba(24, 38, 45, 0.08);
       background: #f8fcff;
       color: var(--aqua-dark);
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.05);
-      font-size: 0.86rem;
+      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.06);
+      font-size: 0.88rem;
       font-weight: 900;
       text-align: left;
+      width: 100%;
     }
     .menu-item.primary {
       background: #0f5e99;
@@ -212,30 +234,30 @@
       min-height: 0;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
       align-items: stretch;
-      padding: 16px 4px 18px;
+      padding: 4px 4px 8px;
+      gap: 8px;
     }
     .hero-copy {
       display: grid;
       gap: 12px;
       padding: 0;
     }
+
     .hero-banner {
-      justify-self: center;
-      width: min(100%, 460px);
-      padding: 10px;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.84);
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      box-shadow: 0 14px 30px rgba(24, 38, 45, 0.08);
-      backdrop-filter: blur(14px);
+      width: min(100%, 400px);
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
     }
+
     .hero-banner img {
       display: block;
       width: 100%;
       height: auto;
-      border-radius: 20px;
+      border-radius: 0;
     }
     .travel-info-actions {
       display: flex;
@@ -3201,9 +3223,9 @@
       ["stay", "숙소정보"],
       ["kongs", "Kong's 인스타"],
       ["translate", "구글 번역", GOOGLE_TRANSLATE_URL],
-      ["gmap", "은애's gmap", EUNAE_GMAP_URL],
     ];
     const tabIds = tabs.filter(([, , href]) => !href).map(([id]) => id);
+    const menuTabs = tabs;
 
     function normalizeScheduleStop(stop) {
       if (Array.isArray(stop)) {
@@ -3376,7 +3398,7 @@
         title: "옥동식",
         hours: "",
         location: "남부",
-        address: "Honolulu, HI",
+        address: "OKDONGSIK Honolulu",
         info: [],
         links: []
       },
@@ -3387,7 +3409,7 @@
         title: "다나카 오브 도쿄 센트럴",
         hours: "",
         location: "남부",
-        address: "Honolulu, HI",
+        address: "Tanaka of Tokyo Central",
         info: [],
         links: []
       },
@@ -3398,7 +3420,7 @@
         title: "헤븐리 아일랜드 라이프 스타일",
         hours: "07:00 AM ~ 02:00 PM · 04:00 PM ~ 10:00 PM",
         location: "남부",
-        address: "Honolulu, HI",
+        address: "Heavenly Island Lifestyle",
         info: ["아침과 저녁 모두 쓰기 좋은 식당"],
         links: []
       },
@@ -3413,6 +3435,7 @@
         info: ["야경과 전망 위주로 가볍게 들르는 코스"],
         links: []
       },
+
       {
         category: "식당",
         day: "6/25",
@@ -3420,9 +3443,9 @@
         title: "스위트 이스카페",
         hours: "",
         location: "남부",
-        address: "Honolulu, HI",
+        address: "Sweet E's Café",
         info: ["숙소에서 차로 10분거리, 아침식사 전문", "주말엔 대기 존재, 테이크아웃 가능"],
-        links: [{ label: "지도", href: "https://maps.app.goo.gl/DKKm3X7ShDhXYts78" }]
+        links: []
       },
       {
         category: "관광지",
@@ -3431,7 +3454,7 @@
         title: "월마트",
         hours: "",
         location: "도심",
-        address: "Honolulu, HI",
+        address: "700 Ke’eaumoku St, Honolulu, HI 96814 미국",
         info: ["필요한 물품을 한 번에 채우는 쇼핑 포인트"],
         links: []
       },
@@ -3453,7 +3476,7 @@
         title: "시크릿 섬",
         hours: "",
         location: "동부",
-        address: "Kaneohe, HI",
+        address: "O‘ahu, Kaneohe, HI 96744 미국",
         info: [],
         links: []
       },
@@ -3481,7 +3504,7 @@
         title: "니코스38",
         hours: "",
         location: "남부",
-        address: "1133 N Nimitz Hwy, Honolulu, HI 96817",
+        address: "1129 N Nimitz Hwy, Honolulu, HI 96817 미국",
         info: ["해산물 식당, 항구에서 멋진 뷰와 함께 식사 가능"],
         links: [{ label: "지도", href: "https://maps.app.goo.gl/ctAEjzPbUZ8dztSbA" }]
       },
@@ -3503,7 +3526,7 @@
         title: "지오반니 새우 트럭",
         hours: "",
         location: "북부",
-        address: "56-505 Kamehameha Hwy, Kahuku, HI 96731",
+        address: "66-472 Kamehameha Hwy, Haleiwa, HI 96712 미국",
         info: ["북부에서 간단히 먹기 좋은 곳"],
         links: []
       },
@@ -3514,7 +3537,7 @@
         title: "라니아케아 비치",
         hours: "",
         location: "북부",
-        address: "5742-5804 Kamehameha Hwy, Haleiwa, HI 96712",
+        address: "미국 96712 하와이 할아이와",
         info: ["거북이 구경, 거리 유지"],
         links: []
       }
@@ -4413,19 +4436,83 @@
       );
     }
 
-    function Tabbar({ active, setActive }) {
-      return React.createElement("nav", { className: "tabbar", "aria-label": "주요 탭" },
-        tabs.map(([id, label, href]) => href ? React.createElement("a", {
-          key: id,
-          className: `tab ${active === id ? "active" : ""}`,
-          href,
-          target: "_blank",
-          rel: "noopener"
-        }, label) : React.createElement("button", {
-          key: id,
-          className: `tab ${active === id ? "active" : ""}`,
-          onClick: () => setActive(id)
-        }, label))
+    function NavigationMenu({ active, setActive }) {
+      const [open, setOpen] = useState(false);
+
+      useEffect(() => {
+        if (!open) return;
+        const onKeyDown = (event) => {
+          if (event.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+      }, [open]);
+
+      useEffect(() => {
+        document.body.style.overflow = open ? "hidden" : "";
+        return () => {
+          document.body.style.overflow = "";
+        };
+      }, [open]);
+
+      const handleSelect = (id) => {
+        setActive(id);
+        setOpen(false);
+      };
+
+      return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "top-menu" },
+          React.createElement("button", {
+            className: "menu-toggle",
+            type: "button",
+            onClick: () => setOpen((current) => !current),
+            "aria-expanded": open,
+            "aria-controls": "main-menu",
+            "aria-label": open ? "메뉴 닫기" : "메뉴 열기"
+          }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
+        ),
+        React.createElement("div", {
+          id: "main-menu",
+          className: `menu-overlay ${open ? "is-open" : ""}`,
+          role: "presentation"
+        },
+          React.createElement("div", {
+            className: "menu-backdrop",
+            onClick: () => setOpen(false)
+          }),
+          React.createElement("aside", {
+            className: "menu-panel",
+            role: "dialog",
+            "aria-modal": "true",
+            "aria-label": "메뉴"
+          },
+            React.createElement("div", { className: "menu-head" },
+              React.createElement("b", null, "메뉴"),
+              React.createElement("span", null, "오른쪽에서 열리는 빠른 이동")
+            ),
+            React.createElement("div", { className: "menu-list" },
+              menuTabs.map(([id, label, href]) => href ? React.createElement("a", {
+                key: id,
+                className: `menu-item ${active === id ? "primary" : ""}`,
+                href,
+                target: "_blank",
+                rel: "noopener",
+                onClick: () => setOpen(false)
+              },
+                React.createElement("span", { "aria-hidden": "true" }, "↗"),
+                React.createElement("span", null, label)
+              ) : React.createElement("button", {
+                key: id,
+                type: "button",
+                className: `menu-item ${active === id ? "primary" : ""}`,
+                onClick: () => handleSelect(id)
+              },
+                React.createElement("span", { "aria-hidden": "true" }, "•"),
+                React.createElement("span", null, label)
+              ))
+            )
+          )
+        )
       );
     }
 
@@ -6389,16 +6476,7 @@
             href: EUNAE_GMAP_URL,
             target: "_blank",
             rel: "noopener"
-          }, "은애's gmap")
-        ),
-        React.createElement("div", { className: "map-hub travel-info-map-hub" },
-          travelInfo.slice(0, 5).map((item) => React.createElement("a", {
-            className: "map-btn",
-            href: mapUrl(item.address || item.title),
-            target: "_blank",
-            rel: "noopener",
-            key: item.title
-          }, item.title))
+          }, "구글맵 한번에 보기")
         ),
         React.createElement("div", { className: "grid travel-info-grid" },
           travelInfo.map((item) => React.createElement("article", { className: "card", key: `${item.category}-${item.title}` },
@@ -6478,8 +6556,16 @@
             React.createElement("div", { className: "splash-bar", "aria-hidden": "true" })
           )
         ) : null,
+        React.createElement("div", { className: "hero-banner" },
+          React.createElement("img", {
+            src: "./assets/hawaii-h.png",
+            alt: "Hawaii 안내 이미지",
+            loading: "eager",
+            decoding: "async"
+          })
+        ),
         React.createElement("main", { className: "shell" },
-          React.createElement(Tabbar, { active: safeActive, setActive: selectTab }),
+          React.createElement(NavigationMenu, { active: safeActive, setActive: selectTab }),
           React.createElement("div", { className: "view-shell" }, ({
             schedule: React.createElement(Schedule, { editSignal: scheduleEditSignal }),
             supplies: React.createElement(Supplies),
