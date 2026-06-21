@@ -5539,6 +5539,11 @@
       useEffect(() => {
         return () => {
           if (composerCloseTimerRef.current) window.clearTimeout(composerCloseTimerRef.current);
+        };
+      }, []);
+
+      useEffect(() => {
+        return () => {
           selectedPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
         };
       }, [selectedPreviewUrls]);
@@ -5606,7 +5611,6 @@
         try {
           const added = await addFiles(selectedFiles, { title, caption, author: draft.author });
           if (added.length > 0) {
-            clearComposer();
             closeComposer();
           }
         } finally {
