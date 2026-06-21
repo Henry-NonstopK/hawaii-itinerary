@@ -1022,9 +1022,18 @@
       min-width: 0;
     }
     .supply-item-top {
-      display: grid;
-      gap: 6px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
       min-width: 0;
+    }
+    .supply-item-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1 1 auto;
     }
     .supply-item-top strong {
       min-width: 0;
@@ -1033,41 +1042,28 @@
       line-height: 1.25;
       overflow-wrap: anywhere;
     }
+    .supply-title-check {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #2fce6e;
+      box-shadow: 0 6px 14px rgba(47, 206, 110, 0.24);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+    .supply-title-check::before {
+      content: "✓";
+      transform: translateY(-0.5px);
+    }
     .supply-item-owner {
       color: var(--muted);
       font-size: 0.8rem;
       font-weight: 800;
-    }
-    .supply-item-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      align-self: start;
-      width: fit-content;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-    .supply-item-status.done {
-      background: rgba(42, 139, 185, 0.12);
-      color: var(--ocean);
-    }
-    .supply-item-status.tax {
-      background: rgba(241, 184, 93, 0.18);
-      color: #8d5f13;
-    }
-    .supply-item-status.pending {
-      background: rgba(86, 201, 209, 0.18);
-      color: #0a5563;
-    }
-    .supply-status-icon {
-      width: 14px;
-      height: 14px;
-      flex: 0 0 auto;
-      border-radius: 999px;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.2 8.6 6.4 11.7 12.9 5.2' stroke='%230f5e99' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
     .supply-item-meta {
       display: grid;
@@ -4820,18 +4816,15 @@
                   section.items.map((item) => React.createElement("li", { key: item.id, className: "supply-item" },
                     React.createElement("div", { className: "supply-item-main" },
                       React.createElement("div", { className: "supply-item-top" },
-                        React.createElement("strong", null, item.label)
-                      ),
-                      React.createElement("div", { className: "supply-item-meta" },
-                        React.createElement("span", {
-                          className: `supply-item-status ${item.status === "완료" ? "done" : item.status === "면세(구매)" ? "tax" : "pending"}`
-                        },
-                          item.status === "완료" ? React.createElement("span", { className: "supply-status-icon", "aria-hidden": "true" }) : null,
-                          React.createElement("span", null, item.status)
-                        ),
-                        React.createElement("span", { className: "supply-item-owner" }, `담당 ${item.owner || "미지정"}`),
-                        item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
+                        React.createElement("div", { className: "supply-item-title" },
+                          React.createElement("strong", null, item.label),
+                          item.status === "완료" ? React.createElement("span", { className: "supply-title-check", "aria-label": "완료" }) : null
+                        )
                       )
+                    ),
+                    React.createElement("div", { className: "supply-item-meta" },
+                      React.createElement("span", { className: "supply-item-owner" }, `담당 ${item.owner || "미지정"}`),
+                      item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
                     ),
                     React.createElement("div", { className: "supply-item-controls" },
                       React.createElement(CustomDropdown, {
