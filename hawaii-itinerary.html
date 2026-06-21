@@ -5526,11 +5526,10 @@
       const [composerClosing, setComposerClosing] = useState(false);
       const [authorMenuOpen, setAuthorMenuOpen] = useState(false);
       const [viewerIndex, setViewerIndex] = useState(null);
-      const [previewIndex, setPreviewIndex] = useState(null);
-      const fileInputRef = useRef(null);
+      const cameraInputRef = useRef(null);
+      const libraryInputRef = useRef(null);
       const composerCloseTimerRef = useRef(null);
       const activePost = viewerIndex === null ? null : posts[viewerIndex];
-      const activePreviewUrl = previewIndex === null ? null : selectedPreviewUrls[previewIndex];
       const selectedLabel = selectedFiles.length
         ? selectedFiles.length === 1
           ? selectedFiles[0].name
@@ -5544,7 +5543,8 @@
         };
       }, [selectedPreviewUrls]);
 
-      const openPicker = () => fileInputRef.current?.click();
+      const openCameraPicker = () => cameraInputRef.current?.click();
+      const openLibraryPicker = () => libraryInputRef.current?.click();
 
       const openComposer = () => {
         if (composerCloseTimerRef.current) window.clearTimeout(composerCloseTimerRef.current);
@@ -5569,7 +5569,6 @@
         selectedPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
         setSelectedFiles(files);
         setSelectedPreviewUrls(files.map((file) => URL.createObjectURL(file)));
-        setPreviewIndex(files.length ? 0 : null);
         event.target.value = "";
       };
 
@@ -5578,7 +5577,6 @@
         setDraft({ title: "", caption: "", author: KONGS_AUTHORS[0] });
         setSelectedFiles([]);
         setSelectedPreviewUrls([]);
-        setPreviewIndex(null);
         setAuthorMenuOpen(false);
       };
 
@@ -5704,26 +5702,31 @@
                 })
               ),
               React.createElement("div", { className: "instagram-compose-actions" },
-                React.createElement("button", { className: "ghost-action", type: "button", onClick: openPicker }, selectedFiles.length ? `${selectedFiles.length}장 선택됨` : "사진 선택"),
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: openCameraPicker }, "카메라로 찍기"),
+                React.createElement("button", { className: "ghost-action", type: "button", onClick: openLibraryPicker }, "갤러리에서 선택"),
                 React.createElement("button", { className: "ghost-action", type: "button", onClick: clearComposer }, "지우기"),
                 React.createElement("button", { className: "ghost-action", type: "button", onClick: clearAll, disabled: !posts.length }, "모두 삭제"),
                 React.createElement("button", { className: "primary-action", type: "submit", disabled: busy || !selectedFiles.length || !draft.title.trim() }, busy ? "올리는 중..." : "등록")
               ),
               selectedPreviewUrls.length ? React.createElement("div", { className: "instagram-preview" },
-                React.createElement("button", {
-                  className: "instagram-preview-main",
-                  type: "button",
-                  onClick: () => setPreviewIndex((current) => current === null ? 0 : current)
-                },
-                  React.createElement("img", { src: activePreviewUrl || selectedPreviewUrls[0], alt: "등록 전 사진 미리보기" }),
-                  React.createElement("span", { className: "photo-badge" }, "미리보기")
+                React.createElement("div", { className: "instagram-preview-main" },
+                  React.createElement("img", { src: selectedPreviewUrls[0], alt: "등록 전 사진 미리보기" }),
+                  React.createElement("span", { className: "photo-badge" }, "등록 전 미리보기")
                 ),
                 selectedPreviewUrls.length > 1 ? React.createElement("div", { className: "instagram-preview-strip" },
                   selectedPreviewUrls.map((url, index) => React.createElement("button", {
                     className: "instagram-preview-thumb",
                     type: "button",
                     key: url,
-                    onClick: () => setPreviewIndex(index)
+                    onClick: () => {
+                      const previewUrl = selectedPreviewUrls[index];
+                      setSelectedPreviewUrls((current) => {
+                        const next = [...current];
+                        const [picked] = next.splice(index, 1);
+                        next.unshift(picked);
+                        return next;
+                      });
+                    }
                   },
                     React.createElement("img", { src: url, alt: `미리보기 ${index + 1}` })
                   ))
@@ -5732,7 +5735,7 @@
               React.createElement("div", { className: "instagram-selected" }, selectedLabel)
             ),
             React.createElement("input", {
-              ref: fileInputRef,
+              ref: cameraInputRef,
               type: "file",
               accept: "image/*",
               capture: "environment",
@@ -5740,32 +5743,16 @@
               hidden: true,
               onChange: handlePick
             }),
+            React.createElement("input", {
+              ref: libraryInputRef,
+              type: "file",
+              accept: "image/*",
+              multiple: true,
+              hidden: true,
+              onChange: handlePick
+            }),
             React.createElement("div", { className: "supply-sheet-actions" },
               React.createElement("button", { className: "ghost-action", type: "button", onClick: closeComposer }, "닫기")
-            )
-          )
-        ) : null,
-        activePreviewUrl ? React.createElement("div", {
-          className: "photo-overlay",
-          role: "presentation",
-          onClick: () => setPreviewIndex(null)
-        },
-          React.createElement("div", {
-            className: "photo-modal instagram-modal",
-            role: "dialog",
-            "aria-modal": "true",
-            "aria-label": "등록 전 사진 미리보기",
-            onClick: (event) => event.stopPropagation()
-          },
-            React.createElement("div", { className: "photo-modal-head" },
-              React.createElement("div", { className: "photo-modal-title" },
-                React.createElement("b", null, "등록 전 사진 미리보기"),
-                React.createElement("span", null, selectedLabel)
-              ),
-              React.createElement("button", { className: "ghost-action", type: "button", onClick: () => setPreviewIndex(null) }, "닫기")
-            ),
-            React.createElement("div", { className: "photo-stage" },
-              React.createElement("img", { src: activePreviewUrl, alt: "등록 전 사진 미리보기" })
             )
           )
         ) : null,
