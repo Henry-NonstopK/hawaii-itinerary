@@ -209,18 +209,7 @@
       font-weight: 900;
       text-align: left;
       width: 100%;
-    }
-    .menu-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      display: inline-grid;
-      place-items: center;
-      background: rgba(15, 94, 153, 0.08);
-      color: inherit;
-      font-size: 0.9rem;
-      flex: 0 0 auto;
-      line-height: 1;
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease, background 140ms ease;
     }
     .menu-label {
       flex: 1 1 auto;
@@ -228,14 +217,44 @@
       line-height: 1.25;
       overflow-wrap: anywhere;
     }
+    .menu-list > :nth-child(6n + 1) {
+      background: linear-gradient(135deg, #f8e8f1, #fff7fb);
+      border-color: rgba(237, 184, 208, 0.72);
+    }
+    .menu-list > :nth-child(6n + 2) {
+      background: linear-gradient(135deg, #e8f3ff, #f8fbff);
+      border-color: rgba(180, 211, 244, 0.72);
+    }
+    .menu-list > :nth-child(6n + 3) {
+      background: linear-gradient(135deg, #e7f7ef, #f8fff9);
+      border-color: rgba(175, 223, 194, 0.74);
+    }
+    .menu-list > :nth-child(6n + 4) {
+      background: linear-gradient(135deg, #fff3df, #fffaf0);
+      border-color: rgba(237, 205, 146, 0.74);
+    }
+    .menu-list > :nth-child(6n + 5) {
+      background: linear-gradient(135deg, #ede6ff, #faf8ff);
+      border-color: rgba(195, 183, 241, 0.74);
+    }
+    .menu-list > :nth-child(6n) {
+      background: linear-gradient(135deg, #e3f3f5, #f8fcfd);
+      border-color: rgba(170, 220, 226, 0.76);
+    }
+    .menu-list > :nth-child(6n + 1):hover,
+    .menu-list > :nth-child(6n + 2):hover,
+    .menu-list > :nth-child(6n + 3):hover,
+    .menu-list > :nth-child(6n + 4):hover,
+    .menu-list > :nth-child(6n + 5):hover,
+    .menu-list > :nth-child(6n):hover {
+      transform: translateX(-2px);
+      filter: saturate(1.02);
+    }
     .menu-item.primary {
-      background: #0f5e99;
+      background: linear-gradient(135deg, #0f5e99, #2f7fc0);
       color: #fff;
       border-color: rgba(15, 94, 153, 0.24);
       box-shadow: 0 10px 22px rgba(15, 94, 153, 0.22);
-    }
-    .menu-item.primary .menu-icon {
-      background: rgba(255, 255, 255, 0.16);
     }
     .hero {
       min-height: 0;
@@ -4479,7 +4498,7 @@
             "aria-expanded": open,
             "aria-controls": "main-menu",
             "aria-label": open ? "메뉴 닫기" : "메뉴 열기"
-          }, React.createElement("span", { "aria-hidden": "true" }, "☰"), "메뉴")
+          }, React.createElement("span", { "aria-hidden": "true" }, "☰"))
         ),
         React.createElement("div", {
           id: "main-menu",
@@ -4509,7 +4528,6 @@
                 rel: "noopener",
                 onClick: () => setOpen(false)
               },
-                React.createElement("span", { className: "menu-icon", "aria-hidden": "true" }, "↗"),
                 React.createElement("span", { className: "menu-label" }, label)
               ) : React.createElement("button", {
                 key: id,
@@ -4517,7 +4535,6 @@
                 className: `menu-item ${active === id ? "primary" : ""}`,
                 onClick: () => handleSelect(id)
               },
-                React.createElement("span", { className: "menu-icon", "aria-hidden": "true" }, "•"),
                 React.createElement("span", { className: "menu-label" }, label)
               ))
             )
