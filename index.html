@@ -2840,6 +2840,10 @@
     const PHOTO_FOLDER = "gallery";
     const INSTAGRAM_FOLDER = "kongs-instagram";
     const PHOTO_MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+    const STATE_DOC_AUTHOR = "system";
+    const STATE_DOC_PREFIX = "__hawaii_state__";
+    const SCHEDULE_STATE_DOC_TITLE = `${STATE_DOC_PREFIX}:schedule`;
+    const KONGS_INSTAGRAM_STATE_DOC_TITLE = `${STATE_DOC_PREFIX}:kongs-instagram`;
     const KONGS_AUTHORS = ["은애", "문식", "상범", "은경", "엄마", "아빠"];
     const STAY_TABS = [
       ["overview", "핵심"],
@@ -3785,27 +3789,21 @@
     }
 
     function useKongsInstagramFeed() {
-      const [posts, setPosts] = useState(() => {
-        try {
-          const stored = JSON.parse(readStoredValue(KONGS_INSTAGRAM_STATE_KEY, "null"));
-          if (!stored || !Array.isArray(stored.posts)) throw new Error("no saved state");
-          return stored.posts.map(normalizeInstagramPost).sort(byNewest);
-        } catch {
-          return [];
-        }
-      });
-      const [status, setStatus] = useState("ready");
-      const [error, setError] = useState("");
-
-      useEffect(() => {
-        writeStoredValue(KONGS_INSTAGRAM_STATE_KEY, JSON.stringify({ posts }));
-      }, [posts]);
+      const {
+        value: posts,
+        status,
+        error,
+        save: savePosts
+      } = useSharedStateDoc(
+        KONGS_INSTAGRAM_STATE_DOC_TITLE,
+        KONGS_INSTAGRAM_STATE_KEY,
+        [],
+        decodeInstagramStateDoc
+      );
 
       async function addFiles(fileList, { title, caption, author } = {}) {
         const files = Array.from(fileList || []).filter((file) => file.type.startsWith("image/"));
         if (files.length === 0) return [];
-        setStatus("loading");
-        setError("");
         const created = [];
 
         for (const file of files) {
@@ -3852,33 +3850,28 @@
         }
 
         if (created.length > 0) {
-          setPosts((current) => [...created, ...current].map(normalizeInstagramPost).sort(byNewest));
+          await savePosts((current) => [...created, ...current].map(normalizeInstagramPost).sort(byNewest));
         }
-        setStatus("ready");
         return created;
       }
 
       async function removePost(post) {
         if (!post?.path) return false;
-        setError("");
         const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove([post.path]);
         if (removeError) {
-          setError(removeError.message);
           return false;
         }
-        setPosts((current) => current.filter((item) => item.path !== post.path));
+        await savePosts((current) => current.filter((item) => item.path !== post.path));
         return true;
       }
 
       async function clearPosts() {
         if (!posts.length) return true;
-        setError("");
         const { error: removeError } = await supabase.storage.from(PHOTO_BUCKET).remove(posts.map((post) => post.path));
         if (removeError) {
-          setError(removeError.message);
           return false;
         }
-        setPosts([]);
+        await savePosts([]);
         return true;
       }
 
@@ -3926,6 +3919,149 @@
       } catch {
         return null;
       }
+    }
+
+    function readJsonCache(key, fallback) {
+      const cached = readStoredValue(key, "");
+      if (!cached) return fallback;
+      const parsed = safeJson(cached);
+      return parsed ?? fallback;
+    }
+
+    function writeJsonCache(key, value) {
+      writeStoredValue(key, JSON.stringify(value));
+    }
+
+    function decodeStateDoc(content, fallback) {
+      if (typeof content !== "string" || !content.trim()) return fallback;
+      const parsed = safeJson(content);
+      return parsed ?? fallback;
+    }
+
+    function decodeScheduleStateDoc(content, fallback) {
+      const parsed = decodeStateDoc(content, null);
+      if (Array.isArray(parsed)) {
+        return parsed.map((day, index) => normalizeScheduleDay(day, days[index]?.id || day.id));
+      }
+      if (!parsed || !Array.isArray(parsed.days)) return fallback;
+      return parsed.days.map((day, index) => normalizeScheduleDay(day, days[index]?.id || day.id));
+    }
+
+    function decodeInstagramStateDoc(content, fallback) {
+      const parsed = decodeStateDoc(content, null);
+      if (Array.isArray(parsed)) {
+        return parsed.map(normalizeInstagramPost).sort(byNewest);
+      }
+      if (!parsed || !Array.isArray(parsed.posts)) return fallback;
+      return parsed.posts.map(normalizeInstagramPost).sort(byNewest);
+    }
+
+    async function loadLatestStateDoc(title) {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("id, author, title, content, created_at")
+        .eq("title", title)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (error) throw error;
+      return data?.[0] || null;
+    }
+
+    function useSharedStateDoc(title, cacheKey, fallbackValue, decode = decodeStateDoc) {
+      const [value, setValue] = useState(() => readJsonCache(cacheKey, fallbackValue));
+      const [status, setStatus] = useState("loading");
+      const [error, setError] = useState("");
+      const latestValueRef = useRef(value);
+      const seededRef = useRef(false);
+
+      useEffect(() => {
+        latestValueRef.current = value;
+      }, [value]);
+
+      useEffect(() => {
+        let cancelled = false;
+
+        async function refresh({ silent = false } = {}) {
+          if (!silent) setStatus("loading");
+          setError("");
+
+          try {
+            const row = await loadLatestStateDoc(title);
+            if (cancelled) return null;
+            if (!row) {
+              setStatus("ready");
+              return null;
+            }
+            const decoded = decode(row.content, latestValueRef.current ?? fallbackValue);
+            setValue(decoded);
+            writeJsonCache(cacheKey, decoded);
+            seededRef.current = true;
+            setStatus("ready");
+            return decoded;
+          } catch (loadError) {
+            if (cancelled) return null;
+            setError(loadError?.message || "DB 동기화에 실패했어요.");
+            setStatus("error");
+            return null;
+          }
+        }
+
+        async function seedIfNeeded() {
+          const loaded = await refresh({ silent: false });
+          if (cancelled || loaded !== null || seededRef.current) return;
+          seededRef.current = true;
+          const current = latestValueRef.current ?? fallbackValue;
+          writeJsonCache(cacheKey, current);
+          await supabase.from("posts").insert({
+            author: STATE_DOC_AUTHOR,
+            title,
+            content: JSON.stringify(current)
+          });
+        }
+
+        seedIfNeeded();
+        const pollId = window.setInterval(() => refresh({ silent: true }), 4000);
+        const channel = supabase
+          .channel(`${title}-state-realtime`, { config: { broadcast: { self: false } } })
+          .on("postgres_changes", { event: "*", schema: "public", table: "posts" }, (payload) => {
+            const row = payload.new || payload.old;
+            if (!row || row.title !== title) return;
+            const decoded = decode(row.content, latestValueRef.current ?? fallbackValue);
+            setValue(decoded);
+            writeJsonCache(cacheKey, decoded);
+            seededRef.current = true;
+          })
+          .subscribe();
+
+        return () => {
+          cancelled = true;
+          window.clearInterval(pollId);
+          supabase.removeChannel(channel);
+        };
+      }, [title, cacheKey, fallbackValue, decode]);
+
+      async function save(nextValue) {
+        const next = typeof nextValue === "function" ? nextValue(latestValueRef.current ?? fallbackValue) : nextValue;
+        latestValueRef.current = next;
+        setValue(next);
+        writeJsonCache(cacheKey, next);
+        setError("");
+        const { error: insertError } = await supabase.from("posts").insert({
+          author: STATE_DOC_AUTHOR,
+          title,
+          content: JSON.stringify(next)
+        });
+        if (insertError) {
+          setError(insertError.message);
+          setStatus("error");
+          return false;
+        }
+        setStatus("ready");
+        return true;
+      }
+
+      return { value, setValue, status, error, save, reload: () => loadLatestStateDoc(title) };
     }
 
     function useSupabaseRows(table, normalizeRow, sortRows, pollMs = 4000) {
@@ -4075,15 +4211,18 @@
     }
 
     function Schedule({ editSignal = 0 }) {
-      const [scheduleDays, setScheduleDays] = useState(() => {
-        try {
-          const stored = JSON.parse(readStoredValue(SCHEDULE_STATE_KEY, "null"));
-          if (!stored || !Array.isArray(stored.days)) throw new Error("no saved state");
-          return stored.days.map((day, index) => normalizeScheduleDay(day, days[index]?.id || day.id));
-        } catch {
-          return days.map((day) => normalizeScheduleDay(day));
-        }
-      });
+      const {
+        value: sharedScheduleDays,
+        status: scheduleSyncStatus,
+        error: scheduleSyncError,
+        save: saveScheduleDays
+      } = useSharedStateDoc(
+        SCHEDULE_STATE_DOC_TITLE,
+        SCHEDULE_STATE_KEY,
+        days.map((day) => normalizeScheduleDay(day)),
+        decodeScheduleStateDoc
+      );
+      const [scheduleDays, setScheduleDays] = useState(() => sharedScheduleDays);
       const [activeDay, setActiveDay] = useState(() => scheduleDays[0]?.id || days[0].id);
       const [daySwipeDirection, setDaySwipeDirection] = useState("forward");
       const [daySwipeOffset, setDaySwipeOffset] = useState(0);
@@ -4099,8 +4238,8 @@
       const shownDays = useMemo(() => scheduleDays.filter((day) => day.id === activeDay), [scheduleDays, activeDay]);
 
       useEffect(() => {
-        writeStoredValue(SCHEDULE_STATE_KEY, JSON.stringify({ days: scheduleDays }));
-      }, [scheduleDays]);
+        setScheduleDays(sharedScheduleDays);
+      }, [sharedScheduleDays]);
 
       useEffect(() => () => {
         if (editorCloseTimerRef.current) window.clearTimeout(editorCloseTimerRef.current);
@@ -4239,8 +4378,12 @@
             const [label = "", query = ""] = line.split("|").map((part) => part.trim());
             return [label, query];
           }),
-        }, editorDraft.id);
-        setScheduleDays((current) => current.map((day) => day.id === updatedDay.id ? updatedDay : day));
+          }, editorDraft.id);
+        setScheduleDays((current) => {
+          const next = current.map((day) => day.id === updatedDay.id ? updatedDay : day);
+          void saveScheduleDays(next);
+          return next;
+        });
         closeEditor();
       };
 
@@ -4251,7 +4394,9 @@
         },
           React.createElement("div", { className: "schedule-head" },
             React.createElement("div", { className: "schedule-head-copy" },
-              React.createElement("h2", { className: "section-title" }, "여행 일정")
+              React.createElement("h2", { className: "section-title" }, "여행 일정"),
+              scheduleSyncError ? React.createElement("p", { className: "section-kicker" }, `DB 오류: ${scheduleSyncError}`) :
+                React.createElement("p", { className: "section-kicker" }, scheduleSyncStatus === "loading" ? "DB에서 일정을 불러오는 중" : "DB로 일정이 공유됩니다")
             ),
             React.createElement("button", {
               type: "button",
