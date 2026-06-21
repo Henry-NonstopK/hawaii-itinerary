@@ -1040,9 +1040,11 @@
     }
     .supply-item-status {
       display: inline-flex;
+      align-items: center;
+      gap: 6px;
       align-self: start;
       width: fit-content;
-      padding: 5px 9px;
+      padding: 5px 10px;
       border-radius: 999px;
       font-size: 0.72rem;
       font-weight: 900;
@@ -1052,9 +1054,20 @@
       background: rgba(42, 139, 185, 0.12);
       color: var(--ocean);
     }
+    .supply-item-status.tax {
+      background: rgba(241, 184, 93, 0.18);
+      color: #8d5f13;
+    }
     .supply-item-status.pending {
       background: rgba(86, 201, 209, 0.18);
       color: #0a5563;
+    }
+    .supply-status-icon {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.2 8.6 6.4 11.7 12.9 5.2' stroke='%230f5e99' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
     .supply-item-meta {
       display: grid;
@@ -1067,17 +1080,93 @@
     }
     .supply-item-controls {
       display: grid;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       margin-top: 6px;
     }
-    .supply-item-controls select {
-      width: 100%;
+    .supply-item-controls .custom-dropdown,
+    .supply-sheet-body .custom-dropdown {
+      position: relative;
       min-width: 0;
+    }
+    .custom-dropdown-trigger {
+      width: 100%;
       min-height: 44px;
-      padding-block: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(24, 38, 45, 0.1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 251, 255, 0.98));
+      color: var(--aqua-dark);
+      box-shadow: 0 10px 18px rgba(24, 38, 45, 0.06);
+      text-align: left;
+    }
+    .custom-dropdown.compact .custom-dropdown-trigger {
+      min-height: 42px;
+      padding: 9px 11px;
       font-size: 0.84rem;
+    }
+    .custom-dropdown-value {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+    .custom-dropdown-arrow {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      transition: transform 160ms ease;
+    }
+    .custom-dropdown.is-open .custom-dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    .custom-dropdown-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 30;
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 18px 34px rgba(24, 38, 45, 0.16);
+      backdrop-filter: blur(14px);
+    }
+    .supply-field .custom-dropdown {
+      width: 100%;
+    }
+    .custom-dropdown-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 42px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: rgba(247, 251, 255, 0.88);
+      color: var(--aqua-dark);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: left;
+    }
+    .custom-dropdown-option.active {
+      background: rgba(86, 201, 209, 0.14);
+      border-color: rgba(86, 201, 209, 0.28);
+    }
+    .custom-dropdown-option-check {
+      color: var(--ocean);
+      font-weight: 900;
     }
     .supply-dock {
       position: relative;
@@ -2720,11 +2809,12 @@
         padding: 14px 14px 13px;
       }
       .supply-item-controls {
+        grid-template-columns: 1fr;
         gap: 8px;
         margin-top: 4px;
       }
-      .supply-item-controls select {
-        min-height: 44px;
+      .custom-dropdown-menu {
+        top: calc(100% + 6px);
       }
       .supply-sheet {
         width: 100%;
@@ -2858,6 +2948,11 @@
     const KONGS_INSTAGRAM_STATE_KEY = "kongs-instagram-state";
     const SUPPLY_PEOPLE = ["은애", "상봉", "문식", "은경", "아빠", "엄마"];
     const SUPPLY_FILTERS = ["전체", "미완료", "완료"];
+    const SUPPLY_STATUS_OPTIONS = [
+      { value: "미완료", label: "미완료" },
+      { value: "완료", label: "완료" },
+      { value: "면세(구매)", label: "면세(구매)" },
+    ];
     const LIVE_TRANSLATE_SOURCE = "en";
     const LIVE_TRANSLATE_TARGET = "ko";
     const GOOGLE_TRANSLATE_URL = `https://translate.google.com/?sl=${LIVE_TRANSLATE_SOURCE}&tl=${LIVE_TRANSLATE_TARGET}&op=translate&hl=ko`;
@@ -3195,10 +3290,13 @@
     ];
 
     function normalizeSupplyItem(item) {
+      const status = SUPPLY_STATUS_OPTIONS.some((option) => option.value === item.status)
+        ? item.status
+        : (item.status === "완료" ? "완료" : "미완료");
       return {
         ...item,
         owner: SUPPLY_PEOPLE.includes(item.owner) ? item.owner : (item.owner || SUPPLY_PEOPLE[0]),
-        status: item.status === "완료" ? "완료" : "미완료"
+        status
       };
     }
 
@@ -4073,6 +4171,54 @@
       return { value, setValue, status, error, save, reload: () => loadLatestStateDoc(title) };
     }
 
+    function CustomDropdown({ value, options, onChange, label, placeholder = "선택", className = "" }) {
+      const [open, setOpen] = useState(false);
+      const rootRef = useRef(null);
+      const selected = options.find((option) => option.value === value) || options[0] || null;
+
+      useEffect(() => {
+        const onPointerDown = (event) => {
+          if (rootRef.current && !rootRef.current.contains(event.target)) {
+            setOpen(false);
+          }
+        };
+        document.addEventListener("pointerdown", onPointerDown);
+        return () => document.removeEventListener("pointerdown", onPointerDown);
+      }, []);
+
+      return React.createElement("div", {
+        className: `custom-dropdown ${className} ${open ? "is-open" : ""}`.trim(),
+        ref: rootRef
+      },
+        React.createElement("button", {
+          type: "button",
+          className: "custom-dropdown-trigger",
+          "aria-expanded": open,
+          "aria-label": label,
+          onClick: () => setOpen((current) => !current)
+        },
+          React.createElement("span", { className: "custom-dropdown-value" }, selected?.label || placeholder),
+          React.createElement("span", { className: "custom-dropdown-arrow", "aria-hidden": "true" }, "⌄")
+        ),
+        open ? React.createElement("div", {
+          className: "custom-dropdown-menu",
+          role: "listbox",
+          "aria-label": label
+        }, options.map((option) => React.createElement("button", {
+          key: option.value,
+          type: "button",
+          className: `custom-dropdown-option ${option.value === value ? "active" : ""}`,
+          onClick: () => {
+            onChange(option.value);
+            setOpen(false);
+          }
+        },
+          React.createElement("span", { className: "custom-dropdown-option-label" }, option.label),
+          option.value === value ? React.createElement("span", { className: "custom-dropdown-option-check", "aria-hidden": "true" }, "✓") : null
+        ))) : null
+      );
+    }
+
     function useSupabaseRows(table, normalizeRow, sortRows, pollMs = 4000) {
       const [items, setItems] = useState([]);
       const [status, setStatus] = useState("loading");
@@ -4616,6 +4762,8 @@
         }))
         .filter((section) => section.items.length > 0 || statusFilter === "전체");
       const visibleCount = visibleSections.reduce((sum, section) => sum + section.items.length, 0);
+      const sectionOptions = sections.map((section) => ({ value: section.id, label: section.title }));
+      const ownerOptions = SUPPLY_PEOPLE.map((person) => ({ value: person, label: person }));
       const openSheet = () => {
         if (sheetCloseTimerRef.current) window.clearTimeout(sheetCloseTimerRef.current);
         setSheetClosing(false);
@@ -4676,28 +4824,32 @@
                       ),
                       React.createElement("div", { className: "supply-item-meta" },
                         React.createElement("span", {
-                          className: `supply-item-status ${item.status === "완료" ? "done" : "pending"}`
-                        }, item.status),
+                          className: `supply-item-status ${item.status === "완료" ? "done" : item.status === "면세(구매)" ? "tax" : "pending"}`
+                        },
+                          item.status === "완료" ? React.createElement("span", { className: "supply-status-icon", "aria-hidden": "true" }) : null,
+                          React.createElement("span", null, item.status)
+                        ),
                         React.createElement("span", { className: "supply-item-owner" }, `담당 ${item.owner || "미지정"}`),
                         item.note ? React.createElement("span", { className: "check-item-note" }, item.note) : null
                       )
                     ),
                     React.createElement("div", { className: "supply-item-controls" },
-                      React.createElement("select", {
-                        "aria-label": "준비자",
+                      React.createElement(CustomDropdown, {
+                        className: "compact",
+                        label: "준비자",
                         value: item.owner || SUPPLY_PEOPLE[0],
-                        onChange: (e) => updateItem(section.id, item.id, { owner: e.target.value })
-                      },
-                        SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                      ),
-                      React.createElement("select", {
-                        "aria-label": "상태",
+                        options: ownerOptions,
+                        placeholder: "준비자",
+                        onChange: (nextOwner) => updateItem(section.id, item.id, { owner: nextOwner })
+                      }),
+                      React.createElement(CustomDropdown, {
+                        className: "compact",
+                        label: "상태",
                         value: item.status,
-                        onChange: (e) => updateItem(section.id, item.id, { status: e.target.value })
-                      },
-                        React.createElement("option", { value: "미완료" }, "미완료"),
-                        React.createElement("option", { value: "완료" }, "완료")
-                      )
+                        options: SUPPLY_STATUS_OPTIONS,
+                        placeholder: "상태",
+                        onChange: (nextStatus) => updateItem(section.id, item.id, { status: nextStatus })
+                      })
                     )
                   ))
                 )
@@ -4725,21 +4877,23 @@
             React.createElement("div", { className: "supply-sheet-body" },
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "카테고리"),
-                React.createElement("select", {
+                React.createElement(CustomDropdown, {
+                  label: "카테고리",
                   value: draft.sectionId,
-                  onChange: (e) => setDraft((current) => ({ ...current, sectionId: e.target.value }))
-                },
-                  sections.map((section) => React.createElement("option", { key: section.id, value: section.id }, section.title))
-                )
+                  options: sectionOptions,
+                  placeholder: "카테고리",
+                  onChange: (sectionId) => setDraft((current) => ({ ...current, sectionId }))
+                })
               ),
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "준비자"),
-                React.createElement("select", {
+                React.createElement(CustomDropdown, {
+                  label: "준비자",
                   value: draft.owner,
-                  onChange: (e) => setDraft((current) => ({ ...current, owner: e.target.value }))
-                },
-                  SUPPLY_PEOPLE.map((person) => React.createElement("option", { key: person, value: person }, person))
-                )
+                  options: ownerOptions,
+                  placeholder: "준비자",
+                  onChange: (owner) => setDraft((current) => ({ ...current, owner }))
+                })
               ),
               React.createElement("label", { className: "supply-field" },
                 React.createElement("span", null, "항목"),
