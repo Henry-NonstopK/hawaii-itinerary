@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hong's 햅삐한 하와이여행</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap");
-
+    @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap");
     :root {
       color-scheme: light;
       --ink: #1d2330;
@@ -31,8 +30,7 @@
       --tab-green: #c8f0c0;
       --tab-cyan: #c8f1ef;
       --tab-blue: #c8dbff;
-      --hawaii-bg-url: url("https://slack-files.com/T0B6QVC77CP-F0BC4JAM5FE-9474538c92");
-      --headline: "Manrope", "Noto Sans KR", sans-serif;
+      --headline: "Outfit", "Noto Sans KR", sans-serif;
       --shadow: 0 22px 54px rgba(24, 38, 45, 0.12);
     }
 
@@ -45,7 +43,7 @@
     body {
       margin: 0;
       position: relative;
-      font-family: "Noto Sans KR", "Manrope", sans-serif;
+      font-family: "Outfit", "Noto Sans KR", sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
       overscroll-behavior: none;
@@ -972,20 +970,130 @@
       font-size: 1.06rem;
       color: var(--aqua-dark);
     }
+    .supply-stat,
+    .supply-stat1,
+    .supply-stat2 {
+      display: grid;
+      gap: 5px;
+      padding: 17px 15px 15px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow:
+              0 10px 24px rgba(18, 45, 54, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .supply-stat::before,
+    .supply-stat1::before,
+    .supply-stat2::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.85;
+      z-index: 0;
+    }
+
+    .supply-stat > *,
+    .supply-stat1 > *,
+    .supply-stat2 > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .supply-stat:hover,
+    .supply-stat1:hover,
+    .supply-stat2:hover {
+      transform: translateY(-3px);
+      box-shadow:
+              0 14px 30px rgba(18, 45, 54, 0.13),
+              inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    /* 하와이 바다 */
+    .supply-stat {
+      background: linear-gradient(135deg, #e8fbff 0%, #d5f4f6 48%, #fff7dc 100%);
+    }
+
+    .supply-stat::before {
+      background:
+              radial-gradient(circle at 85% 15%, rgba(255, 209, 102, 0.38), transparent 28%),
+              radial-gradient(circle at 15% 85%, rgba(0, 188, 212, 0.18), transparent 32%);
+    }
+
+    /* 선셋 */
+    .supply-stat1 {
+      background: linear-gradient(135deg, #fff1dc 0%, #ffd8b5 45%, #ffe7ef 100%);
+    }
+
+    .supply-stat1::before {
+      background:
+              radial-gradient(circle at 88% 18%, rgba(255, 143, 112, 0.34), transparent 30%),
+              radial-gradient(circle at 18% 88%, rgba(255, 214, 102, 0.28), transparent 35%);
+    }
+
+    /* 트로피컬 그린 */
+    .supply-stat2 {
+      background: linear-gradient(135deg, #ecfff4 0%, #d9f7e8 46%, #e9f7ff 100%);
+    }
+
+    .supply-stat2::before {
+      background:
+              radial-gradient(circle at 82% 18%, rgba(73, 190, 170, 0.26), transparent 30%),
+              radial-gradient(circle at 18% 82%, rgba(255, 209, 102, 0.24), transparent 34%);
+    }
     .supply-stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      margin-bottom: 4px;
+      width: 100%;
     }
-    .supply-stat {
-      display: grid;
-      gap: 3px;
-      padding: 16px 14px 13px;
-      border-radius: 20px;
-      border: 1px solid rgba(24, 38, 45, 0.08);
-      background: linear-gradient(180deg, rgba(255, 248, 239, 0.98), rgba(247, 237, 222, 0.94));
-      box-shadow: 0 8px 18px rgba(24, 38, 45, 0.045);
+
+    .supply-stat1 b {
+      color: var(--aqua-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .supply-stat1 span {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      color: var(--ink);
+      font-size: 1.16rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .supply-stat1 span small {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .supply-stat2 b {
+      color: var(--aqua-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .supply-stat2 span {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      color: var(--ink);
+      font-size: 1.16rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .supply-stat2 span small {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
     }
     .supply-stat b {
       color: var(--aqua-dark);
@@ -4997,11 +5105,11 @@
                 React.createElement("b", null, "전체"),
                 React.createElement("span", null, totalCount, React.createElement("small", null, "개"))
               ),
-              React.createElement("div", { className: "supply-stat" },
+              React.createElement("div", { className: "supply-stat2" },
                 React.createElement("b", null, "완료"),
                 React.createElement("span", null, doneCount, React.createElement("small", null, "개"))
               ),
-              React.createElement("div", { className: "supply-stat" },
+              React.createElement("div", { className: "supply-stat1" },
                 React.createElement("b", null, "표시"),
                 React.createElement("span", null, visibleCount, React.createElement("small", null, "개"))
               )
