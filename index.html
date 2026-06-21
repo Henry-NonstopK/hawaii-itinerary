@@ -4064,7 +4064,12 @@
     }
 
     function useSharedStateDoc(title, cacheKey, fallbackValue, decode = decodeStateDoc) {
-      const [value, setValue] = useState(() => readJsonCache(cacheKey, fallbackValue));
+      const [value, setValue] = useState(() => {
+        const cached = readJsonCache(cacheKey, null);
+        if (cached == null) return fallbackValue;
+        const decoded = decode(JSON.stringify(cached), fallbackValue);
+        return decoded ?? fallbackValue;
+      });
       const [status, setStatus] = useState("ready");
       const [error, setError] = useState("");
       const latestValueRef = useRef(value);
