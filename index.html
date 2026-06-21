@@ -3956,6 +3956,15 @@
       return parsed.posts.map(normalizeInstagramPost).sort(byNewest);
     }
 
+    function decodeSupplyStateDoc(content, fallback) {
+      const parsed = decodeStateDoc(content, null);
+      if (Array.isArray(parsed)) {
+        return parsed.map(normalizeSupplySection);
+      }
+      if (!parsed || !Array.isArray(parsed.sections)) return fallback;
+      return parsed.sections.map(normalizeSupplySection);
+    }
+
     async function loadLatestStateDoc(title) {
       const { data, error } = await supabase
         .from("posts")
@@ -4529,15 +4538,18 @@
     }
 
     function Supplies() {
-      const [sections, setSections] = useState(() => {
-        try {
-          const stored = JSON.parse(readStoredValue(SUPPLY_STATE_KEY, "null"));
-          if (!stored || !Array.isArray(stored.sections)) throw new Error("no saved state");
-          return stored.sections.map(normalizeSupplySection);
-        } catch {
-          return supplySections.map(normalizeSupplySection);
-        }
-      });
+      const {
+        value: sharedSections,
+        status: supplySyncStatus,
+        error: supplySyncError,
+        save: saveSections
+      } = useSharedStateDoc(
+        `${STATE_DOC_PREFIX}:supply`,
+        SUPPLY_STATE_KEY,
+        supplySections.map(normalizeSupplySection),
+        decodeSupplyStateDoc
+      );
+      const [sections, setSections] = useState(() => sharedSections);
       const [draft, setDraft] = useState({
         sectionId: supplySections[0].id,
         label: "",
@@ -4550,33 +4562,47 @@
       const sheetCloseTimerRef = useRef(null);
 
       useEffect(() => {
-        writeStoredValue(SUPPLY_STATE_KEY, JSON.stringify({ sections }));
-      }, [sections]);
+        setSections(sharedSections);
+      }, [sharedSections]);
+
+      const persistSections = async (nextSections) => {
+        const normalized = nextSections.map(normalizeSupplySection);
+        setSections(normalized);
+        await saveSections(normalized);
+      };
 
       const updateItem = (sectionId, itemId, updates) => {
-        setSections((current) => current.map((section) => section.id !== sectionId ? section : ({
-          ...section,
-          items: section.items.map((item) => item.id !== itemId ? item : ({ ...item, ...updates }))
-        })));
+        setSections((current) => {
+          const next = current.map((section) => section.id !== sectionId ? section : ({
+            ...section,
+            items: section.items.map((item) => item.id !== itemId ? item : ({ ...item, ...updates }))
+          }));
+          void persistSections(next);
+          return next;
+        });
       };
 
       const addItem = (event) => {
         event.preventDefault();
         const label = draft.label.trim();
         if (!label) return;
-        setSections((current) => current.map((section) => section.id !== draft.sectionId ? section : ({
-          ...section,
-          items: [
-            ...section.items,
-            {
-              id: crypto.randomUUID(),
-              label,
-              status: "미완료",
-              owner: draft.owner || SUPPLY_PEOPLE[0],
-              note: draft.note.trim()
-            }
-          ]
-        })));
+        setSections((current) => {
+          const next = current.map((section) => section.id !== draft.sectionId ? section : ({
+            ...section,
+            items: [
+              ...section.items,
+              {
+                id: crypto.randomUUID(),
+                label,
+                status: "미완료",
+                owner: draft.owner || SUPPLY_PEOPLE[0],
+                note: draft.note.trim()
+              }
+            ]
+          }));
+          void persistSections(next);
+          return next;
+        });
         setDraft((current) => ({ ...current, label: "", note: "" }));
         closeSheet();
       };
@@ -4626,6 +4652,8 @@
                 React.createElement("span", null, visibleCount, React.createElement("small", null, "개"))
               )
             ),
+            supplySyncError ? React.createElement("div", { className: "empty" }, `DB 오류: ${supplySyncError}`) :
+              React.createElement("div", { className: "section-kicker" }, supplySyncStatus === "loading" ? "DB에서 준비물을 불러오는 중" : "준비물 변경이 DB로 공유됩니다"),
             React.createElement("div", { className: "supply-filters", role: "tablist", "aria-label": "준비물 상태 필터" },
               SUPPLY_FILTERS.map((filter) => React.createElement("button", {
                 key: filter,
