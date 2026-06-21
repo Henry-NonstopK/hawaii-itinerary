@@ -221,6 +221,22 @@
       gap: 12px;
       padding: 0;
     }
+    .hero-banner {
+      justify-self: center;
+      width: min(100%, 460px);
+      padding: 10px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(24, 38, 45, 0.08);
+      box-shadow: 0 14px 30px rgba(24, 38, 45, 0.08);
+      backdrop-filter: blur(14px);
+    }
+    .hero-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
     .hero-panel {
       display: grid;
       gap: 12px;
@@ -4326,6 +4342,14 @@
       return (
         React.createElement("section", { className: "hero" },
           React.createElement("div", { className: "hero-copy" },
+            React.createElement("div", { className: "hero-banner" },
+              React.createElement("img", {
+                src: "./assets/hawaii-header.png",
+                alt: "Hawaii 안내 이미지",
+                loading: "eager",
+                decoding: "async"
+              })
+            ),
             React.createElement("div", { className: "hero-panel" },
               React.createElement("div", { className: "hero-search" },
                 React.createElement("div", { className: "hero-search-pill" },
