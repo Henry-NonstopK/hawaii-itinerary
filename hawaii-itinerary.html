@@ -3979,7 +3979,7 @@
 
     function useSharedStateDoc(title, cacheKey, fallbackValue, decode = decodeStateDoc) {
       const [value, setValue] = useState(() => readJsonCache(cacheKey, fallbackValue));
-      const [status, setStatus] = useState("loading");
+      const [status, setStatus] = useState("ready");
       const [error, setError] = useState("");
       const latestValueRef = useRef(value);
       const seededRef = useRef(false);
@@ -3992,7 +3992,7 @@
         let cancelled = false;
 
         async function refresh({ silent = false } = {}) {
-          if (!silent) setStatus("loading");
+          if (!silent && latestValueRef.current == null) setStatus("loading");
           setError("");
 
           try {
