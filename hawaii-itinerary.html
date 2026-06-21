@@ -4370,8 +4370,10 @@
         days.map((day) => normalizeScheduleDay(day)),
         decodeScheduleStateDoc
       );
-      const [scheduleDays, setScheduleDays] = useState(() => sharedScheduleDays);
-      const [activeDay, setActiveDay] = useState(() => scheduleDays[0]?.id || days[0].id);
+      const scheduleFallback = days.map((day) => normalizeScheduleDay(day));
+      const scheduleSeed = Array.isArray(sharedScheduleDays) ? sharedScheduleDays : scheduleFallback;
+      const [scheduleDays, setScheduleDays] = useState(() => scheduleSeed);
+      const [activeDay, setActiveDay] = useState(() => scheduleSeed[0]?.id || days[0].id);
       const [daySwipeDirection, setDaySwipeDirection] = useState("forward");
       const [daySwipeOffset, setDaySwipeOffset] = useState(0);
       const [isDayDragging, setIsDayDragging] = useState(false);
@@ -4381,12 +4383,13 @@
       const dayTouchStartRef = useRef(null);
       const editorCloseTimerRef = useRef(null);
       const lastEditSignalRef = useRef(editSignal);
-      const activeDayIndex = scheduleDays.findIndex((day) => day.id === activeDay);
-      const activeDayData = scheduleDays.find((day) => day.id === activeDay) || scheduleDays[0];
-      const shownDays = useMemo(() => scheduleDays.filter((day) => day.id === activeDay), [scheduleDays, activeDay]);
+      const scheduleList = Array.isArray(scheduleDays) ? scheduleDays : scheduleFallback;
+      const activeDayIndex = scheduleList.findIndex((day) => day.id === activeDay);
+      const activeDayData = scheduleList.find((day) => day.id === activeDay) || scheduleList[0];
+      const shownDays = useMemo(() => scheduleList.filter((day) => day.id === activeDay), [scheduleList, activeDay]);
 
       useEffect(() => {
-        setScheduleDays(sharedScheduleDays);
+        setScheduleDays(Array.isArray(sharedScheduleDays) ? sharedScheduleDays : scheduleFallback);
       }, [sharedScheduleDays]);
 
       useEffect(() => () => {
@@ -4394,10 +4397,10 @@
       }, []);
 
       useEffect(() => {
-        if (!activeDayData && scheduleDays[0]) {
-          setActiveDay(scheduleDays[0].id);
+        if (!activeDayData && scheduleList[0]) {
+          setActiveDay(scheduleList[0].id);
         }
-      }, [activeDayData, scheduleDays]);
+      }, [activeDayData, scheduleList]);
 
       useEffect(() => {
         if (editSignal === lastEditSignalRef.current) return;
@@ -4417,7 +4420,7 @@
       });
 
       const openEditor = (dayId = activeDay) => {
-        const target = scheduleDays.find((day) => day.id === dayId);
+        const target = scheduleList.find((day) => day.id === dayId);
         if (!target) return;
         if (editorCloseTimerRef.current) window.clearTimeout(editorCloseTimerRef.current);
         setEditorDraft(buildEditorDraft(target));
@@ -4437,7 +4440,7 @@
       };
 
       const selectDay = (nextId) => {
-        const nextIndex = scheduleDays.findIndex((day) => day.id === nextId);
+        const nextIndex = scheduleList.findIndex((day) => day.id === nextId);
         if (nextIndex === -1 || nextIndex === activeDayIndex) return;
         setDaySwipeDirection(nextIndex > activeDayIndex ? "forward" : "backward");
         setActiveDay(nextId);
@@ -4494,9 +4497,9 @@
         const committedHorizontal = start.mode === "horizontal" && dt <= 1000 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.15;
         if (committedHorizontal) {
           const nextIndex = dx < 0 ? activeDayIndex + 1 : activeDayIndex - 1;
-          if (nextIndex >= 0 && nextIndex < scheduleDays.length) {
+          if (nextIndex >= 0 && nextIndex < scheduleList.length) {
             setDaySwipeDirection(dx < 0 ? "forward" : "backward");
-            setActiveDay(scheduleDays[nextIndex].id);
+            setActiveDay(scheduleList[nextIndex].id);
           }
         }
         setIsDayDragging(false);
@@ -4554,7 +4557,7 @@
           ),
           React.createElement("div", { className: "schedule-rail" },
             React.createElement("nav", { className: "toolbar", "aria-label": "날짜 바로가기" },
-              scheduleDays.map((day) => React.createElement("button", {
+              scheduleList.map((day) => React.createElement("button", {
                 key: day.id,
                 className: `chip ${activeDay === day.id ? "active" : ""}`,
                 onClick: () => selectDay(day.id)
@@ -4688,7 +4691,9 @@
         supplySections.map(normalizeSupplySection),
         decodeSupplyStateDoc
       );
-      const [sections, setSections] = useState(() => sharedSections);
+      const supplyFallback = supplySections.map(normalizeSupplySection);
+      const supplySeed = Array.isArray(sharedSections) ? sharedSections : supplyFallback;
+      const [sections, setSections] = useState(() => supplySeed);
       const [draft, setDraft] = useState({
         label: "",
         note: "",
@@ -4700,7 +4705,7 @@
       const sheetCloseTimerRef = useRef(null);
 
       useEffect(() => {
-        setSections(sharedSections);
+        setSections(Array.isArray(sharedSections) ? sharedSections : supplyFallback);
       }, [sharedSections]);
 
       const persistSections = async (nextSections) => {
@@ -4745,9 +4750,10 @@
         closeSheet();
       };
 
-      const doneCount = sections.reduce((sum, section) => sum + section.items.filter((item) => item.status === "완료").length, 0);
-      const totalCount = sections.reduce((sum, section) => sum + section.items.length, 0);
-      const visibleSections = sections
+      const sectionList = Array.isArray(sections) ? sections : supplyFallback;
+      const doneCount = sectionList.reduce((sum, section) => sum + section.items.filter((item) => item.status === "완료").length, 0);
+      const totalCount = sectionList.reduce((sum, section) => sum + section.items.length, 0);
+      const visibleSections = sectionList
         .map((section) => ({
           ...section,
           items: section.items.filter((item) => statusFilter === "전체" || item.status === statusFilter)
@@ -5871,6 +5877,7 @@
 
     function KongsInstagram() {
       const { posts, status, error, addFiles, removePost } = useKongsInstagramFeed();
+      const safePosts = Array.isArray(posts) ? posts : [];
       const [draft, setDraft] = useState({ title: "", caption: "", author: KONGS_AUTHORS[0] });
       const [selectedFiles, setSelectedFiles] = useState([]);
       const [selectedPreviewUrls, setSelectedPreviewUrls] = useState([]);
@@ -5881,7 +5888,7 @@
       const [viewerIndex, setViewerIndex] = useState(null);
       const libraryInputRef = useRef(null);
       const composerCloseTimerRef = useRef(null);
-      const activePost = viewerIndex === null ? null : posts[viewerIndex];
+      const activePost = viewerIndex === null ? null : safePosts[viewerIndex];
       const selectedLabel = selectedFiles.length
         ? selectedFiles.length === 1
           ? selectedFiles[0].name
@@ -5976,7 +5983,7 @@
         if (ok) {
           setViewerIndex((current) => {
             if (current === null) return null;
-            return posts.length > 1 ? Math.min(current, posts.length - 2) : null;
+            return safePosts.length > 1 ? Math.min(current, safePosts.length - 2) : null;
           });
         }
       };
@@ -5991,7 +5998,7 @@
           React.createElement("div", { className: "instagram-hero-stats" },
             React.createElement("div", { className: "instagram-stat" },
               React.createElement("b", null, "게시물"),
-              React.createElement("span", null, `${posts.length}개`)
+            React.createElement("span", null, `${safePosts.length}개`)
             ),
             React.createElement("div", { className: "instagram-stat" },
               React.createElement("b", null, "정렬"),
@@ -6108,9 +6115,9 @@
           )
         ) : null,
         status === "loading" ? React.createElement("div", { className: "empty" }, "게시물을 불러오는 중입니다.") :
-        posts.length === 0 ? React.createElement("div", { className: "photo-empty" }, "아직 게시물이 없어요. 사진 등록 버튼을 눌러 첫 게시물을 올려보세요.") :
+        safePosts.length === 0 ? React.createElement("div", { className: "photo-empty" }, "아직 게시물이 없어요. 사진 등록 버튼을 눌러 첫 게시물을 올려보세요.") :
           React.createElement("div", { className: "instagram-feed" },
-            posts.map((post, index) => React.createElement("article", { className: "instagram-post", key: post.id },
+            safePosts.map((post, index) => React.createElement("article", { className: "instagram-post", key: post.id },
               React.createElement("button", {
                 className: "instagram-post-media",
                 type: "button",
@@ -6160,12 +6167,12 @@
                 React.createElement("button", {
                   className: "ghost-action",
                   type: "button",
-                  onClick: () => setViewerIndex((current) => (current - 1 + posts.length) % posts.length)
+                  onClick: () => setViewerIndex((current) => (current - 1 + safePosts.length) % safePosts.length)
                 }, "이전"),
                 React.createElement("button", {
                   className: "ghost-action",
                   type: "button",
-                  onClick: () => setViewerIndex((current) => (current + 1) % posts.length)
+                  onClick: () => setViewerIndex((current) => (current + 1) % safePosts.length)
                 }, "다음")
               ),
               React.createElement("div", { className: "group" },
