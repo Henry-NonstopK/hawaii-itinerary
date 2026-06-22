@@ -3710,6 +3710,33 @@
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
     }
 
+    function renderExternalText(value) {
+      const text = String(value || "");
+      const tokenPattern = /<(https?:\/\/[^>|]+)(?:\|([^>]+))?>|https?:\/\/[^\s<>"')\]]+/gi;
+      const parts = [];
+      let lastIndex = 0;
+      let match;
+      while ((match = tokenPattern.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push(text.slice(lastIndex, match.index));
+        }
+        const href = match[1] || match[0];
+        const label = match[2] || href;
+        parts.push(React.createElement("a", {
+          href,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          key: `${match.index}-${href}`
+        }, label));
+        lastIndex = match.index + match[0].length;
+      }
+      if (!parts.length) return value;
+      if (lastIndex < text.length) {
+        parts.push(text.slice(lastIndex));
+      }
+      return parts;
+    }
+
     function readSessionFlag(key) {
       try {
         return window.sessionStorage.getItem(key) === "1";
@@ -4909,14 +4936,14 @@
                   React.createElement("span", { className: "time" }, time),
                   React.createElement("div", { className: "stop-body" },
                     React.createElement("span", { className: "stop-title" }, title),
-                    React.createElement("p", { className: "stop-note" }, note)
+                    React.createElement("p", { className: "stop-note" }, renderExternalText(note))
                   )
                 ))
               ),
               React.createElement("div", { className: "actions" },
                 day.maps.map(([label, query]) => React.createElement("a", { className: "map-btn", href: mapUrl(query), target: "_blank", rel: "noopener", key: query }, label))
               ),
-              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), day.memo)
+              React.createElement("div", { className: "note" }, React.createElement("b", null, day.memoTitle), renderExternalText(day.memo))
             ))
           )
         ),
@@ -6470,7 +6497,7 @@
                 React.createElement("strong", null, post.title),
                   React.createElement("span", null, post.author)
                 ),
-                React.createElement("p", { className: "instagram-caption" }, post.caption || "짧은 문구 없음"),
+                React.createElement("p", { className: "instagram-caption" }, renderExternalText(post.caption || "짧은 문구 없음")),
                 React.createElement("div", { className: "instagram-post-meta" },
                   React.createElement("span", null, new Date(post.createdAt).toLocaleString("ko-KR")),
                   React.createElement("span", null, `${formatBytes(post.size)} · ${post.width}×${post.height}`)
@@ -6500,7 +6527,7 @@
             React.createElement("div", { className: "photo-stage" },
               React.createElement("img", { src: activePost.publicUrl, alt: activePost.title })
             ),
-            React.createElement("p", { className: "instagram-modal-caption" }, activePost.caption || "짧은 문구 없음"),
+            React.createElement("p", { className: "instagram-modal-caption" }, renderExternalText(activePost.caption || "짧은 문구 없음")),
             React.createElement("div", { className: "photo-modal-actions" },
               React.createElement("div", { className: "group" },
                 React.createElement("button", {
@@ -6649,7 +6676,7 @@
             React.createElement("h3", null, item.title),
             item.address ? React.createElement("a", { className: "map-btn", href: mapUrl(item.address), target: "_blank", rel: "noopener" }, item.address) : null,
             item.info.length ? React.createElement("ul", { className: "checklist" },
-              item.info.map((line) => React.createElement("li", { key: line }, line))
+              item.info.map((line) => React.createElement("li", { key: line }, renderExternalText(line)))
             ) : null,
             item.links.length ? React.createElement("div", { className: "ai-inline" },
               item.links.map((link) => React.createElement("a", { className: "map-btn", href: link.href, target: "_blank", rel: "noopener", key: link.href }, link.label))
